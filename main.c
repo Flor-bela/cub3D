@@ -12,11 +12,11 @@ static int	check_extension(const char *str)
 	i = ft_strlen(str);
 	while (flag == 1)
 	{
-		if (str[i - 1] != 'c')
+		if (str[i - 1] != 'b')
 			break ;
 		if (str[i - 2] != 'u')
 			break ;
-		if (str[i - 3] != 'b')
+		if (str[i - 3] != 'c')
 			break ;
 		if (str[i - 4] != '.')
 			break ;
@@ -31,6 +31,7 @@ static int	check_file(int argc, char **argv)
 {
 	int	fd_cub;
 	
+	fd_cub = 0;
 	if (argc != 2 || argv[1] == NULL || argv[1][0] == '\0')
 		return (1);
 	if (check_extension(argv[1]) == 0)
@@ -53,7 +54,7 @@ int	main(int argc, char **argv)
 	int	fd_cub;
 	
 	fd_cub = check_file(argc, argv);
-	
+
 
 
 	return (0);
