@@ -28,4 +28,17 @@ typedef struct s_data
 }				t_data;
 
 
+int		free_all_gnl(char **ptr, char **result);
+char	*get_next_line(int fd);
+
+
+// For GNL:
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
+# if BUFFER_SIZE <=0
+#  error BUFFER SIZE invalid
+# endif
+
+
 #endif

@@ -1,6 +1,12 @@
 NAME = cub3D
 
-SOURCES = main.c parsing_map.c
+SOURCES = \
+		main.c\
+		parsing_map.c\
+		free_all_gnl.c\
+		get_next_line.c\
+
+
 
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)

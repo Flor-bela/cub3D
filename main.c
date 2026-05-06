@@ -49,13 +49,51 @@ static int	check_file(int argc, char **argv)
 	return (fd_cub);
 }
 
+static void	check_rows(int fd, char *argv, t_data *map)
+{
+	char	*line_map;
+	int		i;
+
+	i = 0;
+	while (1) // ver cuantas lineas tenemos para poder crear la matriz para guardarlo todo
+	{
+		line_map = get_next_line(fd);
+		if (line_map == NULL)
+			break;
+		i++;
+	}
+	map->map_arr = (char **)malloc(sizeof (char *) * (i + 1));
+	if (map->map_arr == NULL)
+	{
+		write(2, "Error\n malloc failed\n", 22);
+		exit(1);
+	}
+	map->map_arr[i] = NULL;
+	close(fd);
+	// abrir de nuevo para ahora sí tenerlo guardado
+	fd = open(argv, O_RDONLY);
+	i = 0;
+	while (1)
+	{
+		line_map = get_next_line(fd);
+		if (line_map == NULL)
+			break ;
+		map->map_arr[i] = line_map;
+		i++;
+	}
+}
+
+
 int	main(int argc, char **argv)
 {
-	int	fd_cub;
+	int		fd;
+	t_data	map;
 	
-	fd_cub = check_file(argc, argv);
+	fd = check_file(argc, argv);
+	check_rows(fd, argv[1], &map); // no he bien check...es mas copy...ver que nombre darle
+	
 
 
-
+	// free map!
 	return (0);
 }
