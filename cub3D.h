@@ -1,6 +1,8 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "libft/libft.h"
+
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>

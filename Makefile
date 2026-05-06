@@ -1,18 +1,23 @@
 NAME = cub3D
 
-SOURCES = 
+SOURCES = main.c parsing_map.c
 
 OBJ_DIR = obj
-
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
+
+LIBFT_DIR = ./libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
 FLAGS = -Wall -Werror -Wextra -g
 CC = cc
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	$(CC) $(FLAGS) $(OBJECTS) -o $(NAME)
+$(LIBFT):
+		make -C $(LIBFT_DIR)
+
+$(NAME): $(LIBFT) $(OBJECTS)
+	$(CC) $(FLAGS) $(OBJECTS) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -20,10 +25,12 @@ $(OBJ_DIR)/%.o: %.c
 
 clean:
 	rm -rf $(OBJ_DIR)
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all cleaen fclean re
+.PHONY: all clean fclean re
