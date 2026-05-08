@@ -13,7 +13,6 @@ static void	free_map(t_data *map)
 	free(map->map_arr);
 }
 
-
 static int	check_extension(const char *str)
 {
 	int	i;
@@ -118,6 +117,8 @@ static void	check_characters_map(t_data *map) // tab??? should I add it??
 			if (map->map_arr[i][j] == 'N' || map->map_arr[i][j] == 'S'
 				 || map->map_arr[i][j] == 'W' || map->map_arr[i][j] == 'E')
 			{
+				map->player.col = j;
+				map->player.row = i;
 				flag++;
 				j++;
 			}
@@ -141,6 +142,13 @@ static void	check_characters_map(t_data *map) // tab??? should I add it??
 	}
 }
 
+static void	error_walls(t_data *map)
+{
+	write(2, "Error \n map not enclosed by walls.\n", 36);
+	free_map(map);
+	exit(1);
+}
+
 static void	check_map_enclosed(t_data *map)
 {
 	int		i;
@@ -153,55 +161,35 @@ static void	check_map_enclosed(t_data *map)
 		j = 0;
 		while (map->map_arr[i][j] != '\0')
 		{
-			if (map->map_arr[i][j] == '0') // para comprobar que entre a todas las direcciones, tengo que tener un flag....
+			if (map->map_arr[i][j] == '0')
 			{
 				flag = 0;
 				if ((j + 1) < (int)ft_strlen(map->map_arr[i]))
 				{
 					flag++;
 					if (map->map_arr[i][j + 1] == ' ' || map->map_arr[i][j + 1] == '\n')
-					{
-						write(2, "Error \n map not enclosed by walls.\n", 36);
-						free_map(map);
-						exit(1);
-					}
+						error_walls(map);
 				}
 				if ((j - 1) >= 0)
 				{
 					flag++;
 					if (map->map_arr[i][j - 1] == ' ' || map->map_arr[i][j - 1] == '\n')
-					{
-						write(2, "Error \n map not enclosed by walls.\n", 36);
-						free_map(map);
-						exit(1);
-					}
+						error_walls(map);
 				}
 				if ((i - 1) >= 0)
 				{	
 					flag++;
 					if (map->map_arr[i - 1][j] == ' ' || map->map_arr[i - 1][j] == '\n')
-					{
-						write(2, "Error \n map not enclosed by walls.\n", 36);
-						free_map(map);
-						exit(1);
-					}
+						error_walls(map);
 				}
 				if ((i + 1) < map->total_rows)
 				{
 					flag++;
 					if (map->map_arr[i + 1][j] == ' ' || map->map_arr[i + 1][j] == '\n')
-					{
-						write(2, "Error \n map not enclosed by walls.\n", 36);
-						free_map(map);
-						exit(1);
-					}
+						error_walls(map);
 				}
 				if (flag != 4)
-				{
-					write(2, "Error \n map not enclosed by walls.\n", 36);
-					free_map(map);
-					exit(1);
-				}
+					error_walls(map);
 			}
 			j++;
 		}
