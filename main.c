@@ -144,7 +144,8 @@ static void	check_characters_map(t_data *map) // tab??? should I add it??
 static void	check_map_enclosed(t_data *map)
 {
 	int		i;
-	size_t	j;
+	int		j;
+	int		flag;
 
 	i = 0;
 	while (i < map->total_rows)
@@ -152,11 +153,13 @@ static void	check_map_enclosed(t_data *map)
 		j = 0;
 		while (map->map_arr[i][j] != '\0')
 		{
-			if (map->map_arr[i][j] == '0')
+			if (map->map_arr[i][j] == '0') // para comprobar que entre a todas las direcciones, tengo que tener un flag....
 			{
-				if ((j + 1) < ft_strlen(map->map_arr[i]))
+				flag = 0;
+				if ((j + 1) < (int)ft_strlen(map->map_arr[i]))
 				{
-					if (map->map_arr[i][j + 1] == ' ')
+					flag++;
+					if (map->map_arr[i][j + 1] == ' ' || map->map_arr[i][j + 1] == '\n')
 					{
 						write(2, "Error \n map not enclosed by walls.\n", 36);
 						free_map(map);
@@ -165,7 +168,8 @@ static void	check_map_enclosed(t_data *map)
 				}
 				if ((j - 1) >= 0)
 				{
-					if (map->map_arr[i][j - 1] == ' ')
+					flag++;
+					if (map->map_arr[i][j - 1] == ' ' || map->map_arr[i][j - 1] == '\n')
 					{
 						write(2, "Error \n map not enclosed by walls.\n", 36);
 						free_map(map);
@@ -174,7 +178,8 @@ static void	check_map_enclosed(t_data *map)
 				}
 				if ((i - 1) >= 0)
 				{	
-					if (map->map_arr[i - 1][j] == ' ')
+					flag++;
+					if (map->map_arr[i - 1][j] == ' ' || map->map_arr[i - 1][j] == '\n')
 					{
 						write(2, "Error \n map not enclosed by walls.\n", 36);
 						free_map(map);
@@ -183,12 +188,19 @@ static void	check_map_enclosed(t_data *map)
 				}
 				if ((i + 1) < map->total_rows)
 				{
-					if (map->map_arr[i + 1][j] == ' ')
+					flag++;
+					if (map->map_arr[i + 1][j] == ' ' || map->map_arr[i + 1][j] == '\n')
 					{
 						write(2, "Error \n map not enclosed by walls.\n", 36);
 						free_map(map);
 						exit(1);
 					}
+				}
+				if (flag != 4)
+				{
+					write(2, "Error \n map not enclosed by walls.\n", 36);
+					free_map(map);
+					exit(1);
 				}
 			}
 			j++;
@@ -196,9 +208,6 @@ static void	check_map_enclosed(t_data *map)
 		i++;
 	}
 }
-
-
-
 
 int	main(int argc, char **argv)
 {
