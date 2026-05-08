@@ -10,7 +10,13 @@ LIB	= -L./libft -lft
 SOURCES =	main.c \
 			check_file.c \
 			error_utils.c \
-			read_file.c
+			read_file.c \
+			init.c \
+			utils.c \
+			parse_color.c \
+			parse_texture.c \
+			debug.c \
+
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
 

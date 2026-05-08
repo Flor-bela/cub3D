@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:21:14 by medel-ca          #+#    #+#             */
-/*   Updated: 2025/04/21 18:05:21 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/08 10:47:47 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strchr(const char *str, int ltr)
 	int				len;
 	unsigned char	z;
 
+	if(!str)
+		return NULL;
 	z = (char)ltr;
 	len = ft_strlen(str);
 	if (z == 0)

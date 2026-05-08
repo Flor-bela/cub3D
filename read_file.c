@@ -1,51 +1,103 @@
 #include "cub3D.h"
 
-char	*fill_buffer(char *rest, int fd)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
-	ssize_t	bytes_read;
-	char	*temp;
-	char	buffer[1024 + 1];
+	int		len;
+	char	*ret;
+	int		i;
+	int		j;
 
-	bytes_read = 1;
-	while (bytes_read > 0)
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	ret = malloc(len + 1 * sizeof(char));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (s1[i])
 	{
-		bytes_read = read(fd, buffer, 1024);
-		if (bytes_read < 0)
-			return (free(rest), NULL);
-		else if (bytes_read == 0)
-			break ;
-		buffer[bytes_read] = 0;
-		temp = ft_strjoin(rest, buffer);
-		if (!temp)
-			return (free(rest), NULL);
-		free(rest);
-		rest = temp;
+		ret[i] = s1[i];
+		i++;
 	}
+	j = 0;
+	while (s2[j])
+	{
+		ret[i + j] = s2[j];
+		j++;
+	}
+	ret[i + j] = '\0';
+	free(s1);
+	return (ret);
+}
+
+char	*set_line(char **rest)
+{
+	char	*line;
+	char	*temp;
+	int		i;
+
+	if (!rest || !*rest || !**rest)
+		return (NULL);
+	temp = *rest;
+	i = 0;
+	while (temp[i])
+	{
+		if (temp[i] == '\n')
+		{
+			i++;
+			break ;
+		}
+		i++;
+	}
+	line = ft_strcpy(temp, i);
+	if (!line)
+	{
+		free(*rest);
+		return (NULL);
+	}
+	temp = ft_strcpy(*rest + i, ft_strlen(*rest + i));
+	free(*rest);
+	*rest = temp;
+	return (line);
+}
+
+char	*fill_buffer(int fd, char *rest)
+{
+	char	buffer[1024 + 1];
+	int		bytes;
+
+	while ((bytes = read(fd, buffer, 1024)) > 0)
+	{
+		if (!rest)
+		{
+			rest = malloc(1);
+			if (!rest)
+				return (NULL);
+			rest[0] = '\0';
+		}
+		buffer[bytes] = '\0';
+		rest = ft_strjoin_free(rest, buffer);
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	if (bytes == -1)
+		return (NULL);
 	return (rest);
 }
 
-char	*read_file(char *filename)
+char	*get_next_line(int fd)
 {
-	int		fd;
-	char	*rest;
-	char	*openf;
+	char		*line;
+	static char	*rest;
 
-	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-	{
-		errormsg("No se pudo abrir el archivo", errno);
-	}
-	rest = ft_calloc(1, 1);
+		return (NULL);
+	rest = fill_buffer(fd, rest);
 	if (!rest)
 	{
-		close(fd);
-		errormsg("map_init(): ft_calloc()", errno);
+		free(rest);
+		return (NULL);
 	}
-	openf = fill_buffer(rest, fd);
-	if (!openf)
-	{
-		errormsg("No se pudo leer el archivo", errno);
-	}
-	close(fd);
-	return (openf);
+	line = set_line(&rest);
+	return (line);
 }
