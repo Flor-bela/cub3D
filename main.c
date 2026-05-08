@@ -1,5 +1,19 @@
 #include "cub3D.h"
 
+static void	free_map(t_data *map)
+{
+	int	i;
+
+	i = 0;	
+	while (i < map->total_rows)
+	{
+		free(map->map_arr[i]);
+		i++;
+	}
+	free(map->map_arr);
+}
+
+
 static int	check_extension(const char *str)
 {
 	int	i;
@@ -38,18 +52,18 @@ static int	check_file(int argc, char **argv)
 		fd_cub = open(argv[1], O_RDONLY);
 	else if (check_extension(argv[1]) == 1)
 	{
-		write(2, "Error\n map isn't valid\n", 24);
+		write(2, "Error \n map isn't valid\n", 24);
 		exit (1);
 	}
 	if (fd_cub < 0)
 	{
-		perror("Error\n");
+		perror("Error \n");
 		exit(1);
 	}
 	return (fd_cub);
 }
 
-static void	check_rows(int fd, char *argv, t_data *map)
+static void	load_map(int fd, char *argv, t_data *map)
 {
 	char	*line_map;
 	int		i;
@@ -57,25 +71,29 @@ static void	check_rows(int fd, char *argv, t_data *map)
 	i = 0;
 	while (1) // ver cuantas lineas tenemos para poder crear la matriz para guardarlo todo
 	{
-		line_map = get_next_line(fd);
+		line_map = get_next_line(fd); // aqui el fd ya viene de Mercedes
 		if (line_map == NULL)
 			break;
+		free(line_map);
 		i++;
 	}
+	map->total_rows = i; // number of rows that map has!
 	map->map_arr = (char **)malloc(sizeof (char *) * (i + 1));
 	if (map->map_arr == NULL)
 	{
-		write(2, "Error\n malloc failed\n", 22);
+		write(2, "Error \n malloc failed\n", 22);
 		exit(1);
 	}
 	map->map_arr[i] = NULL;
-	close(fd);
-	// abrir de nuevo para ahora sí tenerlo guardado
-	fd = open(argv, O_RDONLY);
+		close(fd); // ya lo cierro yo aquí
+
+	fd = open(argv, O_RDONLY); // vuelvo a abrirlo
 	i = 0;
+	// to do: debería aquí añadir que pase todas las rows que Mercedes ha tenido que leer para llegar a mi parte
+	// loop para que continue solo en la parte del mapa
 	while (1)
 	{
-		line_map = get_next_line(fd);
+		line_map = get_next_line(fd); //
 		if (line_map == NULL)
 			break ;
 		map->map_arr[i] = line_map;
@@ -84,16 +102,117 @@ static void	check_rows(int fd, char *argv, t_data *map)
 }
 
 
+static void	check_characters_map(t_data *map) // tab??? should I add it??
+{
+	int	i;
+	int	j;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (i < map->total_rows) // hmmm tiene salto de línea!!!!! Tengo que quitarlo!!! No debería ser interpretado
+	{
+		j = 0;
+		while (map->map_arr[i][j] != '\0')
+		{
+			if (map->map_arr[i][j] == 'N' || map->map_arr[i][j] == 'S'
+				 || map->map_arr[i][j] == 'W' || map->map_arr[i][j] == 'E')
+			{
+				flag++;
+				j++;
+			}
+			else if (map->map_arr[i][j] == ' ' || map->map_arr[i][j] == '\n'
+				|| map->map_arr[i][j] == '1' || map->map_arr[i][j] == '0')
+				j++;
+			else
+			{
+				write(2, "Error \n incorrect character on the map.", 40);
+				free_map(map);
+				exit (1);
+			}
+		}
+		i++;
+	}
+	if (flag != 1)
+	{
+		write(2, "Error \n incorrect starting point.", 33);
+		free_map(map);
+		exit (1);
+	}
+}
+
+static void	check_map_enclosed(t_data *map)
+{
+	int		i;
+	size_t	j;
+
+	i = 0;
+	while (i < map->total_rows)
+	{
+		j = 0;
+		while (map->map_arr[i][j] != '\0')
+		{
+			if (map->map_arr[i][j] == '0')
+			{
+				if ((j + 1) < ft_strlen(map->map_arr[i]))
+				{
+					if (map->map_arr[i][j + 1] == ' ')
+					{
+						write(2, "Error \n map not enclosed by walls.\n", 36);
+						free_map(map);
+						exit(1);
+					}
+				}
+				if ((j - 1) >= 0)
+				{
+					if (map->map_arr[i][j - 1] == ' ')
+					{
+						write(2, "Error \n map not enclosed by walls.\n", 36);
+						free_map(map);
+						exit(1);
+					}
+				}
+				if ((i - 1) >= 0)
+				{	
+					if (map->map_arr[i - 1][j] == ' ')
+					{
+						write(2, "Error \n map not enclosed by walls.\n", 36);
+						free_map(map);
+						exit(1);
+					}
+				}
+				if ((i + 1) < map->total_rows)
+				{
+					if (map->map_arr[i + 1][j] == ' ')
+					{
+						write(2, "Error \n map not enclosed by walls.\n", 36);
+						free_map(map);
+						exit(1);
+					}
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+
+
+
 int	main(int argc, char **argv)
 {
 	int		fd;
 	t_data	map;
 	
-	fd = check_file(argc, argv);
-	check_rows(fd, argv[1], &map); // no he bien check...es mas copy...ver que nombre darle
-	
+	map.map_arr = NULL;
+	fd = check_file(argc, argv); // Mercedes ya tiene esta parte
+	// Cuando ella acabe de leer su parte yo puedo continuar a leer el fd y así voy continuando hasta la zona el mapa....
+	load_map(fd, argv[1], &map);
+	check_characters_map(&map);
+	check_map_enclosed(&map);
 
 
-	// free map!
+	free_map(&map);
 	return (0);
 }

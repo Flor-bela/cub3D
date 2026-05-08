@@ -2,9 +2,9 @@ NAME = cub3D
 
 SOURCES = \
 		main.c\
-		parsing_map.c\
-		free_all_gnl.c\
+		get_next_line_utils.c\
 		get_next_line.c\
+		
 
 
 

@@ -24,15 +24,21 @@ typedef struct s_pos
 typedef struct s_data
 {
 	char		**map_arr;
+	int			total_rows;
 	t_pos		player;
 }				t_data;
 
 
+
+// For GNL:
+
+size_t	ft_len(const char *s);
+void	ft_copy(char *dst, const char *src, size_t size);
 int		free_all_gnl(char **ptr, char **result);
 char	*get_next_line(int fd);
 
 
-// For GNL:
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
 # endif

@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:19:18 by fda-roch          #+#    #+#             */
-/*   Updated: 2025/05/19 14:48:40 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/08 14:08:55 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *s)
 	size_t	num;
 
 	num = 0;
+	if (s == NULL)
+		return (0);
 	while (*s != '\0')
 	{
 		num++;
