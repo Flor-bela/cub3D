@@ -40,11 +40,29 @@ int	check_characters_map(t_map *map)
 	return (1);
 }
 
-int	error_walls(t_map *map)
+static int	error_walls(t_map *map)
 {
 	write(2, "Error \n map not enclosed by walls.\n", 36);
 	(void)map;
 	return (0);
+}
+
+static void	check_max_col(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	map->max_cols = 0;
+	while (i < map->total_rows)
+	{
+		j = 0;
+		while (map->grid[i][j] != '\0')
+			j++;
+		if (map->max_cols < j)
+				map->max_cols = j - 1;
+		i++;
+	}
 }
 
 int	check_map_enclosed(t_map *map)
@@ -93,23 +111,7 @@ int	check_map_enclosed(t_map *map)
 		}
 		i++;
 	}
+	check_max_col(map); // lo añadi aqui quizas cambiar de sitio
 	return (1);
 }
 
-static void	check_max_col(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	map->max_cols = 0;
-	while (i < map->total_rows)
-	{
-		j = 0;
-		while (map->grid[i][j] != '\0')
-			j++;
-		if (map->max_cols < j)
-				map->max_cols = j - 1;
-		i++;
-	}
-}
