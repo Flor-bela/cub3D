@@ -53,7 +53,6 @@ static void	check_max_col(t_map *map)
 	int	j;
 
 	i = 0;
-	map->max_cols = 0;
 	while (i < map->total_rows)
 	{
 		j = 0;

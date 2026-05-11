@@ -21,6 +21,7 @@ t_map	*init_map(void)
 	}
 	map->grid = NULL;
 	map->total_rows = 0;
+	map->max_cols = 0;
 	return (map);
 }
 
