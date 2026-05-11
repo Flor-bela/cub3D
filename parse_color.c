@@ -1,6 +1,21 @@
 #include "cub3D.h"
 
-int	extract_color(char *line, int *colors)
+int	all_colors_found(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (map->colors.floor[i] < 0 || map->colors.floor[i] > 255
+			|| map->colors.ceiling[i] < 0 || map->colors.ceiling[i] > 255)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	save_color(char *line, int *colors)
 {
 	char	*temp;
 	int		index;
@@ -29,7 +44,7 @@ int	extract_color(char *line, int *colors)
 	return (1);
 }
 
-int	parse_color(char *line, t_map *map)
+int	extract_color(char *line, t_map *map)
 {
 	int		i;
 
@@ -40,13 +55,13 @@ int	parse_color(char *line, t_map *map)
 	{
 		if (map->colors.floor[0] >= 0)
 			return (0);
-		return (extract_color(line, map->colors.floor));
+		return (save_color(line, map->colors.floor));
 	}
 	else if (*line == 'C')
 	{
 		if (map->colors.ceiling[0] >= 0)
 			return (0);
-		return (extract_color(line, map->colors.ceiling));
+		return (save_color(line, map->colors.ceiling));
 	}
 	return (1);
 }

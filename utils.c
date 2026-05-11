@@ -24,3 +24,26 @@ char	*ft_strcpy(char *str, int size)
 	cpy[i] = '\0';
 	return (cpy);
 }
+
+int	ft_format(char *file)
+{
+	size_t	len;
+
+	len = ft_strlen(file) - 1;
+	if (file[len] == 'b' && file[len - 1] == 'u'
+		&& file[len - 2] == 'c' && file[len - 3] == '.')
+		return (1);
+	return (0);
+}
+
+int	empty_line(char *line)
+{
+	if (!line)
+		return (0);
+	if (ft_isspace(*line) || *line == '\n')
+	{
+		line++;
+		return (1);
+	}
+	return (0);
+}

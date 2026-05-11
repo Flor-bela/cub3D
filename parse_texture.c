@@ -1,5 +1,13 @@
 #include "cub3D.h"
 
+int	all_textures_found(t_map *map)
+{
+	return (map->textures.no
+		&& map->textures.so
+		&& map->textures.we
+		&& map->textures.ea);
+}
+
 int	save_path(char *path, char **texture)
 {
 	if (*texture)
@@ -27,7 +35,7 @@ char	*extract_path(char *line)
 	return (ft_substr(line, start, end - start));
 }
 
-int	parse_texture(char *line, t_map *map)
+int	extract_texture(char *line, t_map *map)
 {
 	char	*path;
 

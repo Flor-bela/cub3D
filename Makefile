@@ -3,9 +3,15 @@ NAME = cub3D
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g
 
-LFT	= libft/libft.a
-INC	= -I./libft
-LIB	= -L./libft -lft
+MLX_DIR = minilibx-linux
+MLX_REPO = https://github.com/42Paris/minilibx-linux.git
+MLX = $(MLX_DIR)/libmlx.a
+
+LFT = libft/libft.a
+
+INC = -I./libft -I./minilibx-linux
+
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 SOURCES =	main.c \
 			check_file.c \
@@ -15,30 +21,43 @@ SOURCES =	main.c \
 			utils.c \
 			parse_color.c \
 			parse_texture.c \
-			debug.c \
+			parse_map.c \
+			debug.c
 
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
 
-all: $(LFT) $(NAME)
+all: $(MLX) $(LFT) $(NAME)
 
-$(NAME): $(OBJECTS) 
-	$(CC) $(FLAGS)  $^ -o $@ $(LIB)
+$(NAME): $(OBJECTS)
+	$(CC) $(FLAGS) $^ $(LFT) $(MLX_FLAGS) -o $@
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@
 
+$(MLX):
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "Cloning MiniLibX..."; \
+		git clone $(MLX_REPO) $(MLX_DIR); \
+	fi
+	@$(MAKE) -C $(MLX_DIR)
+
 $(LFT):
-	@make -C libft
+	@echo " [ .. ] | Compiling libft.."
+	@make -s -C libft
+	@echo " [ OK ] | Libft ready!"
 
 clean:
 	rm -rf $(OBJ_DIR)
-	@make -s $@ -C libft
+	@make -s clean -C libft
+	@if [ -d "$(MLX_DIR)" ]; then \
+		$(MAKE) -C $(MLX_DIR) clean; \
+	fi
 
 fclean: clean
 	rm -f $(NAME)
-	@make -s $@ -C libft
+	@make -s fclean -C libft
 
 re: fclean all
 
