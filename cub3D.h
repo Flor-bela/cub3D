@@ -49,6 +49,7 @@ typedef struct s_map
 	t_colors	colors;
 	char		**grid;
 	int			total_rows;
+	int			max_cols;
 	t_pos		player;
 	void		*mlx;
 	void		*win;

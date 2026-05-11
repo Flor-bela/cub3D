@@ -95,3 +95,21 @@ int	check_map_enclosed(t_map *map)
 	}
 	return (1);
 }
+
+static void	check_max_col(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	map->max_cols = 0;
+	while (i < map->total_rows)
+	{
+		j = 0;
+		while (map->grid[i][j] != '\0')
+			j++;
+		if (map->max_cols < j)
+				map->max_cols = j - 1;
+		i++;
+	}
+}
