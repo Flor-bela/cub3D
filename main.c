@@ -197,6 +197,25 @@ static void	check_map_enclosed(t_data *map)
 	}
 }
 
+static void	check_max_col(t_data *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	map->max_cols = 0;
+	while (i < map->total_rows)
+	{
+		j = 0;
+		while (map->map_arr[i][j] != '\0')
+			j++;
+		if (map->max_cols < j)
+				map->max_cols = j - 1;
+		i++;
+	}
+}
+
+
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -208,6 +227,9 @@ int	main(int argc, char **argv)
 	load_map(fd, argv[1], &map);
 	check_characters_map(&map);
 	check_map_enclosed(&map);
+
+	check_max_col(&map);
+
 
 
 	free_map(&map);

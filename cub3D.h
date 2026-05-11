@@ -25,9 +25,9 @@ typedef struct s_data
 {
 	char		**map_arr;
 	int			total_rows;
+	int			max_cols;	// added the max number of cols we have to contruct the map
 	t_pos		player;
 }				t_data;
-
 
 
 // For GNL:
