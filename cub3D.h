@@ -15,6 +15,9 @@
 # include <X11/keysym.h>
 # include <mlx.h>
 
+# define SCREEN_WIDTH	1280
+# define SCREEN_HEIGHT	720
+
 typedef struct s_img
 {
 	void	*no;
