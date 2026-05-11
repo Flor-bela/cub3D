@@ -44,11 +44,11 @@ int	extract_texture(char *line, t_map *map)
 	path = extract_path(line + 2);
 	if (ft_strncmp(line, "NO", 2) == 0)
 		return (save_path(path, &map->textures.no));
-	else if (ft_strncmp(line, "SO", 2) == 0)
+	else if (ft_strncmp(line, "SO", 2) == 0 && map->textures.no)
 		return (save_path(path, &map->textures.so));
-	else if (ft_strncmp(line, "WE", 2) == 0)
+	else if (ft_strncmp(line, "WE", 2) == 0 && map->textures.so)
 		return (save_path(path, &map->textures.we));
-	else if (ft_strncmp(line, "EA", 2) == 0)
+	else if (ft_strncmp(line, "EA", 2) == 0 && map->textures.we)
 		return (save_path(path, &map->textures.ea));
 	return (1);
 }

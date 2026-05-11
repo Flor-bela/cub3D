@@ -22,6 +22,7 @@ int	main(int ac, char **av)
 	if (!parse_file(fd, map))
 	{
 		printf("Some mistakes in the textures\n");
+		close(fd);
 		return (1);
 	}
 	debug(map);

@@ -59,7 +59,7 @@ int	extract_color(char *line, t_map *map)
 	}
 	else if (*line == 'C')
 	{
-		if (map->colors.ceiling[0] >= 0)
+		if (map->colors.ceiling[0] >= 0 || map->colors.floor[0] < 0)
 			return (0);
 		return (save_color(line, map->colors.ceiling));
 	}
