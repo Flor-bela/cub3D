@@ -17,3 +17,5 @@ void	errormsg(char *errmsg, int errnum)
 	}
 	exit(0);
 }
+
+

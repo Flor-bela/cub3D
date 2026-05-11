@@ -18,6 +18,7 @@ int	check_characters_map(t_map *map)
 			{
 				map->player.col = j;
 				map->player.row = i;
+				map->player.pov = map->grid[i][j];
 				flag++;
 				j++;
 			}
@@ -89,6 +90,8 @@ int	check_map_enclosed(t_map *map)
 				if (flag != 4)
 					return (error_walls(map));
 			}
+			if(map->total_colums < j)
+				map->total_colums = j;
 			j++;
 		}
 		i++;

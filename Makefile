@@ -22,7 +22,11 @@ SOURCES =	main.c \
 			parse_color.c \
 			parse_texture.c \
 			parse_map.c \
-			debug.c
+			debug.c \
+			start_game.c \
+			render_map.c \
+			handle_input.c \
+			base_destroy.c
 
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)

@@ -14,6 +14,7 @@
 # include <stdlib.h>
 # include <X11/keysym.h>
 # include <mlx.h>
+# include <stddef.h>
 
 typedef struct s_img
 {
@@ -39,9 +40,10 @@ typedef struct s_colors
 
 typedef struct s_pos
 {
-	int			col;
-	int			row;
-}				t_pos;
+	int		col;
+	int		row;
+	char	pov;	
+}	t_pos;
 
 typedef struct s_map
 {
@@ -49,12 +51,13 @@ typedef struct s_map
 	t_colors	colors;
 	char		**grid;
 	int			total_rows;
+	int			total_colums;
+	int			win_width;
+	int			win_height;
 	t_pos		player;
 	void		*mlx;
 	void		*win;
-	int			win_width;
-	int			win_height;
-	t_img	*img;
+	t_img		*img;
 }	t_map;
 
 //debug
@@ -63,6 +66,7 @@ void	debug(t_map *map);
 //init
 t_map	*init_map(void);
 void	destroy_map(t_map *map);
+void	img_init(t_map *map);
 
 //read file
 char	*get_next_line(int fd);
@@ -83,6 +87,13 @@ int		all_textures_found(t_map *map);
 int		check_characters_map(t_map *map);
 int		check_map_enclosed(t_map *map);
 
+//window
+void	start_game(t_map *map);
+int		handle_input(int keysym, void *param);
+int		close_game(t_map *map);
+void	render_map(t_map *map);
+void	map_destroy(t_map *map, char *errmsg, int errnum);
+void	die(char *errmsg, int errnum);
 
 //error utils
 void	errormsg(char *errmsg, int errnum);

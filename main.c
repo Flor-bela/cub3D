@@ -1,5 +1,13 @@
 #include "cub3D.h"
 
+int	expose_hook(void *param)
+{
+	t_map	*map;
+	map = (t_map *)param;
+	render_map(map);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_map	*map;
@@ -27,6 +35,13 @@ int	main(int ac, char **av)
 	}
 	debug(map);
 	printf("Correct file!\n");
+	start_game(map);
+	img_init(map);
+	render_map(map);
+	mlx_key_hook(map->win, handle_input, map);
+	mlx_hook(map->win, 17, 0, close_game, map);
+	mlx_expose_hook(map->win, expose_hook, map);
+	mlx_loop(map->mlx);
 	destroy_map(map);
 	close(fd);
 	return (0);

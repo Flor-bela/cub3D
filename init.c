@@ -7,7 +7,10 @@ t_map	*init_map(void)
 
 	map = (t_map *)malloc(sizeof(t_map));
 	if (map == 0)
-		errormsg("base_init(): malloc()", errno);
+	{
+		free(map);
+		errormsg("map_init(): malloc()", errno);
+	}
 	map->textures.no = NULL;
 	map->textures.so = NULL;
 	map->textures.we = NULL;
@@ -21,8 +24,12 @@ t_map	*init_map(void)
 	}
 	map->grid = NULL;
 	map->total_rows = 0;
+	map->img = 0;
+	map->mlx = NULL;
+	map->win = NULL;
 	return (map);
 }
+
 
 void	destroy_map(t_map *map)
 {
@@ -58,8 +65,8 @@ static void	texture_load(t_map *map, void **img, char *path)
 void	img_init(t_map *map)
 {
 	map->img = (t_img *)malloc(sizeof(t_img));
-//	if (!map->img)
-//		base_destroy(map, "img_init(): malloc()", errno);
+	if (!map->img)
+		map_destroy(map, "img_init(): malloc()", errno);
 	map->img->no = 0;
 	map->img->so = 0;
 	map->img->we = 0;
@@ -69,20 +76,3 @@ void	img_init(t_map *map)
 	texture_load(map, &map->img->we, map->textures.we);
 	texture_load(map, &map->img->ea, map->textures.ea);
 }
-
-/*void	start_game(t_map *map)
-{
-	map->win_width = map->map->width * TILE_LEN;
-	map->win_height = map->map->height * TILE_LEN;
-	map->mlx = mlx_init();
-	if (map->mlx == NULL)
-		exit (1);
-	map->win = mlx_new_window(map->mlx, map->win_width,
-			map->win_height, "This is Fine");
-	if (map->win == NULL)
-	{
-		mlx_destroy_display(base->mlx);
-		free(base->mlx);
-		exit (1);
-	}
-}*/
