@@ -1,0 +1,10 @@
+# objetos
+*.o
+*.a
+
+# ejecutable
+cub3D
+
+# librerías externas
+libft/
+minilibx-linux/
