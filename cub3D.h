@@ -26,6 +26,15 @@ typedef struct s_img
 	void	*ea;
 }	t_img;
 
+typedef struct s_mini
+{
+	void	*img_ptr;
+	char	*addr;
+	int		bits_per_pixel; // ????
+	int		line_length; // ???
+	int		endian; // ???
+}			t_mini;
+
 typedef struct s_textures
 {
 	char	*no;
@@ -58,7 +67,7 @@ typedef struct s_map
 	void		*win;
 	int			win_width;
 	int			win_height;
-	t_img	*img;
+	t_img		*img;
 }	t_map;
 
 //debug

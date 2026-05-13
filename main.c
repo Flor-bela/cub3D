@@ -1,67 +1,69 @@
 #include "cub3D.h"
 
-void	ft_put_background(t_map *map, int mini_width, int mini_height)
+void	ft_mlx_pixel_put(t_mini *img, int x, int y, int colour)
 {
-	int	i;
-	int	j;
+	char	*dst;
 
-	i = 2;
-	j = 2;
-	while (i < mini_height - 2)
-	{
-		while (j < mini_width - 2)
-		{
-			mlx_pixel_put(map->mlx, map->win, i, j, 0xffffff);
-			j++;
-		}
-		i++;
-		j = 2;
-	}
-}
- 
-int	choose_colour(char **map, int i, int j)
-{
-	if (map[i][j] == '0' || map[i][j] == ' ')
-		return (0xffffff); // blanco
-	if (map[i][j] == '1')
-		return (0x000000);
-	return (0x000000);
+	if (x < 0 || y < 0)
+		return ;
+
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8)); // por 8 para convertirlo en bits
+	*(int*)dst = colour;
 }
 
-void	ft_put_map(t_map *map, int map_width, int map_height) // do not use pixel...better to convert it to image somehow...
+void	draw_square(t_mini *img, int x, int y, int size, int colour)
 {
-	int	i;
-	int	j;
+	int i = 0;
+	int j;
 
-	i = 0;
-	j = 0;
-	printf("map_height %d\n", map_height);
-	printf("map_width %d\n", map_width);
-	while (i < map_height - 1)
+	while (i < size)
 	{
-		while (j < map_width - 1)
-		{
-			mlx_pixel_put(map->mlx, map->win, i, j, choose_colour(map->grid, map_height, map_width)); 
-			j++;
-		}
-		i++;
 		j = 0;
+		while (j < size)
+		{
+			ft_mlx_pixel_put(img, x + j, y + i, colour);
+			j++;
+		}
+		i++;
 	}
 }
 
-void	put_minimap(t_map *map)
+void	render_minimap(t_map *map)
 {
-	int	mini_width;
-	int	mini_height;
+	t_mini	mini_map;
+	int		y = 0; // rows
+	int		x; // cols
+	int		tile = 10; // Tamaño de cada cuadro en el minimapa 
+	int		colour;
 
-	mini_width = SCREEN_WIDTH / 6;
-	mini_height = mini_width; // ????
-	ft_put_background(map, mini_width, mini_height);
-	//ft_put_map(map, mini_width,  mini_height);
+	mini_map.img_ptr = mlx_new_image(map->mlx, map->max_cols * tile, map->total_rows * tile);
+	mini_map.addr = mlx_get_data_addr(mini_map.img_ptr, &mini_map.bits_per_pixel, &mini_map.line_length, &mini_map.endian);
 
+	while (y < map->total_rows)
+	{
+		x = 0;
+		while (x < map->max_cols)
+		{
+			if (map->grid[y][x] == '1')
+				colour = 0x000000;
+			else if (map->grid[y][x] == '0')
+				colour = 0xFFFFFF; 
+			else if (map->grid[y][x] == 'N' || map->grid[y][x] == 'S' || map->grid[y][x] == 'W' || map->grid[y][x] == 'E')
+				colour = 0x00FF00; // verde
+			else
+				colour = 0x808080; // gris?? para los espacios sin nada
+			draw_square(&mini_map, x * tile, y * tile, tile, colour);
+			x++;
+		}
+		y++;
+	}
+
+	//mini mapa en el rincón izquierdo? 20, 20 -> posicion
+	mlx_put_image_to_window(map->mlx, map->win, mini_map.img_ptr, 20, 20);
+
+	
+	//mlx_destroy_image(map->mlx, mini_map.img_ptr); // quizás ponerla en t_map....??
 }
-
-
 
 
 int	ft_close_window(t_map *map)
@@ -112,14 +114,9 @@ int	main(int ac, char **av)
 	debug(map);
 	printf("Correct file!\n");
 
-	//start_mini_map(map); 
+	
 
 	map->mlx = mlx_init();
-
-	// 
-	//map->win_width  = 30;
-	//map->win_height = 15;
-
 	map->win_width = map->max_cols * TILE_LEN;
 	map->win_height = map->total_rows * TILE_LEN;
 	/*if (map->mlx == NULL)
@@ -127,9 +124,9 @@ int	main(int ac, char **av)
 		exit (1); */
 	map->win = mlx_new_window(map->mlx, map->win_width,
 			map->win_height, "cub3D");
-	put_minimap(map);
-	mlx_loop_hook(map->mlx, &handle_no_event, map);
 	
+	mlx_loop_hook(map->mlx, &handle_no_event, map);
+	render_minimap(map);
 	mlx_hook(map->win, 17, 0, &ft_close_window, map);
 	//mlx_key_hook(map.win, &handle_input, map);
 	mlx_loop(map->mlx);
