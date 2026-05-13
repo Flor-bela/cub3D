@@ -6,10 +6,7 @@ int	handle_input(int keysym, void *param)
 
 	map = (t_map *)param;
 	if (!map || !map->img)
-	{
-		map_destroy(map, "Error: imagen no iniciada", 0);
-		return (1);
-	}
+		map_destroy(map, NULL, errno);
 	if (keysym == 65307)
 	{
 		close_game(map);

@@ -36,13 +36,19 @@ typedef struct s_colors
 {
 	int	floor[3];
 	int	ceiling[3];
+	int f_color;
+	int c_color;
 }	t_colors;
 
 typedef struct s_pos
 {
-	int		col;
-	int		row;
-	char	pov;	
+	int		x;
+	int		y;
+	char	pov;
+	int		dir_x;
+	int		dir_y;
+	int		plane_x;
+	int		plane_y;
 }	t_pos;
 
 typedef struct s_map
@@ -65,7 +71,7 @@ void	debug(t_map *map);
 
 //init
 t_map	*init_map(void);
-void	destroy_map(t_map *map);
+void	free_map(t_map *map);
 void	img_init(t_map *map);
 
 //read file
@@ -86,6 +92,8 @@ int		all_textures_found(t_map *map);
 
 int		check_characters_map(t_map *map);
 int		check_map_enclosed(t_map *map);
+
+void	player_direction(t_map *map);
 
 //window
 void	start_game(t_map *map);

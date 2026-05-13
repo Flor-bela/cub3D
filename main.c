@@ -19,22 +19,13 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	if (!ft_format(av[1]))
-	{
-		write(1, "Correct format is .cub\n", 24);
-		return (1);
-	}
+		map_destroy(NULL, "Correct format is .cub", 0);
 	map = init_map();
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		return (1);
-	if (!parse_file(fd, map))
-	{
-		printf("Some mistakes in the textures\n");
-		close(fd);
-		return (1);
-	}
+		map_destroy(map, "File cannot be open", errno);
+	parse_file(fd, map);
 	debug(map);
-	printf("Correct file!\n");
 	start_game(map);
 	img_init(map);
 	render_map(map);
@@ -42,7 +33,7 @@ int	main(int ac, char **av)
 	mlx_hook(map->win, 17, 0, close_game, map);
 	mlx_expose_hook(map->win, expose_hook, map);
 	mlx_loop(map->mlx);
-	destroy_map(map);
+	map_destroy(map, NULL, 0);
 	close(fd);
 	return (0);
 }

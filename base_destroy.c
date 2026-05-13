@@ -28,7 +28,7 @@ void	map_destroy(t_map *map, char *errmsg, int errnum)
 			mlx_destroy_display(map->mlx);
 			free(map->mlx);
 		}
-		destroy_map(map);
+		free_map(map);
 		free(map);
 	}
 	die(errmsg, errnum);

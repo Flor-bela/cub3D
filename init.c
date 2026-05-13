@@ -5,12 +5,9 @@ t_map	*init_map(void)
 	t_map	*map;
 	int		i;
 
-	map = (t_map *)malloc(sizeof(t_map));
+	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (map == 0)
-	{
-		free(map);
-		errormsg("map_init(): malloc()", errno);
-	}
+		map_destroy(map, "map_init(): malloc()", errno);
 	map->textures.no = NULL;
 	map->textures.so = NULL;
 	map->textures.we = NULL;
@@ -24,14 +21,14 @@ t_map	*init_map(void)
 	}
 	map->grid = NULL;
 	map->total_rows = 0;
-	map->img = 0;
+	map->img = NULL;
 	map->mlx = NULL;
 	map->win = NULL;
 	return (map);
 }
 
 
-void	destroy_map(t_map *map)
+void	free_map(t_map *map)
 {
 	int	i;
 
@@ -42,14 +39,13 @@ void	destroy_map(t_map *map)
 	free(map->textures.ea);
 	if(map->grid)
 	{
-		while(i < map->total_rows)
+		while (map->grid[i]) // Terminar grid en NULL
 		{
 			free(map->grid[i]);
 			i++;
 		}
 		free(map->grid);
 	}
-	free(map);
 }
 
 static void	texture_load(t_map *map, void **img, char *path)
@@ -59,7 +55,7 @@ static void	texture_load(t_map *map, void **img, char *path)
 	len = TILE_LEN;
 	*img = mlx_xpm_file_to_image(map->mlx, path, &len, &len);
 	if (*img == 0)
-		errormsg("texture_init(): can't load texture", errno);
+		map_destroy(map, "texture_init(): can't load texture", errno);
 }
 
 void	img_init(t_map *map)

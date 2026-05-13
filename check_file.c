@@ -79,18 +79,22 @@ int	parse_file(int fd, t_map *map)
 	line = NULL;
 	if (!parse_texture(&line, map, fd)) // Saltar líneas vacías, comprobar que no se repiten ni faltan y tienen el formato correcto
 	{
-		destroy_map(map);
-		return (0);
+		close(fd);
+		free(line);
+		map_destroy(map, "The textures are not correct", errno);
 	}
 	if (!parse_color(&line, map, fd)) // Saltar líneas vacías, comprobar que no se repiten ni faltan y tienen el formato correcto
 	{
-		destroy_map(map);
-		return (0);
+		close(fd);
+		free(line);
+		map_destroy(map, "The colors are not correct", errno);
 	}
 	if (!parse_map(&line, map, fd)) // Comprobar que el mapa está cerrado y tiene solo los caracteres correctos (1, 0 y posición de personaje)
 	{
-		destroy_map(map);
-		return (0);
+		close(fd);
+		free(line);
+		map_destroy(map, "The map is not correct", errno);
 	}
+	player_direction(map);
 	return (1);
 }

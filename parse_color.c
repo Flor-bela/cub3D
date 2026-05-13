@@ -15,7 +15,7 @@ int	all_colors_found(t_map *map)
 	return (1);
 }
 
-int	save_color(char *line, int *colors)
+int	save_color(char *line, int *colors, int *ccolor)
 {
 	char	*temp;
 	int		index;
@@ -41,6 +41,7 @@ int	save_color(char *line, int *colors)
 		}
 		i = size;
 	}
+	*ccolor = ((colors[0] << 16) | (colors[1] << 8) | colors[2]);
 	return (1);
 }
 
@@ -55,13 +56,13 @@ int	extract_color(char *line, t_map *map)
 	{
 		if (map->colors.floor[0] >= 0)
 			return (0);
-		return (save_color(line, map->colors.floor));
+		return (save_color(line, map->colors.floor, &map->colors.f_color));
 	}
 	else if (*line == 'C')
 	{
 		if (map->colors.ceiling[0] >= 0 || map->colors.floor[0] < 0)
 			return (0);
-		return (save_color(line, map->colors.ceiling));
+		return (save_color(line, map->colors.ceiling, &map->colors.c_color));
 	}
 	return (1);
 }
