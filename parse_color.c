@@ -1,14 +1,14 @@
 #include "cub3D.h"
 
-int	all_colors_found(t_map *map)
+int	all_colors_found(t_game *game)
 {
 	int	i;
 
 	i = 0;
 	while (i < 3)
 	{
-		if (map->colors.floor[i] < 0 || map->colors.floor[i] > 255
-			|| map->colors.ceiling[i] < 0 || map->colors.ceiling[i] > 255)
+		if (game->map.floor[i] < 0 || game->map.floor[i] > 255
+			|| game->map.ceiling[i] < 0 || game->map.ceiling[i] > 255)
 			return (0);
 		i++;
 	}
@@ -45,7 +45,7 @@ int	save_color(char *line, int *colors, int *ccolor)
 	return (1);
 }
 
-int	extract_color(char *line, t_map *map)
+int	extract_color(char *line, t_game *game)
 {
 	int		i;
 
@@ -54,15 +54,15 @@ int	extract_color(char *line, t_map *map)
 		i++;
 	if (line[i] == 'F')
 	{
-		if (map->colors.floor[0] >= 0)
+		if (game->map.floor[0] >= 0)
 			return (0);
-		return (save_color(line, map->colors.floor, &map->colors.f_color));
+		return (save_color(line, game->map.floor, &game->map.f_color));
 	}
 	else if (*line == 'C')
 	{
-		if (map->colors.ceiling[0] >= 0 || map->colors.floor[0] < 0)
+		if (game->map.ceiling[0] >= 0 || game->map.floor[0] < 0)
 			return (0);
-		return (save_color(line, map->colors.ceiling, &map->colors.c_color));
+		return (save_color(line, game->map.ceiling, &game->map.c_color));
 	}
 	return (1);
 }

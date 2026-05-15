@@ -1,25 +1,28 @@
 #include "cub3D.h"
 
-void	player_direction(t_map *map)
+void	player_direction(t_game *game)
 {
-	if(map->player.pov == 'N')
+	if(game->player.pov == 'N')
 	{
-		map->player.dir_x = 0;
-		map->player.dir_y = -1;
+		game->player.dir_x = 0.0;
+		game->player.dir_y = -1.0;
 	}
-	if(map->player.pov == 'S')
+	else if(game->player.pov == 'S')
 	{
-		map->player.dir_x = 0;
-		map->player.dir_y = 1;
+		game->player.dir_x = 0.0;
+		game->player.dir_y = 1.0;
 	}
-	if(map->player.pov == 'W')
+	else if(game->player.pov == 'W')
 	{
-		map->player.dir_x = -1;
-		map->player.dir_y = 0;
+		game->player.dir_x = -1.0;
+		game->player.dir_y = 0.0;
 	}
-	if(map->player.pov == 'E')
+	else
 	{
-		map->player.dir_x = 1;
-		map->player.dir_y = 0;
+		game->player.dir_x = 1.0;
+		game->player.dir_y = 0.0;
 	}
+	game->player.plane_x = -game->player.dir_y * 0.66;
+	game->player.plane_y = game->player.dir_x * 0.66;
+	game->player.p_angle = atan2(game->player.dir_y, game->player.dir_x);
 }

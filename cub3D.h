@@ -1,6 +1,18 @@
 #ifndef CUB3D_H
 # define CUB3D_H
-# define TILE_LEN  32
+
+# define TILE_SIZE  64
+# define WIDTH 1920
+# define HEIGHT 1080
+
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define LEFT 65361
+# define RIGHT 65363
+
+# define PI 3.14159265359
 
 # include <unistd.h>
 # include <sys/types.h>
@@ -15,92 +27,130 @@
 # include <X11/keysym.h>
 # include <mlx.h>
 # include <stddef.h>
+# include <math.h>
+# include <stdbool.h>
+
+enum e_tex
+{
+	NO,
+	SO,
+	WE,
+	EA
+};
+
+typedef struct s_ray
+{
+    float rayDirX;
+    float rayDirY;
+    int mapX;
+    int mapY;
+    float sideDistX;
+    float sideDistY;
+    float deltaDistX;
+	float deltaDistY;
+    int stepX;
+    int stepY;
+    int hit;
+    int side;
+    float perpWallDist;
+	int	lineHeight;
+	int drawStart;
+	int drawEnd;
+
+} t_ray;
 
 typedef struct s_img
 {
-	void	*no;
-	void	*so;
-	void	*we;
-	void	*ea;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		width; //?
+	int		height; //?
 }	t_img;
 
-typedef struct s_textures
+typedef struct s_player
 {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-}	t_textures;
-
-typedef struct s_colors
-{
-	int	floor[3];
-	int	ceiling[3];
-	int f_color;
-	int c_color;
-}	t_colors;
-
-typedef struct s_pos
-{
-	int		x;
-	int		y;
+	float	p_x;
+	float	p_y;
 	char	pov;
-	int		dir_x;
-	int		dir_y;
-	int		plane_x;
-	int		plane_y;
-}	t_pos;
+	float	dir_x;
+	float	dir_y;
+	float	plane_x;
+	float	plane_y;
+	float	p_angle;
+	bool	key_up;
+    bool	key_down;
+    bool	key_left;
+    bool	key_right;
+	bool	left_rotate;
+	bool	right_rotate;
+}	t_player;
 
 typedef struct s_map
 {
-	t_textures	textures;
-	t_colors	colors;
-	char		**grid;
-	int			total_rows;
-	int			total_colums;
-	int			win_width;
-	int			win_height;
-	t_pos		player;
+	char	**grid;
+	int		floor[3]; // datos innecesarios?
+	int		ceiling[3]; // datos innecesarios?
+	int		f_color;
+	int		c_color;
+	char	*text_path[4];
+	int		total_row; // datos innecesarios?
+	int		total_column; // datos innecesarios?
+} t_map;
+
+typedef struct s_render
+{
+	t_img	textures[4];
+	t_img	screen;
+} t_render;
+
+
+typedef struct s_game
+{
 	void		*mlx;
 	void		*win;
-	t_img		*img;
-}	t_map;
+	t_render	render;
+	t_map		map;
+	t_player	player;
+}	t_game;
 
 //debug
-void	debug(t_map *map);
+void	debug(t_game *game);
 
 //init
-t_map	*init_map(void);
-void	free_map(t_map *map);
-void	img_init(t_map *map);
+t_game	*init_game(void);
+void	free_map(t_game *game);
+void	img_init(t_game *game);
 
 //read file
 char	*get_next_line(int fd);
 
 //check file
 int		ft_format(char *file);
-int		parse_file(int fd, t_map *map);
+int		parse_file(int fd, t_game *game);
 
-int		extract_color(char *line, t_map *map);
+int		extract_color(char *line, t_game *game);
 int		is_color_line(char *line);
-int		all_colors_found(t_map *map);
+int		all_colors_found(t_game *game);
 
 char	*extract_path(char *line);
-int	 	extract_texture(char *line, t_map *map);
+int	 	extract_texture(char *line, t_game *game);
 int		is_texture_line(char *line);
-int		all_textures_found(t_map *map);
+int		all_textures_found(t_game *game);
 
-int		check_characters_map(t_map *map);
-int		check_map_enclosed(t_map *map);
+int		check_characters_map(t_game *game);
+int		check_map_enclosed(t_game *game);
 
-void	player_direction(t_map *map);
+void	player_direction(t_game *game);
 
 //window
-void	start_game(t_map *map);
+void	start_game(t_game *game);
 int		handle_input(int keysym, void *param);
-int		close_game(t_map *map);
-void	render_map(t_map *map);
-void	map_destroy(t_map *map, char *errmsg, int errnum);
+int		close_game(t_game *game);
+void	render_game(t_game *game);
+void	game_destroy(t_game *game, char *errmsg, int errnum);
 void	die(char *errmsg, int errnum);
 
 //error utils
@@ -112,5 +162,6 @@ char	*ft_strcpy(char *str, int size);
 char	*ft_strjoin_free(char *s1, char *s2);
 int		empty_line(char *line);
 int		ft_format(char *file);
+int		game_loop(t_game *game);
 
 #endif

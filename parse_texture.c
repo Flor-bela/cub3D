@@ -1,17 +1,20 @@
 #include "cub3D.h"
 
-int	all_textures_found(t_map *map)
+int	all_textures_found(t_game *game)
 {
-	return (map->textures.no
-		&& map->textures.so
-		&& map->textures.we
-		&& map->textures.ea);
+	printf("Todas las texturas guardadsa?\n");
+	return (game->map.text_path[NO]
+		&& game->map.text_path[SO]
+		&& game->map.text_path[WE]
+		&& game->map.text_path[EA]);
 }
 
 int	save_path(char *path, char **texture)
 {
 	if (*texture)
 	{
+		printf("Textura ya usada\n");
+		printf("%s\n", path);
 		free(path);
 		return (0);
 	}
@@ -35,7 +38,7 @@ char	*extract_path(char *line)
 	return (ft_substr(line, start, end - start));
 }
 
-int	extract_texture(char *line, t_map *map)
+int	extract_texture(char *line, t_game *game)
 {
 	char	*path;
 
@@ -43,13 +46,13 @@ int	extract_texture(char *line, t_map *map)
 		line++;
 	path = extract_path(line + 2);
 	if (ft_strncmp(line, "NO", 2) == 0)
-		return (save_path(path, &map->textures.no));
-	else if (ft_strncmp(line, "SO", 2) == 0 && map->textures.no)
-		return (save_path(path, &map->textures.so));
-	else if (ft_strncmp(line, "WE", 2) == 0 && map->textures.so)
-		return (save_path(path, &map->textures.we));
-	else if (ft_strncmp(line, "EA", 2) == 0 && map->textures.we)
-		return (save_path(path, &map->textures.ea));
+		return (save_path(path, &game->map.text_path[NO]));
+	else if (ft_strncmp(line, "SO", 2) == 0 && game->map.text_path[NO])
+		return (save_path(path, &game->map.text_path[SO]));
+	else if (ft_strncmp(line, "WE", 2) == 0 && game->map.text_path[SO])
+		return (save_path(path, &game->map.text_path[WE]));
+	else if (ft_strncmp(line, "EA", 2) == 0 && game->map.text_path[WE])
+		return (save_path(path, &game->map.text_path[EA]));
 	return (1);
 }
 

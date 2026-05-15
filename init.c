@@ -1,74 +1,73 @@
 #include "cub3D.h"
 
-t_map	*init_map(void)
+void	init_player(t_player *player)
 {
-	t_map	*map;
+	player->p_x = 0;
+	player->p_y = 0;
+	player->pov = 0;
+	player->key_down = false;
+	player->key_left = false;
+	player->key_right = false;
+	player->key_up = false;
+	player->left_rotate = false;
+	player->right_rotate = false;
+}
+
+t_game	*init_game(void)
+{
+	t_game	*game;
 	int		i;
 
-	map = (t_map *)ft_calloc(1, sizeof(t_map));
-	if (map == 0)
-		map_destroy(map, "map_init(): malloc()", errno);
-	map->textures.no = NULL;
-	map->textures.so = NULL;
-	map->textures.we = NULL;
-	map->textures.ea = NULL;
+	game = (t_game *)ft_calloc(1, sizeof(t_game));
+	if (!game)
+    	die("init_game(): malloc()", errno);
+	game->mlx = NULL;
+	game->win = NULL;
+	game->render.screen.img = NULL;
+	game->map.grid = NULL;
+	i = 0;
+	while (i < 4)	
+	{
+		game->map.text_path[i] = NULL;
+		game->render.textures[i].img = NULL;
+		i++;
+	}
 	i = 0;
 	while (i < 3)
 	{
-		map->colors.ceiling[i] = -1;
-		map->colors.floor[i] = -1;
+		game->map.ceiling[i] = -1;
+		game->map.floor[i] = -1;
 		i++;
-	}
-	map->grid = NULL;
-	map->total_rows = 0;
-	map->img = NULL;
-	map->mlx = NULL;
-	map->win = NULL;
-	return (map);
+	}	
+	game->map.total_row = 0; //necesario?
+	game->map.total_column = 0;	//necesario?
+	init_player(&game->player);
+	return (game);
 }
 
+static void	texture_load(t_game *game, t_img *texture, char *path)
+{
+	int	len;
 
-void	free_map(t_map *map)
+	len = TILE_SIZE;
+	texture->img = mlx_xpm_file_to_image(game->mlx, path, &len, &len);
+	if (texture->img == 0)
+		game_destroy(game, "texture_init(): can't load texture", errno);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, &texture->line_len, &texture->endian);
+}
+
+void	img_init(t_game *game)
 {
 	int	i;
 
 	i = 0;
-	free(map->textures.no);
-	free(map->textures.so);
-	free(map->textures.we);
-	free(map->textures.ea);
-	if(map->grid)
+	while(i < 4)
 	{
-		while (map->grid[i]) // Terminar grid en NULL
-		{
-			free(map->grid[i]);
-			i++;
-		}
-		free(map->grid);
+		texture_load(game, &game->render.textures[i], game->map.text_path[i]);
+		i++;
 	}
-}
-
-static void	texture_load(t_map *map, void **img, char *path)
-{
-	int	len;
-
-	len = TILE_LEN;
-	*img = mlx_xpm_file_to_image(map->mlx, path, &len, &len);
-	if (*img == 0)
-		map_destroy(map, "texture_init(): can't load texture", errno);
-}
-
-void	img_init(t_map *map)
-{
-	map->img = (t_img *)malloc(sizeof(t_img));
-	if (!map->img)
-		map_destroy(map, "img_init(): malloc()", errno);
-	map->img->no = 0;
-	map->img->so = 0;
-	map->img->we = 0;
-	map->img->ea = 0;
-	texture_load(map, &map->img->no, map->textures.no);
-	texture_load(map, &map->img->so, map->textures.so);
-	texture_load(map, &map->img->we, map->textures.we);
-	texture_load(map, &map->img->ea, map->textures.ea);
+	game->render.screen.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->render.screen.addr = mlx_get_data_addr(game->render.screen.img, 
+		&game->render.screen.bpp, &game->render.screen.line_len, 
+		&game->render.screen.endian);
 }

@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS =  -Wall -Wextra -Werror -g
 
 MLX_DIR = minilibx-linux
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
@@ -24,9 +24,10 @@ SOURCES =	main.c \
 			parse_map.c \
 			debug.c \
 			start_game.c \
-			render_map.c \
 			handle_input.c \
-			base_destroy.c
+			game_destroy.c \
+			player_direction.c \
+			
 
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
