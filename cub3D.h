@@ -50,8 +50,8 @@ typedef struct s_ray
 	float deltaDistY;
     int stepX;
     int stepY;
-    int hit;
     int side;
+	int hit;
     float perpWallDist;
 	int	lineHeight;
 	int drawStart;

@@ -32,8 +32,8 @@ void draw_background(t_game *game)
 
 void	move_player(t_player *player)
 {
-	int speed = 10;
-	float angle_speed = 0.5;
+	int speed = 5;
+	float angle_speed = 0.1;
 
 	if(player->left_rotate)
 		player->p_angle -= angle_speed;
@@ -69,58 +69,69 @@ void	move_player(t_player *player)
 	}
 }
 
-void	init_ray(t_ray *ray, t_game *game, float ray_angle)
+void	init_rayX(t_ray *ray, t_game *game, float ray_angle) // Eje horizontal -> calcula las distancias entre las líneas verticales
 {
 	ray->rayDirX = cos(ray_angle); // vector de dirección según el ángulo del jugador
-	ray->rayDirY = sin(ray_angle);
 	ray->mapX = game->player.p_x / TILE_SIZE; // de posición real a casillas de mapa
-	ray->mapY = game->player.p_y / TILE_SIZE;
 	if (ray->rayDirX == 0)  // distancia hacia linea vertical
     	ray->deltaDistX = 1e30; // Si la dirección del jugador es vertical no va a atravesar lineas verticales
 	else
 		ray->deltaDistX = fabs(1 / ray->rayDirX); // fabs: valor absoluto
-
-	if (ray->rayDirY == 0)  // distancia hacia linea horizontal
-		ray->deltaDistY = 1e30;
-	else
-		ray->deltaDistY = fabs(1 / ray->rayDirY);
 	if (ray->rayDirX < 0) // dirección del salto
 		ray->stepX = -1; // Izquierda
 	else
 		ray->stepX = 1; // Derecha
-	if (ray->rayDirY < 0)
-		ray->stepY = -1; // Arriba
-	else
-		ray->stepY = 1; // Abajo
-	if (ray->rayDirX < 0)  // Distancia hasta la primera linea vertical
+	if (ray->rayDirX < 0)  // Distancia hasta la primera linea vertical (hacia izda.)
 	{
 		ray->sideDistX =
 			(game->player.p_x / TILE_SIZE - ray->mapX)
 			* ray->deltaDistX;
 	}
-	else
+	else					// hacia dcha.
 	{
 		ray->sideDistX =
 			(ray->mapX + 1.0 - game->player.p_x / TILE_SIZE)
 			* ray->deltaDistX;
 	}
-	if (ray->rayDirY < 0) // Distancia hasta la primera linea horizontal
+}
+
+void	init_rayY(t_ray *ray, t_game *game, float ray_angle)
+{
+	ray->rayDirY = sin(ray_angle);	
+	ray->mapY = game->player.p_y / TILE_SIZE;
+	if (ray->rayDirY == 0)  // distancia hacia linea horizontal
+		ray->deltaDistY = 1e30;
+	else
+		ray->deltaDistY = fabs(1 / ray->rayDirY);	
+	if (ray->rayDirY < 0)
+		ray->stepY = -1; // Arriba
+	else
+		ray->stepY = 1; // Abajo
+	if (ray->rayDirY < 0) // Distancia hasta la primera linea horizontal (hacia arriba)
 	{
 		ray->sideDistY =
 			(game->player.p_y / TILE_SIZE - ray->mapY)
 			* ray->deltaDistY;
 	}
-	else
+	else				//hacia abajo
 	{
 		ray->sideDistY =
 			(ray->mapY + 1.0 - game->player.p_y / TILE_SIZE)
 			* ray->deltaDistY;
 	}
 }
+
+void	init_ray(t_ray *ray, t_game *game, float ray_angle)
+{
+	init_rayX(ray, game, ray_angle);
+	init_rayY(ray, game, ray_angle);	
+}
 void	draw_wall(t_ray *ray, t_game *game, int i)
 {
 	int color;
 
+//	if(ray->hit < 0)
+//		return ;
 	if (ray->side == 1)
 		color = 0xAAAAAA; // más oscuro
 	else
@@ -134,6 +145,8 @@ void	draw_wall(t_ray *ray, t_game *game, int i)
 }
 void	calculate_wall(t_ray *ray, t_game *game)
 {
+//	if(ray->hit < 0)
+//		return ;
 	if (ray->side == 0)
 	ray->perpWallDist = (ray->mapX - game->player.p_x / TILE_SIZE
     	+ (1 - ray->stepX) / 2) / ray->rayDirX;
@@ -149,30 +162,31 @@ void	calculate_wall(t_ray *ray, t_game *game)
 	if (ray->drawEnd >= HEIGHT)
     	ray->drawEnd = HEIGHT - 1;
 }
-
+void	move_ray(float *sideDist, float deltaDist, int *mappos, int mapstep)
+{
+	*sideDist += deltaDist;
+	*mappos += mapstep;
+}
 void	perform_dda(t_ray *ray, t_game *game)
 {
 	ray->hit = 0;
 	ray->side = 0;
-
 	while(ray->hit == 0)
 	{
-		if (ray->sideDistX < ray->sideDistY)
+		if (ray->sideDistX < ray->sideDistY) // Vamos a comprobar solo si hay pared avanzando en x o y, lo que sea más corto
 		{
-			ray->sideDistX += ray->deltaDistX;
-			ray->mapX += ray->stepX;
+			move_ray(&ray->sideDistX, ray->deltaDistX, &ray->mapX, ray->stepX);
 			ray->side = 0;
 		}
 		else
 		{
-			ray->sideDistY += ray->deltaDistY;
-			ray->mapY += ray->stepY;
+			move_ray(&ray->sideDistY, ray->deltaDistY, &ray->mapY, ray->stepY);
 			ray->side = 1;
 		}
-		if (ray->mapX < 0 || ray->mapY < 0 || ray->mapY >= game->map.total_column 
-			|| ray->mapX >= game->map.total_row)
+		if (ray->mapX < 0 || ray->mapY < 0 || ray->mapY >= game->map.total_row 
+			|| ray->mapX >= game->map.total_column)
 		{
-			ray->hit = 1;
+			ray->hit = -1;
 			return;
 		}
 		if (game->map.grid[ray->mapY][ray->mapX] == '1')
