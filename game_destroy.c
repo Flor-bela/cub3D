@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_destroy.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
+/*   Updated: 2026/05/15 15:53:35 by medel-ca         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	free_map(t_game *game)
@@ -9,7 +21,7 @@ void	free_map(t_game *game)
 	free(game->map.text_path[SO]);
 	free(game->map.text_path[WE]);
 	free(game->map.text_path[EA]);
-	if(game->map.grid)
+	if (game->map.grid)
 	{
 		while (game->map.grid[i]) // Terminar grid en NULL
 		{
@@ -20,40 +32,41 @@ void	free_map(t_game *game)
 	}
 }
 
-static void game_destroy_images(t_game *game)
+static void	game_destroy_images(t_game *game)
 {
-    int i;
+	int	i;
 
-    if (!game || !game->mlx)
-        return;
-    i = 0;
-    while (i < 4)
-    {
-        if (game->render.textures[i].img)
-        {
-            mlx_destroy_image(game->mlx, game->render.textures[i].img);
-            game->render.textures[i].img = NULL;
-        }
-        i++;
-    }
+	if (!game || !game->mlx)
+		return ;
+	i = 0;
+	while (i < 4)
+	{
+		if (game->render.textures[i].img)
+		{
+			mlx_destroy_image(game->mlx, game->render.textures[i].img);
+			game->render.textures[i].img = NULL;
+		}
+		i++;
+	}
+	mlx_destroy_image(game->mlx, game->render.screen.img);
 }
 
-void game_destroy(t_game *game, char *errmsg, int errnum)
+void	game_destroy(t_game *game, char *errmsg, int errnum)
 {
-    if (game)
-    {
-        game_destroy_images(game);
-        if (game->mlx)
-        {
-            if (game->win)
-                mlx_destroy_window(game->mlx, game->win);
-            mlx_destroy_display(game->mlx);
-            free(game->mlx);
-        }
-        free_map(game);
-        free(game);
-    }
-    die(errmsg, errnum);
+	if (game)
+	{
+		game_destroy_images(game);
+		if (game->mlx)
+		{
+			if (game->win)
+				mlx_destroy_window(game->mlx, game->win);
+			mlx_destroy_display(game->mlx);
+			free(game->mlx);
+		}
+		free_map(game);
+		free(game);
+	}
+	die(errmsg, errnum);
 }
 
 void	die(char *errmsg, int errnum)

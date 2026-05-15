@@ -1,37 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/15 15:58:23 by medel-ca          #+#    #+#             */
+/*   Updated: 2026/05/15 17:54:49 by medel-ca         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-int	key_press(int keycode, t_player *player)
+int	esc_game(int keysym, void *param)
 {
-	if(keycode == W)
-		player->key_up = true;
-	if(keycode == S)
-		player->key_down = true;
-	if(keycode == A)
-		player->key_left = true;
-	if(keycode == D)
-		player->key_right = true;
-	if(keycode == LEFT)
-		player->left_rotate = true;
-	if(keycode == RIGHT)
-		player->right_rotate = true;
-	return 0;
+	t_game	*game;
+
+	game = (t_game *)param;
+	if (keysym == 65307)
+		close_game(game);
+	return (0);
 }
 
-int	key_release(int keycode, t_player *player)
+int	key_press(int keycode, t_game *game)
 {
-	if(keycode == W)
+	t_player *player = &game->player;
+	if (keycode == W)
+		player->key_up = true;
+	if (keycode == S)
+		player->key_down = true;
+	if (keycode == A)
+		player->key_left = true;
+	if (keycode == D)
+		player->key_right = true;
+	if (keycode == LEFT)
+		player->left_rotate = true;
+	if (keycode == RIGHT)
+		player->right_rotate = true;
+	return (0);
+}
+
+int	key_release(int keycode, t_game *game)
+{
+	t_player *player = &game->player;
+	if (keycode == W)
 		player->key_up = false;
-	if(keycode == S)
+	if (keycode == S)
 		player->key_down = false;
-	if(keycode == A)
+	if (keycode == A)
 		player->key_left = false;
-	if(keycode == D)
+	if (keycode == D)
 		player->key_right = false;
-	if(keycode == LEFT)
+	if (keycode == LEFT)
 		player->left_rotate = false;
-	if(keycode == RIGHT)
+	if (keycode == RIGHT)
 		player->right_rotate = false;
-	return 0;
+	if (keycode == 65307)
+		close_game(game);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -53,8 +79,8 @@ int	main(int ac, char **av)
 	parse_file(fd, game);
 	debug(game);
 	start_game(game);
-	mlx_hook(game->win, 2, 1L << 0, key_press, &game->player);
-	mlx_hook(game->win, 3, 1L << 1, key_release, &game->player);
+	mlx_hook(game->win, 2, 1L << 0, key_press, game);
+	mlx_hook(game->win, 3, 1L << 1, key_release, game);
 	mlx_hook(game->win, 17, 0, close_game, game);
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);

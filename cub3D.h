@@ -5,6 +5,9 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 
+# define SPEED 5
+# define A_SPEED 0.1
+
 # define W 119
 # define A 97
 # define S 115
@@ -144,21 +147,28 @@ int		check_characters_map(t_game *game);
 int		check_map_enclosed(t_game *game);
 
 void	player_direction(t_game *game);
+void	move_player(t_player *player, char **grid);
 
 //window
 void	start_game(t_game *game);
-int		handle_input(int keysym, void *param);
 int		close_game(t_game *game);
-void	render_game(t_game *game);
 void	game_destroy(t_game *game, char *errmsg, int errnum);
 void	die(char *errmsg, int errnum);
+
+//RayCast
+void	cast_ray(t_game *game, float ray_angle, int i);
+void	init_rayy(t_ray *ray, t_game *game, float ray_angle);
+void	init_rayx(t_ray *ray, t_game *game, float ray_angle);
+void	move_ray(float *sideDist, float deltaDist, int *mappos, int mapstep);
+void	draw_background(t_game *game);
+void	draw_wall(t_ray *ray, t_game *game, int i);
+void	put_pixel(int x, int y, int color, t_game *game);
 
 //error utils
 void	errormsg(char *errmsg, int errnum);
 
 //utils
 int		ft_isspace(char c);
-char	*ft_strcpy(char *str, int size);
 char	*ft_strjoin_free(char *s1, char *s2);
 int		empty_line(char *line);
 int		ft_format(char *file);

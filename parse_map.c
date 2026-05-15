@@ -16,8 +16,8 @@ int	check_characters_map(t_game *game)
 			if (game->map.grid[i][j] == 'N' || game->map.grid[i][j] == 'S'
 				 || game->map.grid[i][j] == 'W' || game->map.grid[i][j] == 'E')
 			{
-				game->player.p_x = j;
-				game->player.p_y = i;
+				game->player.p_x = j * TILE_SIZE;
+				game->player.p_y = i * TILE_SIZE;
 				game->player.pov = game->map.grid[i][j];
 				flag++;
 				j++;

@@ -9,5 +9,5 @@ void	debug(t_game *game)
 	printf("Floor: %d - %d - %d\n", game->map.floor[0], game->map.floor[1], game->map.floor[2]);
 	printf("Ceiling: %d - %d - %d\n", game->map.ceiling[0], game->map.ceiling[1], game->map.ceiling[2]);
 	printf("Total rows: %d, Total colums: %d\n", game->map.total_row, game->map.total_column);
-	printf("Posición del jugador: %f, %f, mirando hacia %c\n", game->player.dir_x, game->player.dir_y, game->player.pov);
+	printf("Posición del jugador: %f, %f, mirando hacia %c\n", game->player.p_x / TILE_SIZE, game->player.p_y / TILE_SIZE, game->player.pov);
 }

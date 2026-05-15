@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_file.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
+/*   Updated: 2026/05/15 15:52:18 by medel-ca         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 int	parse_map(char **line, t_game *game, int fd)
@@ -62,8 +74,8 @@ int	parse_texture(char **line, t_game *game, int fd)
 		}
 		if (!is_texture_line(*line))
 			break ;
-		if (!extract_texture(*line, game)){
-			return (0);}
+		if (!extract_texture(*line, game))
+			return (0);
 		free(*line);
 		*line = get_next_line(fd);
 	}
@@ -79,7 +91,7 @@ int	parse_file(int fd, t_game *game)
 	line = NULL;
 	if (!parse_texture(&line, game, fd)) // Saltar líneas vacías, comprobar que no se repiten ni faltan y tienen el formato correcto
 	{
-		close(fd);		
+		close(fd);
 		free(line);
 		game_destroy(game, "The textures are not correct", errno);
 	}

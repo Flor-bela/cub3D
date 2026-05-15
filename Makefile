@@ -16,7 +16,7 @@ MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 SOURCES =	main.c \
 			check_file.c \
 			error_utils.c \
-			read_file.c \
+			get_next_line.c \
 			init.c \
 			utils.c \
 			parse_color.c \
@@ -24,9 +24,12 @@ SOURCES =	main.c \
 			parse_map.c \
 			debug.c \
 			start_game.c \
-			handle_input.c \
+			game_loop.c \
+			game_loop_utils.c \
 			game_destroy.c \
 			player_direction.c \
+			move_player.c \
+			cast_ray.c
 			
 
 OBJ_DIR = obj
