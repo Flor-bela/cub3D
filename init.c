@@ -1,89 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/15 15:58:18 by medel-ca          #+#    #+#             */
+/*   Updated: 2026/05/17 14:50:45 by fda-roch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-t_map	*init_map(void)
+void	init_player(t_player *player)
 {
-	t_map	*map;
-	int		i;
-
-	map = (t_map *)malloc(sizeof(t_map));
-	if (map == 0)
-		errormsg("base_init(): malloc()", errno);
-	map->textures.no = NULL;
-	map->textures.so = NULL;
-	map->textures.we = NULL;
-	map->textures.ea = NULL;
-	i = 0;
-	while (i < 3)
-	{
-		map->colors.ceiling[i] = -1;
-		map->colors.floor[i] = -1;
-		i++;
-	}
-	map->grid = NULL;
-	map->total_rows = 0;
-	map->max_cols = 0;
-	return (map);
+	player->p_x = 0;
+	player->p_y = 0;
+	player->pov = 0;
+	player->key_down = false;
+	player->key_left = false;
+	player->key_right = false;
+	player->key_up = false;
+	player->left_rotate = false;
+	player->right_rotate = false;
 }
 
-void	destroy_map(t_map *map)
+void	init_textures(t_game *game)
 {
 	int	i;
 
 	i = 0;
-	free(map->textures.no);
-	free(map->textures.so);
-	free(map->textures.we);
-	free(map->textures.ea);
-	if(map->grid)
+	while (i < 4)
 	{
-		while(i < map->total_rows)
-		{
-			free(map->grid[i]);
-			i++;
-		}
-		free(map->grid);
+		game->map.text_path[i] = NULL;
+		game->render.textures[i].img = NULL;
+		i++;
 	}
-	free(map);
+	i = 0;
+	while (i < 3)
+	{
+		game->map.ceiling[i] = -1;
+		game->map.floor[i] = -1;
+		i++;
+	}
 }
 
-static void	texture_load(t_map *map, void **img, char *path)
+t_game	*init_game(void)
+{
+	t_game	*game;
+
+	game = (t_game *)ft_calloc(1, sizeof(t_game));
+	if (!game)
+		die("init_game(): malloc()", errno);
+	game->mlx = NULL;
+	game->win = NULL;
+	game->render.screen.img = NULL;
+	game->map.grid = NULL;
+	init_textures(game);
+	game->map.total_row = 0; //necesario?
+	game->map.total_column = 0; //necesario?
+	init_player(&game->player);
+	return (game);
+}
+
+static void	texture_load(t_game *game, t_img *texture, char *path)
 {
 	int	len;
 
-	len = TILE_LEN;
-	*img = mlx_xpm_file_to_image(map->mlx, path, &len, &len);
-	if (*img == 0)
-		errormsg("texture_init(): can't load texture", errno);
+	len = TILE_SIZE;
+	texture->img = mlx_xpm_file_to_image(game->mlx, path, &len, &len);
+	if (texture->img == 0)
+		game_destroy(game, "texture_init(): can't load texture", errno);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp,
+			&texture->line_len, &texture->endian);
 }
 
-void	img_init(t_map *map)
+void	img_init(t_game *game)
 {
-	map->img = (t_img *)malloc(sizeof(t_img));
-//	if (!map->img)
-//		base_destroy(map, "img_init(): malloc()", errno);
-	map->img->no = 0;
-	map->img->so = 0;
-	map->img->we = 0;
-	map->img->ea = 0;
-	texture_load(map, &map->img->no, map->textures.no);
-	texture_load(map, &map->img->so, map->textures.so);
-	texture_load(map, &map->img->we, map->textures.we);
-	texture_load(map, &map->img->ea, map->textures.ea);
-}
+	int	i;
 
-/*void	start_game(t_map *map)
-{
-	map->win_width = map->map->width * TILE_LEN;
-	map->win_height = map->map->height * TILE_LEN;
-	map->mlx = mlx_init();
-	if (map->mlx == NULL)
-		exit (1);
-	map->win = mlx_new_window(map->mlx, map->win_width,
-			map->win_height, "This is Fine");
-	if (map->win == NULL)
+	i = 0;
+	while (i < 4)
 	{
-		mlx_destroy_display(base->mlx);
-		free(base->mlx);
-		exit (1);
+		texture_load(game, &game->render.textures[i], game->map.text_path[i]);
+		i++;
 	}
-}*/
+	game->render.screen.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->render.screen.addr = mlx_get_data_addr(game->render.screen.img,
+			&game->render.screen.bpp, &game->render.screen.line_len,
+			&game->render.screen.endian);
+}
