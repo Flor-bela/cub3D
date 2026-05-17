@@ -3,8 +3,8 @@ SO ./assets/wall.xpm
 WE ./assets/wall0.xpm
 EA ./assets/c_door.xpm
 
-F 255,50,255
-C 0,0,0
+F 180,170,150
+C 235,235,240
 
 
 1111111111111111111111111

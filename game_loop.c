@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 17:32:00 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/17 17:40:50 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ void    init_mini_map(t_game *game)
 {
 	int	y = 0;
 	int	x;
-	int	tile = 20;
+	int	tile = 10; // hacner con que esta dimension cambie si presionamos N o M!!!
 	int	colour;
 
 	if (game->mini_map.img)
@@ -33,20 +33,20 @@ void    init_mini_map(t_game *game)
 			{
 				while (x < game->map.total_column)
 				{
-					draw_square(game, x * tile, y * tile, tile, 0x808080);
+					draw_square(game, x * tile, y * tile, tile, 0x2C3E50);
 					x++;
 				}
 				break ;
 			}
 			
 			if (game->map.grid[y][x] == '1')
-				colour = 0xFF0000;
+				colour = 0x555555;
 			else if (game->map.grid[y][x] == '0')
-				colour = 0xFFFFFF; 
+				colour = 0xF5F5DC;
 			else if (game->map.grid[y][x] == 'N' || game->map.grid[y][x] == 'S' || game->map.grid[y][x] == 'W' || game->map.grid[y][x] == 'E')
-				colour = 0x00FF00;
+				colour = 0xE05A47;
 			else
-				colour = 0x808080;
+				colour = 0x2C3E50;
 				
 			draw_square(game, x * tile, y * tile, tile, colour);
 			x++;
@@ -81,6 +81,6 @@ int	game_loop(t_game *game)
 	
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->render.screen.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20); //en el rincón izquierdo
+	mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 0, 0); //en el rincón izquierdo
 	return (0);
 }
