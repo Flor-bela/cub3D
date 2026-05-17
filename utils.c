@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:09:51 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 16:11:21 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/17 14:06:07 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,18 @@ int	ft_format(char *file)
 	if (file[len] == 'b' && file[len - 1] == 'u'
 		&& file[len - 2] == 'c' && file[len - 3] == '.')
 		return (1);
+	return (0);
+}
+
+int	new_line(char *line)
+{
+	if (!line)
+		return (0);
+	if (*line == '\n')
+	{
+		line++;
+		return (1);
+	}
 	return (0);
 }
 

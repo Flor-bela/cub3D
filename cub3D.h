@@ -176,5 +176,6 @@ char	*ft_strjoin_free(char *s1, char *s2);
 int		empty_line(char *line);
 int		ft_format(char *file);
 int		game_loop(t_game *game);
+int	new_line(char *line);
 
 #endif

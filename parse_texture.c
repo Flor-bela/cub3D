@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:07:45 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 16:07:45 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/17 14:02:56 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	all_textures_found(t_game *game)
 {
-	printf("Todas las texturas guardadsa?\n");
 	return (game->map.text_path[NO]
 		&& game->map.text_path[SO]
 		&& game->map.text_path[WE]
