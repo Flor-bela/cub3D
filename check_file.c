@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 15:52:18 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/17 14:13:45 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 int	parse_map(char **line, t_game *game, int fd)
 {
 	char	*temp;
-
 	temp = ft_calloc(1, 1);
-	while (*line && empty_line(*line))
+	while (*line && new_line(*line))
 	{
 		free(*line);
 		*line = get_next_line(fd);
@@ -43,6 +42,8 @@ int	parse_color(char **line, t_game *game, int fd)
 {
 	while (*line)
 	{
+		if(all_colors_found(game))
+			return (1);
 		if (empty_line(*line))
 		{
 			free(*line);

@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 17:35:41 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/17 14:52:22 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	draw_wall(t_ray *ray, t_game *game, int i)
 	int	y;
 
 	if (ray->side == 1)
-		color = 0xAAAAAA; // más oscuro
+		color = game->render.textures[0].addr[]; // más oscuro
 	else
 		color = 0xFFFFFF;
 	y = ray->drawStart;
@@ -56,12 +56,12 @@ void	perform_dda(t_ray *ray, t_game *game)
 		if (ray->sideDistX < ray->sideDistY) // Vamos a comprobar solo si hay pared avanzando en x o y, lo que sea más corto
 		{
 			move_ray(&ray->sideDistX, ray->deltaDistX, &ray->mapX, ray->stepX);
-			ray->side = 0;
+			ray->side = 0; // pared vertical
 		}
 		else
 		{
 			move_ray(&ray->sideDistY, ray->deltaDistY, &ray->mapY, ray->stepY);
-			ray->side = 1;
+			ray->side = 1; // pared horizontal
 		}
 		if (ray->mapX < 0 || ray->mapY < 0 || ray->mapY >= game->map.total_row
 			|| ray->mapX >= game->map.total_column)
