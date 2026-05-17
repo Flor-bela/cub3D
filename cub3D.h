@@ -160,8 +160,10 @@ void	game_destroy(t_game *game, char *errmsg, int errnum);
 void	die(char *errmsg, int errnum);
 
 //mini-map
-void	ft_mlx_pixel_put(t_img *img, int x, int y, int colour);
-void	draw_square(t_img *img, int x, int y, int size, int colour);
+void	init_mini_map(t_game *game);
+void	ft_mlx_pixel_put(t_game *game, int x, int y, int colour);
+void	draw_square(t_game *game, int x, int y, int size, int colour);
+
 
 //RayCast
 void	cast_ray(t_game *game, float ray_angle, int i);
@@ -181,6 +183,6 @@ char	*ft_strjoin_free(char *s1, char *s2);
 int		empty_line(char *line);
 int		ft_format(char *file);
 int		game_loop(t_game *game);
-int	new_line(char *line);
+int		new_line(char *line);
 
 #endif
