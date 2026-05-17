@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 17:21:18 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/17 17:32:00 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ int	game_loop(t_game *game)
 	{
 		cast_ray(game, start_angle, i);
 		start_angle += step;
+		// mini - mapa rayos aqui?????
 		i++;
 	}
+	init_mini_map(game);
+	
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->render.screen.img, 0, 0);
-	init_mini_map(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20); //en el rincón izquierdo
 	return (0);
 }
