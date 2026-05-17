@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:18 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 14:50:45 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/17 15:36:19 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,38 @@ void	init_textures(t_game *game)
 		i++;
 	}
 }
+/* 
+static void	init_mini_map(t_game *game)
+{
+	int		y = 0; // rows
+	int		x; // cols
+	int		tile = 10; // Tamaño de cada cuadro en el minimapa
+	int		colour;
+
+	game->mini_map.img = mlx_new_image(game->mlx, game->map.total_column * tile, game->map.total_row * tile);
+	game->mini_map.addr = mlx_get_data_addr(game->mini_map.img, &game->mini_map.bpp, &game->mini_map.line_len, &game->mini_map.endian);
+
+	while (y < game->map.total_row)
+	{
+		x = 0;
+		while (x < game->map.total_column)
+		{
+			if (game->map.grid[y][x] == '1')
+				colour = 0x000000;
+			else if (game->map.grid[y][x] == '0')
+				colour = 0xFFFFFF; 
+			else if (game->map.grid[y][x] == 'N' || game->map.grid[y][x] == 'S' || game->map.grid[y][x] == 'W' || game->map.grid[y][x] == 'E')
+				colour = 0x00FF00; // verde
+			else
+				colour = 0x808080; // gris?? para los espacios sin nada
+			draw_square(game->mini_map.img, x * tile, y * tile, tile, colour);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20); //en el rincón izquierdo
+	//destroy image at the end too!!!
+} */
 
 t_game	*init_game(void)
 {
@@ -56,6 +88,7 @@ t_game	*init_game(void)
 	game->win = NULL;
 	game->render.screen.img = NULL;
 	game->map.grid = NULL;
+	//init_mini_map(game);
 	init_textures(game);
 	game->map.total_row = 0; //necesario?
 	game->map.total_column = 0; //necesario?
@@ -90,3 +123,4 @@ void	img_init(t_game *game)
 			&game->render.screen.bpp, &game->render.screen.line_len,
 			&game->render.screen.endian);
 }
+

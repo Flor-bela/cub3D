@@ -29,7 +29,8 @@ SOURCES =	main.c \
 			game_destroy.c \
 			player_direction.c \
 			move_player.c \
-			cast_ray.c
+			cast_ray.c \
+			mini_map.c
 			
 
 OBJ_DIR = obj

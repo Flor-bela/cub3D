@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 14:52:22 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/17 15:32:18 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	draw_wall(t_ray *ray, t_game *game, int i)
 	int	y;
 
 	if (ray->side == 1)
-		color = game->render.textures[0].addr[]; // más oscuro
+		color = 0x000000;
 	else
 		color = 0xFFFFFF;
 	y = ray->drawStart;
