@@ -41,6 +41,18 @@ enum e_tex
 	EA
 };
 
+enum e_wall
+{
+	VER,
+	HOR,
+};
+enum e_step
+{
+	UP = -1,
+	DOWN = 1,
+	L = -1,
+	R = 1,
+};
 typedef struct s_ray
 {
     float rayDirX;
@@ -161,7 +173,7 @@ void	init_rayy(t_ray *ray, t_game *game, float ray_angle);
 void	init_rayx(t_ray *ray, t_game *game, float ray_angle);
 void	move_ray(float *sideDist, float deltaDist, int *mappos, int mapstep);
 void	draw_background(t_game *game);
-void	draw_wall(t_ray *ray, t_game *game, int i);
+void	draw_wall(t_ray *ray, t_game *game, float angle, int i);
 void	put_pixel(int x, int y, int color, t_game *game);
 
 //error utils

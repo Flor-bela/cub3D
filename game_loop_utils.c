@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:16:48 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 17:38:55 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:39:40 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	init_rayx(t_ray *ray, t_game *game, float ray_angle)
 	else
 		ray->deltaDistX = fabs(1 / ray->rayDirX); // fabs: valor absoluto
 	if (ray->rayDirX < 0) // dirección del salto
-		ray->stepX = -1; // Izquierda
+		ray->stepX = L; // Izquierda
 	else
-		ray->stepX = 1; // Derecha
+		ray->stepX = R; // Derecha
 	if (ray->rayDirX < 0) // Distancia hasta la primera linea vertical (hacia izda.)
 	{
 		ray->sideDistX = (game->player.p_x / TILE_SIZE - ray->mapX)
@@ -87,9 +87,9 @@ void	init_rayy(t_ray *ray, t_game *game, float ray_angle)
 	else
 		ray->deltaDistY = fabs(1 / ray->rayDirY);
 	if (ray->rayDirY < 0)
-		ray->stepY = -1; // Arriba
+		ray->stepY = UP; // Arriba
 	else
-		ray->stepY = 1; // Abajo
+		ray->stepY = DOWN; // Abajo
 	if (ray->rayDirY < 0) // Distancia hasta la primera linea horizontal (hacia arriba)
 	{
 		ray->sideDistY = (game->player.p_y / TILE_SIZE - ray->mapY)
