@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 17:40:50 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/18 17:51:31 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ void    init_mini_map(t_game *game)
 {
 	int	y = 0;
 	int	x;
-	int	tile = 10; // hacner con que esta dimension cambie si presionamos N o M!!!
+	int	tile = 10; // hacer que esta dimension cambie si presionamos N o M!!!
 	int	colour;
 
 	if (game->mini_map.img)
@@ -41,10 +41,10 @@ void    init_mini_map(t_game *game)
 			
 			if (game->map.grid[y][x] == '1')
 				colour = 0x555555;
-			else if (game->map.grid[y][x] == '0')
-				colour = 0xF5F5DC;
-			else if (game->map.grid[y][x] == 'N' || game->map.grid[y][x] == 'S' || game->map.grid[y][x] == 'W' || game->map.grid[y][x] == 'E')
-				colour = 0xE05A47;
+			else if (game->map.grid[y][x] == '0' || game->map.grid[y][x] == 'N'
+				|| game->map.grid[y][x] == 'S' || game->map.grid[y][x] == 'W'
+				|| game->map.grid[y][x] == 'E')
+				colour = 0xF5F5DC; // todo en beige
 			else
 				colour = 0x2C3E50;
 				
@@ -53,6 +53,16 @@ void    init_mini_map(t_game *game)
 		}
 		y++;
 	}
+	
+	int	player_tile;
+	int player_pixel_x;
+	int player_pixel_y;
+	
+	player_tile = 10;
+	player_pixel_x = (int)((game->player.p_x / TILE_SIZE) * tile) - (player_tile / 2); //player_tile / 2 para poder "centrar" el punto (podemos no hacerlo)
+	player_pixel_y = (int)((game->player.p_y / TILE_SIZE) * tile) - (player_tile / 2);
+	
+	draw_square(game, player_pixel_x, player_pixel_y, player_tile, 0xE05A47);
 }
 
 int	game_loop(t_game *game)

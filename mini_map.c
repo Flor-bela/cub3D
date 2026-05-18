@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 15:02:15 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/05/17 17:11:42 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/18 17:29:21 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_mlx_pixel_put(t_game *game, int x, int y, int colour)
 {
 	char	*dst;
 
-	if (x < 0 || y < 0 || x >= (game->map.total_column * 10) || y >= (game->map.total_row * 10))
+	if (x < 0 || y < 0 || x >= (game->map.total_column * 10) || y >= (game->map.total_row * 10)) // por 10 que es el numero de tiles cada grid ahora mismo....
 	return ;
 
 	dst = game->mini_map.addr + (y * game->mini_map.line_len + x * (game->mini_map.bpp / 8)); // por 8 para convertirlo en bits
