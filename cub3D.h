@@ -161,9 +161,9 @@ void	game_destroy(t_game *game, char *errmsg, int errnum);
 void	die(char *errmsg, int errnum);
 
 //mini-map
-void	init_mini_map(t_game *game);
-void	ft_mlx_pixel_put(t_game *game, int x, int y, int colour);
-void	draw_square(t_game *game, int x, int y, int size, int colour);
+void	draw_mini_map(t_game *game);
+void	ft_mlx_pixel_put(t_game *game, int x, int y, int color);
+void	draw_square(t_game *game, int x, int y, int color);
 
 
 //RayCast
