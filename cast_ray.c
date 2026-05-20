@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 15:32:18 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:27:12 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,5 @@ void	cast_ray(t_game *game, float ray_angle, int i)
 	perform_dda(&ray, game);
 	calculate_wall(&ray, game);
 	draw_wall(&ray, game, i);
+	draw_ray_on_minimap(game, &ray, ray_angle);
 }

@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/18 18:40:27 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:30:16 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	game_loop(t_game *game)
 	start_angle = player->p_angle - fov / 2;
 	step = fov / WIDTH;
 	i = 0;
+	draw_minimap(game);
 	while (i < WIDTH)
 	{
 		cast_ray(game, start_angle, i);
 		start_angle += step;
-		// mini - mapa rayos aqui?????
 		i++;
 	}
-	draw_mini_map(game);
+	
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->render.screen.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win,

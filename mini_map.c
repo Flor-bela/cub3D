@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 15:02:15 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/05/18 18:43:05 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/20 19:10:25 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ void	draw_square(t_game *game, int x, int y, int color)
 	}
 }
 
-void	draw_mini_map(t_game *game)
+void	draw_minimap(t_game *game)
 {
-	int	y = 0;
+	int	y;
 	int	x;
 	int	color;
 
+	y = 0;
 	if (game->mini_map.img)
 		mlx_destroy_image(game->mlx, game->mini_map.img);
 
@@ -86,7 +87,30 @@ void	draw_mini_map(t_game *game)
 	// Player
 	int player_pixel_x;
 	int player_pixel_y;
-	player_pixel_x = (int)((game->player.p_x / TILE_SIZE) * TILE_MINI) - (TILE_MINI / 2); //tile / 2 para poder "centrar" el punto
+	
+	player_pixel_x = (int)((game->player.p_x / TILE_SIZE) * TILE_MINI) - (TILE_MINI / 2);
 	player_pixel_y = (int)((game->player.p_y / TILE_SIZE) * TILE_MINI) - (TILE_MINI / 2);
 	draw_square(game, player_pixel_x, player_pixel_y, 0xE05A47);
+}
+
+void	draw_ray_on_minimap(t_game *game, t_ray *ray, float ray_angle)
+{
+	float	real_dist;
+	float	current_x;
+	float	current_y;
+	int		i;
+	int		line_length;
+
+	i = 0;
+	real_dist = ray->perpWallDist / cos(ray_angle - game->player.p_angle);
+	line_length = (int)(real_dist * TILE_MINI);
+	current_x = (game->player.p_x / TILE_SIZE) * TILE_MINI;
+	current_y = (game->player.p_y / TILE_SIZE) * TILE_MINI;
+	while (i < line_length)
+	{
+		ft_mlx_pixel_put(game, (int)current_x, (int)current_y, 0x00FF00);
+		current_x += cos(ray_angle);
+		current_y += sin(ray_angle);
+		i++;
+	}
 }

@@ -161,10 +161,10 @@ void	game_destroy(t_game *game, char *errmsg, int errnum);
 void	die(char *errmsg, int errnum);
 
 //mini-map
-void	draw_mini_map(t_game *game);
 void	ft_mlx_pixel_put(t_game *game, int x, int y, int color);
 void	draw_square(t_game *game, int x, int y, int color);
-
+void	draw_minimap(t_game *game);
+void	draw_ray_on_minimap(t_game *game, t_ray *ray, float ray_angle);
 
 //RayCast
 void	cast_ray(t_game *game, float ray_angle, int i);
