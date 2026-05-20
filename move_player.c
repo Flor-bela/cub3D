@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:15:08 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 17:08:52 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/19 12:26:17 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ void	move_player(t_player *player, char **grid)
 {
 	float	c_angle;
 	float	s_angle;
-
+	
 	rotate_player(player);
 	c_angle = cos(player->p_angle);
 	s_angle = sin(player->p_angle);
 	if (player->key_up && valid_move(*player, c_angle, s_angle, grid))
 		move(player, c_angle, s_angle);
-	else if (player->key_down && valid_move(*player, -c_angle, -s_angle, grid))
+	if (player->key_down && valid_move(*player, -c_angle, -s_angle, grid))
 		move(player, -c_angle, -s_angle);
-	else if (player->key_left && valid_move(*player, s_angle, -c_angle, grid))
+	if (player->key_left && valid_move(*player, s_angle, -c_angle, grid))
 		move(player, s_angle, -c_angle);
-	else if (player->key_right && valid_move(*player, -s_angle, c_angle, grid))
+	if (player->key_right && valid_move(*player, -s_angle, c_angle, grid))
 		move(player, -s_angle, c_angle);
 }

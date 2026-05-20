@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:18 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 17:39:24 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/20 10:08:59 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ t_game	*init_game(void)
 
 static void	texture_load(t_game *game, t_img *texture, char *path)
 {
-	int	len;
-
-	len = TILE_SIZE;
-	texture->img = mlx_xpm_file_to_image(game->mlx, path, &len, &len);
+	texture->img = mlx_xpm_file_to_image(game->mlx, path, &texture->width, &texture->height);
 	if (texture->img == 0)
 		game_destroy(game, "texture_init(): can't load texture", errno);
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp,

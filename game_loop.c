@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 16:17:53 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/19 16:51:07 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	game_loop(t_game *game)
 	start_angle = player->p_angle - fov / 2;
 	step = fov / WIDTH;
 	i = 0;
-	draw_background(game);
 	while (i < WIDTH)
 	{
 		cast_ray(game, start_angle, i);

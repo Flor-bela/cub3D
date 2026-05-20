@@ -41,36 +41,34 @@ enum e_tex
 	EA
 };
 
-enum e_wall
+typedef struct s_texcalc
 {
-	VER,
-	HOR,
-};
-enum e_step
-{
-	UP = -1,
-	DOWN = 1,
-	L = -1,
-	R = 1,
-};
+    double  wallx;
+    double  step;
+    double  texpos;
+    int     texx;
+    int     texy;
+    int     offset;
+} t_texcalc;
+
 typedef struct s_ray
 {
-    float rayDirX;
-    float rayDirY;
-    int mapX;
-    int mapY;
-    float sideDistX;
-    float sideDistY;
-    float deltaDistX;
-	float deltaDistY;
-    int stepX;
-    int stepY;
-    int side;
-	int hit;
-    float perpWallDist;
-	int	lineHeight;
-	int drawStart;
-	int drawEnd;
+    float	rayDirX;
+    float	rayDirY;
+    int		mapX;
+    int		mapY;
+    float	sideDistX;
+    float	sideDistY;
+    float	deltaDistX;
+	float	deltaDistY;
+    int		stepX;
+    int		stepY;
+    int		side;
+	int		hit;
+    float	perpWallDist;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
 
 } t_ray;
 
@@ -92,8 +90,6 @@ typedef struct s_player
 	char	pov;
 	float	dir_x;
 	float	dir_y;
-	float	plane_x;
-	float	plane_y;
 	float	p_angle;
 	bool	key_up;
     bool	key_down;
@@ -172,9 +168,11 @@ void	cast_ray(t_game *game, float ray_angle, int i);
 void	init_rayy(t_ray *ray, t_game *game, float ray_angle);
 void	init_rayx(t_ray *ray, t_game *game, float ray_angle);
 void	move_ray(float *sideDist, float deltaDist, int *mappos, int mapstep);
-void	draw_background(t_game *game);
-void	draw_wall(t_ray *ray, t_game *game, float angle, int i);
+void	draw_wall(t_ray *ray, t_game *game, int i);
 void	put_pixel(int x, int y, int color, t_game *game);
+t_img	get_texture(t_game *game, t_ray *ray);
+void	buffer_backwround(int drawstart, int drawend, int i, t_game *game);
+void	buffer_wall(t_ray *ray, int i, t_game *game);
 
 //error utils
 void	errormsg(char *errmsg, int errnum);

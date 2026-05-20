@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CC = cc
+CC = gcc -g -O0
 FLAGS =  -Wall -Wextra -Werror -g
 
 MLX_DIR = minilibx-linux
@@ -29,7 +29,8 @@ SOURCES =	main.c \
 			game_destroy.c \
 			player_direction.c \
 			move_player.c \
-			cast_ray.c
+			cast_ray.c \
+			cast_ray_utils.c
 			
 
 OBJ_DIR = obj

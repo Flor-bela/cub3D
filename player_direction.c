@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_direction.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:08:06 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/15 16:08:11 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/19 12:14:58 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,5 @@ void	player_direction(t_game *game)
 		game->player.dir_x = 1.0;
 		game->player.dir_y = 0.0;
 	}
-	game->player.plane_x = -game->player.dir_y * 0.66;
-	game->player.plane_y = game->player.dir_x * 0.66;
 	game->player.p_angle = atan2(game->player.dir_y, game->player.dir_x);
 }

@@ -3,92 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 17:55:58 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:48:31 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_img get_texture(t_game *game, t_ray *ray)
+void	debugray(t_ray ray, t_game *game, float ray_angle)
 {
-	if(ray->side == VER) // Vamos a cruzar 
-	{
-		if(ray->stepY == UP)
-			return (game->render.textures[NO]);
-		else
-			return (game->render.textures[SO]);
-	}
-	else
-	{
-		if(ray->stepX == L)
-			return (game->render.textures[WE]);
-		else
-			return (game->render.textures[EA]);
-	}
-}
-//NO FUNCIONA :)
-void	draw_wall(t_ray *ray, t_game *game, float angle, int i)
-{
-	int	color;
-	int	y;
-	int texy;
-	int texx;
-	t_img texture;
-	float wallx;
-
-	y = 0;
-	(void)angle;
-//	texture = get_texture(game, ray);
-	texture = game->render.textures[NO];
-	if(ray->side == VER)
-		wallx = game->player.p_y + ray->perpWallDist * ray->rayDirY;
-	else
-		wallx = game->player.p_x + ray->perpWallDist * ray->rayDirX;
-//	wallx /= 64.0;
-//	printf("Wallx %f\n", wallx);
-	wallx -= floor(wallx);
-//	printf("Wallx %f\n", wallx);
-	texx = (wallx * (32)); // las texturas que estoy usando son de 32x32
-	double step = 1.0 * 32 / ray->lineHeight; // paso para completar toda la línea
-	double texPos = (ray->drawStart - HEIGHT / 2 + ray->lineHeight / 2) * step; //
-	while(y < ray->drawStart)
-	{
-		put_pixel(i, y, game->map.c_color, game);
-		y++;
-	}
-	while(y < ray->drawEnd)
-	{
-		texy = (int)texPos & (32 - 1);
-		texPos += step;
-	//	printf("y: %d drawstart: %d lineHeight: %d texx: %d texy: %d offset: %d\n", y, ray->drawStart, ray->lineHeight, texx, texy, offset);
-		color = texture.addr[32 * texy + texx];
-		put_pixel(i, y, color, game);
-	//	sleep(1);
-		y++;
-	}
-	while (y < HEIGHT)
-	{
-		put_pixel(i, y, game->map.f_color, game);
-		y++;
-	}
+	printf("player: %f %f\n", game->player.p_x, game->player.p_y);
+	printf("ray hit: %d %d\n", ray.mapX, ray.mapY);
+	printf("Raydir: %f %f\n", ray.rayDirX, ray.rayDirY);
+	printf("Side distance: %f %f\n", ray.sideDistX, ray.sideDistY);
+	printf("Delta: %f %f\n", ray.deltaDistX, ray.deltaDistY);
+	printf("Step %d %d\n", ray.stepX, ray.stepY);
+	printf("angle diff: %f dist: %f line: %d\n", ray_angle - game->player.p_angle, ray.perpWallDist, ray.lineHeight);
+	printf("Perp wall distance: %f\n", ray.perpWallDist);
+	printf("Heigh: %d, Start: %d, End: %d\n", ray.lineHeight, ray.drawStart, ray.drawEnd);
 }
 
-void	calculate_wall(t_ray *ray, t_game *game)
+void	draw_wall(t_ray *ray, t_game *game, int i)
 {
-	if (ray->side == VER)
-		ray->perpWallDist = (ray->mapX - game->player.p_x / TILE_SIZE
-				+ (1 - ray->stepX) / 2) / ray->rayDirX;
-	else
-		ray->perpWallDist = (ray->mapY - game->player.p_y / TILE_SIZE
-				+ (1 - ray->stepY) / 2) / ray->rayDirY;
-	if (ray->perpWallDist < 0.0001)
-		ray->perpWallDist = 0.0001;
-	ray->drawStart = -(int)(HEIGHT / ray->perpWallDist) / 2 + (HEIGHT / 2);
-	ray->drawEnd = (int)(HEIGHT / ray->perpWallDist) / 2 + (HEIGHT / 2);
-	if (ray->drawStart < 0)
+	buffer_backwround(0, ray->drawStart, i, game); 
+	buffer_wall(ray, i, game);
+	buffer_backwround(ray->drawEnd, HEIGHT, i, game);
+	printf("side=%d mapX=%d mapY=%d rayDirX=%f rayDirY=%f\n",
+	ray->side, ray->mapX, ray->mapY, ray->rayDirX, ray->rayDirY);
+}
+
+void	calculate_wall(t_ray *ray, t_game *game, float ray_angle)
+{
+
+	if (ray->side == 0)  // cruza línea en vertical del grid | -> W|E <- | (E/W)
+		ray->perpWallDist = ray->sideDistX - ray->deltaDistX;
+	else // cruza una línea en horizontal del grid (N/S)
+		ray->perpWallDist = ray->sideDistY - ray->deltaDistY;
+	if (ray->perpWallDist < 0.1) // Si no ajustaba el tamaño cuando la pared está muy cerca la textura era muy grande y se colgaba el programa
+		ray->perpWallDist = 0.1; // Ahora se produce un "salto" en un punto cuando te alejas/acercas a una pared
+	ray->lineHeight = (int)(HEIGHT / (ray->perpWallDist
+				* cos(ray_angle - game->player.p_angle))); // ajuste de ojo de pez
+	if(ray->lineHeight > HEIGHT * 4) // límite para evitar paredes muy grandes
+		ray->lineHeight = HEIGHT * 4;
+	ray->drawStart = -(int)ray->lineHeight / 2 + (HEIGHT / 2);
+	ray->drawEnd = (int)ray->lineHeight / 2 + (HEIGHT / 2);
+	if (ray->drawEnd < 0) // límite para evitar pintar fuera de pantalla
 		ray->drawStart = 0;
 	if (ray->drawEnd >= HEIGHT)
 		ray->drawEnd = HEIGHT - 1;
@@ -103,12 +64,12 @@ void	perform_dda(t_ray *ray, t_game *game)
 		if (ray->sideDistX < ray->sideDistY) // Vamos a comprobar solo si hay pared avanzando en x o y, lo que sea más corto
 		{
 			move_ray(&ray->sideDistX, ray->deltaDistX, &ray->mapX, ray->stepX);
-			ray->side = VER; // pared vertical
+			ray->side = 0; // cruza línea en vertical del grid | -> W|E <- | (E/W)
 		}
 		else
 		{
 			move_ray(&ray->sideDistY, ray->deltaDistY, &ray->mapY, ray->stepY);
-			ray->side = HOR; // pared horizontal
+			ray->side = 1; // cruza una línea en horizontal del grid (N/S)
 		}
 		if (ray->mapX < 0 || ray->mapY < 0 || ray->mapY >= game->map.total_row
 			|| ray->mapX >= game->map.total_column)
@@ -133,6 +94,7 @@ void	cast_ray(t_game *game, float ray_angle, int i)
 
 	init_ray(&ray, game, ray_angle);
 	perform_dda(&ray, game);
-	calculate_wall(&ray, game);
-	draw_wall(&ray, game, ray_angle, i);
+	calculate_wall(&ray, game, ray_angle);
+	draw_wall(&ray, game, i);
+//	debugray(ray, game, ray_angle);
 }
