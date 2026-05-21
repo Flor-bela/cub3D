@@ -24,14 +24,14 @@ int	get_texx(t_player player, t_ray *ray, t_img texture)
 	int		texx;
 
 	if (ray->side == 0) // cruza línea en vertical del grid | -> W|E <- | (E/W) Tenemos que calcular a que altura de la pared ha caido (de 0 a n, en el eje y)
-		wallx = player.p_y + ray->perpWallDist * ray->rayDirY;
+		wallx = player.p_y + ray->perpWallDist * ray->rayDirY; // -> NO PUEDE DEPENDER DEL JUGADOR ???
 	else // cruza línea horizontal del grid. Tenemos que calcular en que parte de la pared ha caído (de 0 a n, en el eje x)
-		wallx = player.p_x + ray->perpWallDist * ray->rayDirX; 
+		wallx = player.p_x + ray->perpWallDist * ray->rayDirX;
 	wallx -= floor(wallx); // Nos quedamos la parte digital -> posición relativa al TILE en el que estamos
 	texx = (int)(wallx * (texture.width)); // Buscamos ese punto del TILE en la textura
-	if (ray->side == 0 && ray->stepX < 0) // Volteamos textura W
+	if (ray->side == 0 && ray->rayDirX < 0) // Volteamos textura W
 		texx = texture.width - texx - 1;
-	if (ray->side == 1 && ray->stepY > 0) // Volteamos textura S
+	if (ray->side == 1 && ray->rayDirY > 0) // Volteamos textura S
 		texx = texture.width - texx - 1;
 	return (texx);
 }
@@ -55,7 +55,6 @@ void	buffer_backwround(int start, int end, int i, t_game *game)
 
 void	buffer_wall(t_ray *ray, int i, t_game *game)
 {
-	int		y;
 	int		color;
 	t_img	texture;
 	t_texcalc tex;
@@ -63,19 +62,18 @@ void	buffer_wall(t_ray *ray, int i, t_game *game)
 	texture = get_texture(game, ray);
 	tex.texx = get_texx(game->player, ray, texture); // Punto variable en la textura, ejemplo: 0,0 0,1 0,2 ... tenemos que calcular la x. 
 	tex.step = (double)texture.height / ray->lineHeight; // paso para completar toda la línea
-	tex.texpos = 0; // Posición en la textura al empezar a dibujar (float) Límite superior
-	y = ray->drawStart;
-	while (y < ray->drawEnd)
+	tex.texpos = (ray->drawStart - HEIGHT / 2 + ray->lineHeight / 2) * tex.step; // Posición en la textura al empezar a dibujar (float) Límite superior
+	while (ray->drawStart < ray->drawEnd)
 	{
-		tex.texy = (int)tex.texpos; // Nos quedamos con la parte entera (tenemos que coger un pixel entero)
+		tex.texy = (int)tex.texpos & (TILE_SIZE - 1); // Nos quedamos con la parte entera (tenemos que coger un pixel entero)
+		tex.texpos += tex.step;
 		if (tex.texy < 0) // Límites para no salirnos de la textura
 			tex.texy = 0;
 		if (tex.texy >= texture.height)
 			tex.texy = texture.height - 1;
 		tex.offset = (tex.texy * texture.line_len + tex.texx * (texture.bpp / 8)); // Punto en la cadena addr donde está el pixel que necesitamos
 		color = *(int *)(texture.addr + tex.offset);
-		put_pixel(i, y, color, game); // guardamos el color en el t_img screen (también está el cielo y el suelo)
-		tex.texpos += tex.step;
-		y++;
+		put_pixel(i, ray->drawStart, color, game); // guardamos el color en el t_img screen (también está el cielo y el suelo)
+		ray->drawStart++;
 	}
 }

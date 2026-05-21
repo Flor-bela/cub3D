@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/20 16:48:31 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/21 10:05:59 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ void	draw_wall(t_ray *ray, t_game *game, int i)
 	buffer_backwround(0, ray->drawStart, i, game); 
 	buffer_wall(ray, i, game);
 	buffer_backwround(ray->drawEnd, HEIGHT, i, game);
-	printf("side=%d mapX=%d mapY=%d rayDirX=%f rayDirY=%f\n",
-	ray->side, ray->mapX, ray->mapY, ray->rayDirX, ray->rayDirY);
 }
 
 void	calculate_wall(t_ray *ray, t_game *game, float ray_angle)
 {
-
 	if (ray->side == 0)  // cruza línea en vertical del grid | -> W|E <- | (E/W)
 		ray->perpWallDist = ray->sideDistX - ray->deltaDistX;
 	else // cruza una línea en horizontal del grid (N/S)
@@ -49,7 +46,7 @@ void	calculate_wall(t_ray *ray, t_game *game, float ray_angle)
 		ray->lineHeight = HEIGHT * 4;
 	ray->drawStart = -(int)ray->lineHeight / 2 + (HEIGHT / 2);
 	ray->drawEnd = (int)ray->lineHeight / 2 + (HEIGHT / 2);
-	if (ray->drawEnd < 0) // límite para evitar pintar fuera de pantalla
+	if (ray->drawStart < 0) // límite para evitar pintar fuera de pantalla
 		ray->drawStart = 0;
 	if (ray->drawEnd >= HEIGHT)
 		ray->drawEnd = HEIGHT - 1;
@@ -66,7 +63,7 @@ void	perform_dda(t_ray *ray, t_game *game)
 			move_ray(&ray->sideDistX, ray->deltaDistX, &ray->mapX, ray->stepX);
 			ray->side = 0; // cruza línea en vertical del grid | -> W|E <- | (E/W)
 		}
-		else
+		else 
 		{
 			move_ray(&ray->sideDistY, ray->deltaDistY, &ray->mapY, ray->stepY);
 			ray->side = 1; // cruza una línea en horizontal del grid (N/S)
@@ -91,7 +88,6 @@ void	init_ray(t_ray *ray, t_game *game, float ray_angle)
 void	cast_ray(t_game *game, float ray_angle, int i)
 {
 	t_ray	ray;
-
 	init_ray(&ray, game, ray_angle);
 	perform_dda(&ray, game);
 	calculate_wall(&ray, game, ray_angle);

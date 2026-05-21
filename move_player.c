@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:15:08 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/19 12:26:17 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/21 10:03:38 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,20 @@ void	move(t_player *player, float cos, float sin)
 
 int	valid_move(t_player player, float cos, float sin, char **grid)
 {
-	int	mapx;
-	int	mapy;
+	int	n_mapx;
+	int	n_mapy;
+	int mapx;
+	int mapy;
 
-	mapx = (player.p_x + cos * SPEED) / TILE_SIZE;
-	mapy = (player.p_y + sin * SPEED) / TILE_SIZE;
-	if (grid[mapy][mapx] == '1')
+	mapx = player.p_x / TILE_SIZE;
+	mapy = player.p_y / TILE_SIZE;
+	n_mapx = (player.p_x + cos * SPEED) / TILE_SIZE;
+	n_mapy = (player.p_y + sin * SPEED) / TILE_SIZE;	
+	if (grid[mapy][n_mapx] == '1')
+		return (0);	
+	if (grid[n_mapy][mapx] == '1')
+		return (0);
+	if (grid[n_mapy][n_mapx] == '1')
 		return (0);
 	return (1);
 }
