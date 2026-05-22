@@ -30,7 +30,7 @@ SOURCES =	main.c \
 			player_direction.c \
 			move_player.c \
 			cast_ray.c \
-			cast_ray_utils.c
+			cast_ray_utils.c \
 			mini_map.c
 			
 
