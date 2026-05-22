@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 15:02:15 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/05/20 19:10:25 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/20 19:15:17 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	draw_ray_on_minimap(t_game *game, t_ray *ray, float ray_angle)
 	int		line_length;
 
 	i = 0;
-	real_dist = ray->perpWallDist / cos(ray_angle - game->player.p_angle);
+	//real_dist = ray->perpWallDist / cos(ray_angle - game->player.p_angle); // para ojo de pez!
+	real_dist = ray->perpWallDist;
 	line_length = (int)(real_dist * TILE_MINI);
 	current_x = (game->player.p_x / TILE_SIZE) * TILE_MINI;
 	current_y = (game->player.p_y / TILE_SIZE) * TILE_MINI;
