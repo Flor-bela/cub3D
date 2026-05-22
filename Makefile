@@ -31,6 +31,7 @@ SOURCES =	main.c \
 			move_player.c \
 			cast_ray.c \
 			cast_ray_utils.c
+			mini_map.c
 			
 
 OBJ_DIR = obj

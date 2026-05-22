@@ -48,6 +48,23 @@ int	error_walls(t_game *game)
 	return (0);
 }
 
+static void	check_max_col(t_map map) // he vuelto a añadir esto que no estoy segura si hace falta dejarlo o no!!! (verlo)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map.total_row)
+	{
+		j = 0;
+		while (map.grid[i][j] != '\0')
+			j++;
+		if (map.total_column < j)
+				map.total_column = j - 1;
+		i++;
+	}
+}
+
 int	check_map_enclosed(t_game *game)
 {
 	int		i;
@@ -96,7 +113,7 @@ int	check_map_enclosed(t_game *game)
 		}
 		i++;
 	}
-	//check_max_col(map); // lo añadi aqui quizas cambiar de sitio
+	check_max_col(game->map); // lo añadi aqui quizas cambiar de sitio
 	return (1);
 }
 
