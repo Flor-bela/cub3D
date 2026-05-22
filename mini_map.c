@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 15:02:15 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/05/22 17:02:29 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/22 17:48:18 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	draw_minimap(t_game *game)
 {
 	int	y;
 	int	x;
-	int	color;
 
 	y = 0;
 	if (game->mini_map.img)
@@ -70,15 +69,13 @@ void	draw_minimap(t_game *game)
 				break ;
 			}
 			if (game->map.grid[y][x] == '1')
-				color = 0x555555;
+				draw_square(game, x * TILE_MINI, y * TILE_MINI, 0x555555);
 			else if (game->map.grid[y][x] == '0' || game->map.grid[y][x] == 'N'
 				|| game->map.grid[y][x] == 'S' || game->map.grid[y][x] == 'W'
 				|| game->map.grid[y][x] == 'E')
-				color = 0xF5F5DC; // todo en beige
+				draw_square(game, x * TILE_MINI, y * TILE_MINI, 0xF5F5DC);
 			else
-				color = 0x2C3E50;
-				
-			draw_square(game, x * TILE_MINI, y * TILE_MINI, color);
+				draw_square(game, x * TILE_MINI, y * TILE_MINI, 0x2C3E50);
 			x++;
 		}
 		y++;
