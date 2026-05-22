@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/22 17:47:52 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/22 18:25:23 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int	game_loop(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->render.screen.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win,
-		game->mini_map.img, 10, 10);
+		game->mini_map.img, 20, 20);
 	return (0);
 }

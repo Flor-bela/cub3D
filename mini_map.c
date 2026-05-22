@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 15:02:15 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/05/22 17:48:18 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/22 18:25:58 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	draw_square(t_game *game, int x, int y, int color)
 
 void	draw_minimap(t_game *game)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
 
 	y = 0;
 	if (game->mini_map.img)
 		mlx_destroy_image(game->mlx, game->mini_map.img);
-
+	
 	game->mini_map.img = mlx_new_image(game->mlx, game->map.total_column * TILE_MINI, game->map.total_row * TILE_MINI);
 	game->mini_map.addr = mlx_get_data_addr(game->mini_map.img, &game->mini_map.bpp, &game->mini_map.line_len, &game->mini_map.endian);
 

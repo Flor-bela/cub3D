@@ -73,9 +73,6 @@ typedef struct s_ray
 
 } t_ray;
 
-# define SCREEN_WIDTH	1280
-# define SCREEN_HEIGHT	720
-
 typedef struct s_img
 {
 	void	*img;
@@ -128,7 +125,7 @@ typedef struct s_game
 	void		*win;
 	t_render	render;
 	t_map		map;
-	t_img		mini_map; // tengo que inicializarlo!!!
+	t_img		mini_map;
 	t_player	player;
 }	t_game;
 

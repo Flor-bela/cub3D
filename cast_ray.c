@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/22 15:40:15 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/22 18:32:17 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	calculate_wall(t_ray *ray, t_game *game, float ray_angle)
 		ray->perpWallDist = ray->sideDistY - ray->deltaDistY;
 	if (ray->perpWallDist < 0.1) // Si no ajustaba el tamaño cuando la pared está muy cerca la textura era muy grande y se colgaba el programa
 		ray->perpWallDist = 0.1; // Ahora se produce un "salto" en un punto cuando te alejas/acercas a una pared
-	ray->lineHeight = (int)(HEIGHT / (ray->perpWallDist
-				* cos(ray_angle - game->player.p_angle))); // ajuste de ojo de pez
+	ray->lineHeight = (int)HEIGHT / ray->perpWallDist;
+				//* cos(ray_angle - game->player.p_angle))); // ajuste de ojo de pez
 	if(ray->lineHeight > HEIGHT * 4) // límite para evitar paredes muy grandes
 		ray->lineHeight = HEIGHT * 4;
 	ray->drawStart = -(int)ray->lineHeight / 2 + (HEIGHT / 2);
