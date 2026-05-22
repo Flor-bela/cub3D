@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/22 18:32:17 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/22 22:26:24 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	draw_wall(t_ray *ray, t_game *game, int i)
 	buffer_backwround(ray->drawEnd, HEIGHT, i, game);
 }
 
-void	calculate_wall(t_ray *ray, t_game *game, float ray_angle)
+void	calculate_wall(t_ray *ray)
 {
 	if (ray->side == 0)  // cruza línea en vertical del grid | -> W|E <- | (E/W)
 		ray->perpWallDist = ray->sideDistX - ray->deltaDistX;
@@ -90,7 +90,7 @@ void	cast_ray(t_game *game, float ray_angle, int i)
 	t_ray	ray;
 	init_ray(&ray, game, ray_angle);
 	perform_dda(&ray, game);
-	calculate_wall(&ray, game, ray_angle);
+	calculate_wall(&ray);
 	draw_wall(&ray, game, i);
 //	debugray(ray, game, ray_angle);
 	draw_ray_on_minimap(game, &ray, ray_angle);
