@@ -24,9 +24,9 @@ int	get_texx(t_player player, t_ray *ray, t_img texture)
 	int		texx;
 
 	if (ray->side == 0) // cruza línea en vertical del grid | -> W|E <- | (E/W) Tenemos que calcular a que altura de la pared ha caido (de 0 a n, en el eje y)
-		wallx = player.p_y + ray->perpWallDist * ray->rayDirY; // -> NO PUEDE DEPENDER DEL JUGADOR ???
+		wallx = (player.p_y / TILE_SIZE) + ray->perpWallDist * ray->rayDirY; // -> NO PUEDE DEPENDER DEL JUGADOR ???
 	else // cruza línea horizontal del grid. Tenemos que calcular en que parte de la pared ha caído (de 0 a n, en el eje x)
-		wallx = player.p_x + ray->perpWallDist * ray->rayDirX;
+		wallx = (player.p_x / TILE_SIZE)  + ray->perpWallDist * ray->rayDirX;
 	wallx -= floor(wallx); // Nos quedamos la parte digital -> posición relativa al TILE en el que estamos
 	texx = (int)(wallx * (texture.width)); // Buscamos ese punto del TILE en la textura
 	if (ray->side == 0 && ray->rayDirX < 0) // Volteamos textura W

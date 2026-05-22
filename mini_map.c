@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 15:02:15 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/05/22 15:52:36 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/22 17:02:29 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	draw_minimap(t_game *game)
 	draw_square(game, player_pixel_x, player_pixel_y, 0xE05A47);
 }
 
-void	sawdraw_ray_on_minimap(t_game *game, t_ray *ray, float ray_angle)
+void	draw_ray_on_minimap(t_game *game, t_ray *ray, float ray_angle)
 {
 	float	real_dist;
 	float	current_x;
