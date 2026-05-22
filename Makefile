@@ -1,7 +1,7 @@
 NAME = cub3D
 
-CC = cc
-FLAGS = -Wall -Werror -Wextra -g
+CC = gcc -g -O0
+FLAGS =  -Wall -Wextra -Werror -g
 
 MLX_DIR = minilibx-linux
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
@@ -16,13 +16,22 @@ MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 SOURCES =	main.c \
 			check_file.c \
 			error_utils.c \
-			read_file.c \
+			get_next_line.c \
 			init.c \
 			utils.c \
 			parse_color.c \
 			parse_texture.c \
 			parse_map.c \
-			debug.c
+			debug.c \
+			start_game.c \
+			game_loop.c \
+			game_loop_utils.c \
+			game_destroy.c \
+			player_direction.c \
+			move_player.c \
+			cast_ray.c \
+			cast_ray_utils.c
+			
 
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)

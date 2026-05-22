@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-int	check_characters_map(t_map *map)
+int	check_characters_map(t_game *game)
 {
 	int	i;
 	int	j;
@@ -8,21 +8,22 @@ int	check_characters_map(t_map *map)
 
 	i = 0;
 	flag = 0;
-	while (i < map->total_rows) // hmmm tiene salto de línea!!!!! Tengo que quitarlo!!! No debería ser interpretado
+	while (i < game->map.total_row) // hmmm tiene salto de línea!!!!! Tengo que quitarlo!!! No debería ser interpretado
 	{
 		j = 0;
-		while (map->grid[i][j] != '\0')
+		while (game->map.grid[i][j] != '\0')
 		{
-			if (map->grid[i][j] == 'N' || map->grid[i][j] == 'S'
-				 || map->grid[i][j] == 'W' || map->grid[i][j] == 'E')
+			if (game->map.grid[i][j] == 'N' || game->map.grid[i][j] == 'S'
+				 || game->map.grid[i][j] == 'W' || game->map.grid[i][j] == 'E')
 			{
-				map->player.col = j;
-				map->player.row = i;
+				game->player.p_x = j * TILE_SIZE + TILE_SIZE / 2;
+				game->player.p_y = i * TILE_SIZE + TILE_SIZE / 2;
+				game->player.pov = game->map.grid[i][j];
 				flag++;
 				j++;
 			}
-			else if (map->grid[i][j] == ' ' || map->grid[i][j] == '\n'
-				|| map->grid[i][j] == '1' || map->grid[i][j] == '0')
+			else if (game->map.grid[i][j] == ' ' || game->map.grid[i][j] == '\n'
+				|| game->map.grid[i][j] == '1' || game->map.grid[i][j] == '0')
 				j++;
 			else
 			{
@@ -40,77 +41,62 @@ int	check_characters_map(t_map *map)
 	return (1);
 }
 
-static int	error_walls(t_map *map)
+int	error_walls(t_game *game)
 {
 	write(2, "Error \n map not enclosed by walls.\n", 36);
-	(void)map;
+	(void)game;
 	return (0);
 }
 
-static void	check_max_col(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->total_rows)
-	{
-		j = 0;
-		while (map->grid[i][j] != '\0')
-			j++;
-		if (map->max_cols < j)
-				map->max_cols = j - 1;
-		i++;
-	}
-}
-
-int	check_map_enclosed(t_map *map)
+int	check_map_enclosed(t_game *game)
 {
 	int		i;
 	int		j;
 	int		flag;
 
 	i = 0;
-	while (i < map->total_rows)
+	while (i < game->map.total_row)
 	{
 		j = 0;
-		while (map->grid[i][j] != '\0')
+		while (game->map.grid[i][j] != '\0')
 		{
-			if (map->grid[i][j] == '0')
+			if (game->map.grid[i][j] == '0')
 			{
 				flag = 0;
-				if ((j + 1) < (int)ft_strlen(map->grid[i]))
+				if ((j + 1) < (int)ft_strlen(game->map.grid[i]))
 				{
 					flag++;
-					if (map->grid[i][j + 1] == ' ' || map->grid[i][j + 1] == '\n')
-						return (error_walls(map));
+					if (game->map.grid[i][j + 1] == ' ' || game->map.grid[i][j + 1] == '\n')
+						return (error_walls(game));
 				}
 				if ((j - 1) >= 0)
 				{
 					flag++;
-					if (map->grid[i][j - 1] == ' ' || map->grid[i][j - 1] == '\n')
-						return (error_walls(map));
+					if (game->map.grid[i][j - 1] == ' ' || game->map.grid[i][j - 1] == '\n')
+						return (error_walls(game));
 				}
 				if ((i - 1) >= 0)
 				{	
 					flag++;
-					if (map->grid[i - 1][j] == ' ' || map->grid[i - 1][j] == '\n')
-						return (error_walls(map));
+					if (game->map.grid[i - 1][j] == ' ' || game->map.grid[i - 1][j] == '\n')
+						return (error_walls(game));
 				}
-				if ((i + 1) < map->total_rows)
+				if ((i + 1) < game->map.total_row)
 				{
 					flag++;
-					if (map->grid[i + 1][j] == ' ' || map->grid[i + 1][j] == '\n')
-						return (error_walls(map));
+					if (game->map.grid[i + 1][j] == ' ' || game->map.grid[i + 1][j] == '\n')
+						return (error_walls(game));
 				}
 				if (flag != 4)
-					return (error_walls(map));
+					return (error_walls(game));
 			}
+			if(game->map.total_column < j)
+				game->map.total_column = j;
 			j++;
 		}
 		i++;
 	}
-	check_max_col(map); // lo añadi aqui quizas cambiar de sitio
+	//check_max_col(map); // lo añadi aqui quizas cambiar de sitio
 	return (1);
 }
 
