@@ -127,7 +127,8 @@ typedef struct s_game
 	t_map		map;
 	t_img		mini_map;
 	t_player	player;
-}	t_game;
+	float		proj_plane_dist;
+}				t_game;
 
 //debug
 void	debug(t_game *game);
