@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/25 13:56:58 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/26 14:06:01 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,10 @@ void	cast_ray(t_game *game, float ray_angle, int i)
 {
 	t_ray	ray;
 	
-
 	init_ray(&ray, game, ray_angle);
 	perform_dda(&ray, game);
 	calculate_wall(&ray, game, ray_angle);
 	draw_wall(&ray, game, i);
 //	debugray(ray, game, ray_angle);
-	draw_ray_on_minimap(game, &ray, ray_angle);
+	game->rays_dist[i] = ray.perpWallDist; // guardarlo aquí para no volver a calcularlo para el mini_mapa
 }
