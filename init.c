@@ -56,7 +56,9 @@ t_game	*init_game(void)
 	game->win = NULL;
 	game->render.screen.img = NULL;
 	game->map.grid = NULL;
-	game->mini_map.img = NULL;
+	game->rays_dist = (float *)malloc(sizeof(float) * WIDTH); // para el mini_mapa
+	if (!game->rays_dist)
+		die("init_game(): malloc()", errno);
 	init_textures(game);
 	game->map.total_row = 0; //necesario?
 	game->map.total_column = 0; //necesario?
@@ -88,4 +90,3 @@ void	img_init(t_game *game)
 			&game->render.screen.bpp, &game->render.screen.line_len,
 			&game->render.screen.endian);
 }
-

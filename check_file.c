@@ -15,6 +15,7 @@
 int	parse_map(char **line, t_game *game, int fd)
 {
 	char	*temp;
+
 	temp = ft_calloc(1, 1);
 	while (*line && new_line(*line))
 	{

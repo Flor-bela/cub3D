@@ -7,7 +7,8 @@
 # define HEIGHT 1080
 
 # define SPEED 5
-# define A_SPEED 0.1
+# define A_SPEED 0.05
+# define PLAYER_RADIUS 20
 
 # define W 119
 # define A 97
@@ -127,6 +128,8 @@ typedef struct s_game
 	t_map		map;
 	t_img		mini_map;
 	t_player	player;
+	float		proj_plane_dist;
+	float		*rays_dist; // para el mini_mapa
 }	t_game;
 
 //debug
@@ -169,7 +172,7 @@ void	die(char *errmsg, int errnum);
 void	ft_mlx_pixel_put(t_game *game, int x, int y, int color);
 void	draw_square(t_game *game, int x, int y, int color);
 void	draw_minimap(t_game *game);
-void	draw_ray_on_minimap(t_game *game, t_ray *ray, float ray_angle);
+void	draw_ray_on_minimap(t_game *game, float distance, float ray_angle);
 
 //RayCast
 void	cast_ray(t_game *game, float ray_angle, int i);

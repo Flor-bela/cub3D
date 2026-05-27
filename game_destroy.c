@@ -63,6 +63,7 @@ void	game_destroy(t_game *game, char *errmsg, int errnum)
 			mlx_destroy_display(game->mlx);
 			free(game->mlx);
 		}
+		free(game->rays_dist);
 		free_map(game);
 		free(game);
 	}
