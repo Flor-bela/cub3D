@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:23 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 16:57:15 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/05/27 17:32:00 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int ac, char **av)
 	if (fd < 0)
 		game_destroy(game, "File cannot be open", errno);
 	parse_file(fd, game);
-	debug(game);
+//	debug(game);
 	start_game(game);
 	mlx_hook(game->win, 2, 1L << 0, key_press, game);
 	mlx_hook(game->win, 3, 1L << 1, key_release, game);

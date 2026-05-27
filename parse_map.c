@@ -115,4 +115,4 @@ int	check_map_enclosed(t_game *game)
 	}
 	check_max_col(&game->map);
 	return (1);
-}
+}  
