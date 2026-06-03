@@ -7,7 +7,8 @@
 # define HEIGHT 1080
 
 # define SPEED 5
-# define A_SPEED 0.1
+# define A_SPEED 0.05
+# define PLAYER_RADIUS 20
 
 # define W 119
 # define A 97

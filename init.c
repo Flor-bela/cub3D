@@ -90,4 +90,3 @@ void	img_init(t_game *game)
 			&game->render.screen.bpp, &game->render.screen.line_len,
 			&game->render.screen.endian);
 }
-
