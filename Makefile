@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC = cc
-FLAGS =  -Wall -Wextra -Werror -g
+FLAGS =  -Wall -Wextra -Werror -O3 -g -g3
 
 MLX_DIR = minilibx-linux
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git

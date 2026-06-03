@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/03 11:01:05 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/03 16:50:20 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	game_loop(t_game *game)
 	float		fov;
 	float		start_angle;
 	int			i;
+	int			x;
+	int			y;
 
 	player = &game->player;
 	move_player(player, game->map.grid);
@@ -31,6 +33,24 @@ int	game_loop(t_game *game)
 		//start_angle += step; // no  pueden ser incrementos iguales, el angulo se ensancha cuando nos alejamos del centro!!! (si lo dejaramos con incrementos angulares fijos estaríamos proyectando el "mundo" como un cilindro)
 		i++;
 	}
+	
+	
+	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
+	int center_x;
+	
+	center_x = WIDTH / 2;
+	if (x != center_x)
+	{
+		if (x < center_x)
+			player->p_angle -= A_SPEED * 0.5; // he multiplicado para no ser tan sencible con el ratón!
+		else if (x > center_x)
+			player->p_angle += A_SPEED * 0.5;
+
+		mlx_mouse_move(game->mlx, game->win, center_x, (HEIGHT / 2));
+		mlx_mouse_hide(game->mlx, game->win);
+	}
+	
+	
 	draw_minimap(game);
 	i = 0;
 	while (i < WIDTH)
