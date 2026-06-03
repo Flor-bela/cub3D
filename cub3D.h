@@ -2,7 +2,7 @@
 # define CUB3D_H
 
 # define TILE_SIZE 64
-# define TILE_MINI 10
+# define TILE_MINI 16
 # define WIDTH 1920
 # define HEIGHT 1080
 
