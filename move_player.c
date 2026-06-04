@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:15:08 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/04 15:14:32 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:04:52 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	valid_y(float mapx, float n_mapy, char **grid)
 		return (0);
 	if (is_wall(mapx, n_mapy - PLAYER_RADIUS, grid))
 		return (0);
-	if (is_wall(mapx - PLAYER_RADIUS, n_mapy + PLAYER_RADIUS, grid))
+	if (is_wall(mapx + PLAYER_RADIUS, n_mapy, grid))
 		return (0);
-	if (is_wall(mapx - PLAYER_RADIUS, n_mapy - PLAYER_RADIUS, grid))
+	if (is_wall(mapx - PLAYER_RADIUS, n_mapy, grid))
 		return (0);
 	return (1);
 }
@@ -55,25 +55,12 @@ int	valid_x(float n_mapx, float mapy, char **grid)
 		return (0);
 	if (is_wall(n_mapx - PLAYER_RADIUS, mapy, grid))
 		return (0);
-	if (is_wall(n_mapx + PLAYER_RADIUS, mapy + PLAYER_RADIUS, grid))
+	if (is_wall(n_mapx, mapy  + PLAYER_RADIUS, grid))
 		return (0);
-	if (is_wall(n_mapx - PLAYER_RADIUS, mapy + PLAYER_RADIUS, grid))
+	if (is_wall(n_mapx, mapy  - PLAYER_RADIUS, grid))
 		return (0);
 	return (1);
 }
-
-/*void	valid_move(t_player *player, float cos, float sin, char **grid)
-{
-	int	n_mapx;
-	int	n_mapy;
-
-	n_mapx = player->p_x + cos * SPEED;
-	n_mapy = player->p_y + sin * SPEED;
-	if (valid_x(n_mapx, player->p_y, grid))
-		player->p_x = n_mapx;
-	if(valid_y(player->p_x, n_mapy, grid))
-		player->p_y = n_mapy;
-}*/
 
 void	valid_move(t_player *player, float x, float y, char **grid)
 {
@@ -82,6 +69,7 @@ void	valid_move(t_player *player, float x, float y, char **grid)
 
 	n_mapx = player->p_x + x * SPEED;
 	n_mapy = player->p_y + y * SPEED;
+	
 	if (valid_x(n_mapx, player->p_y, grid))  //Validar x e y por separado para que deslice por las paredes
 		player->p_x = n_mapx;
 	if(valid_y(player->p_x, n_mapy, grid))
@@ -118,20 +106,3 @@ void	move_player(t_player *player, char **grid)
 	valid_move(player, move_x, move_y, grid); // Actualizar la posición si el movimiento es válido
 }
 
-/*void	move_player(t_player *player, char **grid)
-{
-	float	c_angle;
-	float	s_angle;
-	
-	rotate_player(player);
-	c_angle = cos(player->p_angle);
-	s_angle = sin(player->p_angle);
-	if (player->key_up)
-		valid_move(player, c_angle, s_angle, grid);
-	if (player->key_down)
-		valid_move(player, -c_angle, -s_angle, grid);
-	if (player->key_left)
-		valid_move(player, s_angle, -c_angle, grid);
-	if (player->key_right)
-		valid_move(player, -s_angle, c_angle, grid);
-}*/
