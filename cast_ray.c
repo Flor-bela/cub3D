@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/21 10:05:59 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:09:47 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ void	cast_ray(t_game *game, float ray_angle, int i)
 	perform_dda(&ray, game);
 	calculate_wall(&ray, game, ray_angle);
 	draw_wall(&ray, game, i);
-//	debugray(ray, game, ray_angle);
+	debugray(ray, game, ray_angle);
 }
