@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:15:08 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/27 17:36:38 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/04 15:14:32 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int	valid_y(float mapx, float n_mapy, char **grid)
 		return (0);
 	if (is_wall(mapx, n_mapy - PLAYER_RADIUS, grid))
 		return (0);
+	if (is_wall(mapx - PLAYER_RADIUS, n_mapy + PLAYER_RADIUS, grid))
+		return (0);
+	if (is_wall(mapx - PLAYER_RADIUS, n_mapy - PLAYER_RADIUS, grid))
+		return (0);
 	return (1);
 }
 
@@ -50,6 +54,10 @@ int	valid_x(float n_mapx, float mapy, char **grid)
 	if (is_wall(n_mapx + PLAYER_RADIUS, mapy, grid))
 		return (0);
 	if (is_wall(n_mapx - PLAYER_RADIUS, mapy, grid))
+		return (0);
+	if (is_wall(n_mapx + PLAYER_RADIUS, mapy + PLAYER_RADIUS, grid))
+		return (0);
+	if (is_wall(n_mapx - PLAYER_RADIUS, mapy + PLAYER_RADIUS, grid))
 		return (0);
 	return (1);
 }
