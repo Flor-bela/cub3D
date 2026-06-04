@@ -8,7 +8,7 @@
 
 # define SPEED 5
 # define A_SPEED 0.05
-# define PLAYER_RADIUS 20
+# define PLAYER_RADIUS 10
 
 # define W 119
 # define A 97
@@ -130,6 +130,8 @@ typedef struct s_game
 	t_player	player;
 	float		proj_plane_dist;
 	float		*rays_dist; // para el mini_mapa
+	int			x;
+	int			y;
 }				t_game;
 
 //debug
