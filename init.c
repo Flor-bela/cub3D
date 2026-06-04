@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:18 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/20 10:08:59 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:38:53 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ t_game	*init_game(void)
 	game->win = NULL;
 	game->render.screen.img = NULL;
 	game->map.grid = NULL;
+	game->rays_dist = (float *)malloc(sizeof(float) * WIDTH); // para el mini_mapa
+	if (!game->rays_dist)
+		die("init_game(): malloc()", errno);
 	init_textures(game);
 	game->map.total_row = 0; //necesario?
 	game->map.total_column = 0; //necesario?

@@ -18,5 +18,8 @@ cub3D
 - [Raycasting IV: Directional Sprites, Doors, And More](https://lodev.org/cgtutor/raycasting4.html)
 - https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/
 - https://42-fran-byte-f94097.gitlab.io/docs/cub3d/cub3d-approach-es/#/
+- https://hackmd.io/@nszl/H1LXByIE2
+- https://devabdilah.medium.com/3d-ray-casting-game-with-cub3d-7a116376056a
+
 
 ### AI Usage

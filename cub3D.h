@@ -1,12 +1,14 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define TILE_SIZE  64
+# define TILE_SIZE 64
+# define TILE_MINI 10
 # define WIDTH 1920
 # define HEIGHT 1080
 
 # define SPEED 5
-# define A_SPEED 0.1
+# define A_SPEED 0.05
+# define PLAYER_RADIUS 20
 
 # define W 119
 # define A 97
@@ -124,7 +126,10 @@ typedef struct s_game
 	void		*win;
 	t_render	render;
 	t_map		map;
+	t_img		mini_map;
 	t_player	player;
+	float		proj_plane_dist;
+	float		*rays_dist; // para el mini_mapa
 }	t_game;
 
 //debug
@@ -163,6 +168,12 @@ int		close_game(t_game *game);
 void	game_destroy(t_game *game, char *errmsg, int errnum);
 void	die(char *errmsg, int errnum);
 
+//mini-map
+void	ft_mlx_pixel_put(t_game *game, int x, int y, int color);
+void	draw_square(t_game *game, int x, int y, int color);
+void	draw_minimap(t_game *game);
+void	draw_ray_on_minimap(t_game *game, float distance, float ray_angle);
+
 //RayCast
 void	cast_ray(t_game *game, float ray_angle, int i);
 void	init_rayy(t_ray *ray, t_game *game, float ray_angle);
@@ -183,6 +194,6 @@ char	*ft_strjoin_free(char *s1, char *s2);
 int		empty_line(char *line);
 int		ft_format(char *file);
 int		game_loop(t_game *game);
-int	new_line(char *line);
+int		new_line(char *line);
 
 #endif
