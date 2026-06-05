@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
+/*   Updated: 2026/06/05 14:32:57 by fda-roch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -47,34 +59,33 @@ enum e_tex
 
 typedef struct s_texcalc
 {
-    double  wallx;
-    double  step;
-    double  texpos;
-    int     texx;
-    int     texy;
-    int     offset;
-} t_texcalc;
+	double	wallx;
+	double	step;
+	double	texpos;
+	int		texx;
+	int		texy;
+	int		offset;
+}			t_texcalc;
 
 typedef struct s_ray
 {
-    float	rayDirX;
-    float	rayDirY;
-    int		mapX;
-    int		mapY;
-    float	sideDistX;
-    float	sideDistY;
-    float	deltaDistX;
-	float	deltaDistY;
-    int		stepX;
-    int		stepY;
-    int		side;
+	float	ray_dir_x;
+	float	ray_dir_y;
+	int		mapx;
+	int		mapy;
+	float	side_dist_x;
+	float	side_dist_y;
+	float	delta_dist_x;
+	float	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	int		side;
 	int		hit;
-    float	perpWallDist;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
-
-} t_ray;
+	float	perp_wall_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}			t_ray;
 
 typedef struct s_img
 {
@@ -85,7 +96,7 @@ typedef struct s_img
 	int		endian;
 	int		width; //?
 	int		height; //?
-}	t_img;
+}			t_img;
 
 typedef struct s_player
 {
@@ -96,12 +107,12 @@ typedef struct s_player
 	float	dir_y;
 	float	p_angle;
 	bool	key_up;
-    bool	key_down;
-    bool	key_left;
-    bool	key_right;
+	bool	key_down;
+	bool	key_left;
+	bool	key_right;
 	bool	left_rotate;
 	bool	right_rotate;
-}	t_player;
+}			t_player;
 
 typedef struct s_map
 {
@@ -113,14 +124,13 @@ typedef struct s_map
 	char	*text_path[4];
 	int		total_row; // datos innecesarios?
 	int		total_column; // datos innecesarios?
-} t_map;
+}			t_map;
 
 typedef struct s_render
 {
 	t_img	textures[4];
 	t_img	screen;
-} t_render;
-
+}			t_render;
 
 typedef struct s_game
 {
@@ -130,10 +140,10 @@ typedef struct s_game
 	t_map		map;
 	t_player	player;
 	float		proj_plane_dist;
-	float		*rays_dist; // para el mini_mapa
+	float		*rays_dist;
 	int			x;
 	int			y;
-	bool		minimap; // key
+	bool		minimap;
 }				t_game;
 
 //debug
@@ -157,7 +167,7 @@ int		is_color_line(char *line);
 int		all_colors_found(t_game *game);
 
 char	*extract_path(char *line);
-int	 	extract_texture(char *line, t_game *game);
+int		extract_texture(char *line, t_game *game);
 int		is_texture_line(char *line);
 int		all_textures_found(t_game *game);
 
@@ -173,11 +183,13 @@ int		close_game(t_game *game);
 void	game_destroy(t_game *game, char *errmsg, int errnum);
 void	die(char *errmsg, int errnum);
 
-//mini-map
-void	ft_mlx_pixel_put(t_game *game, int x, int y, int color);
-void	draw_square(t_game *game, int x, int y, int color);
+//minimap
+void	minimap(t_game *game);
 void	draw_minimap(t_game *game);
+void	draw_player_minimap(t_game *game);
+void	draw_square(t_game *game, int x, int y, int color);
 void	draw_ray_on_minimap(t_game *game, float distance, float ray_angle);
+void	ft_mlx_pixel_put_minimap(t_game *game, int x, int y, int color);
 
 //RayCast
 void	cast_ray(t_game *game, float ray_angle, int i);
@@ -187,7 +199,7 @@ void	move_ray(float *sideDist, float deltaDist, int *mappos, int mapstep);
 void	draw_wall(t_ray *ray, t_game *game, int i);
 void	put_pixel(int x, int y, int color, t_game *game);
 t_img	get_texture(t_game *game, t_ray *ray);
-void	buffer_backwround(int drawstart, int drawend, int i, t_game *game);
+void	buffer_backwround(int draw_start, int draw_end, int i, t_game *game);
 void	buffer_wall(t_ray *ray, int i, t_game *game);
 
 //error utils
@@ -198,6 +210,7 @@ int		ft_isspace(char c);
 char	*ft_strjoin_free(char *s1, char *s2);
 int		empty_line(char *line);
 int		ft_format(char *file);
+void	move_mouse(t_game *game, t_player *player);
 int		game_loop(t_game *game);
 int		new_line(char *line);
 
