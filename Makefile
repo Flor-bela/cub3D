@@ -23,6 +23,7 @@ SOURCES =	main.c \
 			parse_texture.c \
 			parse_map.c \
 			debug.c \
+			frames_per_second.c\
 			start_game.c \
 			game_loop.c \
 			game_loop_utils.c \

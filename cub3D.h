@@ -3,8 +3,8 @@
 
 # define TILE_SIZE 64
 # define TILE_MINI 10
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 2560
+# define HEIGHT 1440
 
 # define SPEED 5
 # define A_SPEED 0.05
@@ -14,6 +14,7 @@
 # define A 97
 # define S 115
 # define D 100
+# define M 109
 # define LEFT 65361
 # define RIGHT 65363
 
@@ -132,10 +133,12 @@ typedef struct s_game
 	float		*rays_dist; // para el mini_mapa
 	int			x;
 	int			y;
+	bool		minimap; // key
 }				t_game;
 
 //debug
 void	debug(t_game *game);
+void	frames_per_second(void);
 
 //init
 t_game	*init_game(void);

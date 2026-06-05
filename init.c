@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:18 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/26 14:08:28 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:13:11 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_game	*init_game(void)
 	init_textures(game);
 	game->map.total_row = 0; //necesario?
 	game->map.total_column = 0; //necesario?
+	game->minimap = true; // minimap false at the beginning
 	init_player(&game->player);
 	return (game);
 }

@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:23 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/04 17:33:17 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:14:00 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ int	key_press(int keycode, t_game *game)
 		player->left_rotate = true;
 	if (keycode == RIGHT)
 		player->right_rotate = true;
+	if (keycode == M)
+	{
+		if (game->minimap == true)
+			game->minimap = false;
+		else
+			game->minimap = true;
+	}
 	return (0);
 }
 
