@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/05 14:32:57 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 17:12:13 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ typedef struct s_map
 	int		f_color;
 	int		c_color;
 	char	*text_path[4];
-	int		total_row; // datos innecesarios?
-	int		total_column; // datos innecesarios?
+	int		total_row;
+	int		total_column;
 }			t_map;
 
 typedef struct s_render

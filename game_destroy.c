@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_destroy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/26 14:09:26 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 15:05:00 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	die(char *errmsg, int errnum)
 		ft_putendl_fd("", 2);
 		exit(1);
 	}
+	if (errmsg == 0) // para minimap
+		exit(1);
 	exit(0);
 }
 

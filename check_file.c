@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/26 14:04:15 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 15:04:42 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ int	parse_file(int fd, t_game *game)
 		free(line);
 		game_destroy(game, "The colors are not correct", errno);
 	}
-	if (!parse_map(&line, game, fd)) // Comprobar que el mapa está cerrado y tiene solo los caracteres correctos (1, 0 y posición de personaje)
+	if (!parse_map(&line, game, fd)) // Comprobar que el mapa está cerrado y tiene solo los caracteres correctos (1, 0, ' ' y posición de personaje)
 	{
 		close(fd);
 		free(line);
-		game_destroy(game, "The map is not correct", errno);
+		game_destroy(game, 0, errno);
 	}
 	player_direction(game);
 	return (1);

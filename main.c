@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:23 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/05 13:14:00 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 15:07:39 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	if (!ft_format(av[1]))
-		game_destroy(NULL, "Correct format is .cub", 0);
+		game_destroy(NULL, " correct format is .cub", 0);
 	game = init_game();
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		game_destroy(game, "File cannot be open", errno);
+		game_destroy(game, " file cannot be open", errno);
 	parse_file(fd, game);
 //	debug(game);
 	start_game(game);

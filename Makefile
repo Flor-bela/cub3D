@@ -21,9 +21,10 @@ SOURCES =	main.c \
 			utils.c \
 			parse_color.c \
 			parse_texture.c \
-			parse_map.c \
+			parse_map_chars.c \
+			parse_map_walls.c \
 			debug.c \
-			frames_per_second.c\
+			frames_per_second.c \
 			start_game.c \
 			game_loop.c \
 			game_loop_utils.c \
