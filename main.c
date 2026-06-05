@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:23 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/04 17:33:17 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:21:42 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	esc_game(int keysym, void *param)
 
 int	key_press(int keycode, t_game *game)
 {
-	t_player *player = &game->player;
+	t_player	*player;
+
+	player = &game->player;
 	if (keycode == W)
 		player->key_up = true;
 	if (keycode == S)
@@ -42,7 +44,9 @@ int	key_press(int keycode, t_game *game)
 
 int	key_release(int keycode, t_game *game)
 {
-	t_player *player = &game->player;
+	t_player	*player;
+
+	player = &game->player;
 	if (keycode == W)
 		player->key_up = false;
 	if (keycode == S)
@@ -67,7 +71,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		write (1, "Usage: ./cub3D game.cub\n", 24);
+		write(1, "Usage: ./cub3D game.cub\n", 24);
 		return (1);
 	}
 	if (!ft_format(av[1]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_destroy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/26 14:09:26 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:34:11 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_map(t_game *game)
 	free(game->map.text_path[EA]);
 	if (game->map.grid)
 	{
-		while (game->map.grid[i]) // Terminar grid en NULL
+		while (game->map.grid[i])
 		{
 			free(game->map.grid[i]);
 			i++;

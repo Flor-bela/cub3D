@@ -136,6 +136,7 @@ typedef struct s_game
 
 //debug
 void	debug(t_game *game);
+void	debugray(t_ray ray, t_game *game, float ray_angle);
 
 //init
 t_game	*init_game(void);
@@ -197,5 +198,8 @@ int		empty_line(char *line);
 int		ft_format(char *file);
 int		game_loop(t_game *game);
 int		new_line(char *line);
+
+//move player
+void	valid_move(t_player *player, float x, float y, char **grid);
 
 #endif

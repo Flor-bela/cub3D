@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:28 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 14:49:36 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:34:50 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ int	all_colors_found(t_game *game)
 	return (1);
 }
 
+int	spaces(char *line, int i)
+{
+	while (line[i] && !ft_isdigit(line[i]))
+		i++;
+	return (i);
+}
+
 int	save_color(char *line, int *colors, int *ccolor)
 {
 	char	*temp;
@@ -34,12 +41,11 @@ int	save_color(char *line, int *colors, int *ccolor)
 	int		i;
 	int		size;
 
-	i = 0;
 	index = 0;
+	i = 0;
 	while (line[i])
 	{
-		while (line[i] && !ft_isdigit(line[i]))
-			i++;
+		i = spaces(line, i);
 		size = i;
 		while (line[size] && ft_isdigit(line[size]))
 			size++;
