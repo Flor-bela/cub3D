@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/05 15:04:42 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/08 11:55:52 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	parse_color(char **line, t_game *game, int fd)
 {
 	while (*line)
 	{
-		if(all_colors_found(game))
+		if (all_colors_found(game))
 			return (1);
 		if (empty_line(*line))
 		{
@@ -86,24 +86,30 @@ int	parse_texture(char **line, t_game *game, int fd)
 	return (1);
 }
 
+// We jump empty lines
+// We check we have 4 textures, no repetitions, no less or more than 4 
+// textures with correct format
+// Only 2 colors, with correct format
+// Closed map
+// Only allowed characters (1, 0 and character position)
 int	parse_file(int fd, t_game *game)
 {
 	char	*line;
 
 	line = NULL;
-	if (!parse_texture(&line, game, fd)) // Saltar líneas vacías, comprobar que no se repiten ni faltan y tienen el formato correcto
+	if (!parse_texture(&line, game, fd))
 	{
 		close(fd);
 		free(line);
 		game_destroy(game, "The textures are not correct", errno);
 	}
-	if (!parse_color(&line, game, fd)) // Saltar líneas vacías, comprobar que no se repiten ni faltan y tienen el formato correcto
+	if (!parse_color(&line, game, fd))
 	{
 		close(fd);
 		free(line);
 		game_destroy(game, "The colors are not correct", errno);
 	}
-	if (!parse_map(&line, game, fd)) // Comprobar que el mapa está cerrado y tiene solo los caracteres correctos (1, 0, ' ' y posición de personaje)
+	if (!parse_map(&line, game, fd))
 	{
 		close(fd);
 		free(line);

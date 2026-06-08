@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:18 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/05 14:37:41 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/08 11:58:13 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ t_game	*init_game(void)
 	if (!game->rays_dist)
 		die("init_game(): malloc()", errno);
 	init_textures(game);
-	game->map.total_row = 0; //necesario?
-	game->map.total_column = 0; //necesario?
+	game->map.total_row = 0;
+	game->map.total_column = 0;
 	game->minimap = true;
 	init_player(&game->player);
 	return (game);
@@ -69,7 +69,8 @@ t_game	*init_game(void)
 
 static void	texture_load(t_game *game, t_img *texture, char *path)
 {
-	texture->img = mlx_xpm_file_to_image(game->mlx, path, &texture->width, &texture->height);
+	texture->img = mlx_xpm_file_to_image(game->mlx, path,
+			&texture->width, &texture->height);
 	if (texture->img == 0)
 		game_destroy(game, "texture_init(): can't load texture", errno);
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp,

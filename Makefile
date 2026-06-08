@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC = cc
-FLAGS =  -Wall -Wextra -Werror -O3 -g -g3
+FLAGS =  -Wall -Wextra -O3 -g -g3
 
 MLX_DIR = minilibx-linux
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
@@ -33,7 +33,8 @@ SOURCES =	main.c \
 			move_player.c \
 			cast_ray.c \
 			cast_ray_utils.c \
-			minimap.c
+			minimap.c \
+			move_player_utils.c
 			
 
 OBJ_DIR = obj

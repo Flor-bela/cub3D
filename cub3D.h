@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/05 17:12:13 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/08 12:08:25 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define TILE_SIZE 64
 # define TILE_MINI 10
-# define WIDTH 2560
-# define HEIGHT 1440
+# define WIDTH 1920
+# define HEIGHT 1080
 
 # define SPEED 5
 # define A_SPEED 0.05
@@ -71,8 +71,8 @@ typedef struct s_ray
 {
 	float	ray_dir_x;
 	float	ray_dir_y;
-	int		mapx;
-	int		mapy;
+	int		map_x;
+	int		map_y;
 	float	side_dist_x;
 	float	side_dist_y;
 	float	delta_dist_x;
@@ -149,6 +149,7 @@ typedef struct s_game
 //debug
 void	debug(t_game *game);
 void	frames_per_second(void);
+void	debugray(t_ray ray, t_game *game, float ray_angle);
 
 //init
 t_game	*init_game(void);
@@ -213,5 +214,8 @@ int		ft_format(char *file);
 void	move_mouse(t_game *game, t_player *player);
 int		game_loop(t_game *game);
 int		new_line(char *line);
+
+//move player
+void	valid_move(t_player *player, float x, float y, char **grid);
 
 #endif
