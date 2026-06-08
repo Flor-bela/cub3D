@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:23 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 11:58:18 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/08 13:21:54 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,9 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == RIGHT)
 		player->right_rotate = true;
 	if (keycode == M)
-	{
-		if (game->minimap == true)
-			game->minimap = false;
-		else
-			game->minimap = true;
-	}
+		game->mouse= !game->mouse;
+	if (keycode == N)
+		game->minimap= !game->minimap;
 	return (0);
 }
 
@@ -78,7 +75,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		write(1, "Usage: ./cub3D game.cub\n", 24);
+		write(2, "Usage: ./cub3D game.cub\n", 25);
 		return (1);
 	}
 	if (!ft_format(av[1]))
@@ -90,7 +87,6 @@ int	main(int ac, char **av)
 	parse_file(fd, game);
 //	debug(game);
 	start_game(game);
-	mlx_mouse_get_pos(game->mlx, game->win, &game->x, &game->y);
 	mlx_hook(game->win, 2, 1L << 0, key_press, game);
 	mlx_hook(game->win, 3, 1L << 1, key_release, game);
 	mlx_hook(game->win, 17, 0, close_game, game);

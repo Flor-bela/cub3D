@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 11:57:19 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/08 13:24:38 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 
 void	move_mouse(t_game *game, t_player *player)
 {
-	int	new_x;
-	int	new_y;
+	int	x;
+	int	y;
+	int	center_x;
+	int	center_y;
 
-	mlx_mouse_get_pos(game->mlx, game->win, &new_x, &new_y);
-	if (game->x != new_x && new_x >= 0 && new_x <= WIDTH
-		&& new_y >= 0 && new_y <= HEIGHT)
+	center_x = WIDTH / 2;
+	center_y = HEIGHT / 2;
+
+	if (!game->mouse)
+		return ;
+	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
+	if (x != center_x)
 	{
-		if (new_x < game->x)
+		if (x < center_x)
 			player->p_angle -= A_SPEED * 0.5;
-		else if (new_x > game->x)
+		else if (x > center_x)
 			player->p_angle += A_SPEED * 0.5;
-		game->x = new_x;
+		mlx_mouse_move(game->mlx, game->win, center_x, center_y);
+		mlx_mouse_hide(game->mlx, game->win);
 	}
 }
 

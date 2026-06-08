@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/08 12:08:25 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/08 13:17:41 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define A 97
 # define S 115
 # define D 100
-# define M 109
+# define M 109 // mouse
+# define N 110 // minimap
 # define LEFT 65361
 # define RIGHT 65363
 
@@ -141,9 +142,8 @@ typedef struct s_game
 	t_player	player;
 	float		proj_plane_dist;
 	float		*rays_dist;
-	int			x;
-	int			y;
 	bool		minimap;
+	bool		mouse;
 }				t_game;
 
 //debug
