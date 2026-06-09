@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 11:56:10 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 13:19:05 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	game_destroy(t_game *game, char *errmsg, int errnum)
 			free(game->mlx);
 		}
 		free(game->rays_dist);
+		free(game->start_angle);
 		free_map(game);
 		free(game);
 	}

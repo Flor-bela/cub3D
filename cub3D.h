@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/08 13:17:41 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 13:29:10 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define TILE_SIZE 64
 # define TILE_MINI 10
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1280
+# define HEIGHT 720
 
 # define SPEED 5
 # define A_SPEED 0.05
@@ -142,6 +142,7 @@ typedef struct s_game
 	t_player	player;
 	float		proj_plane_dist;
 	float		*rays_dist;
+	float		*start_angle;
 	bool		minimap;
 	bool		mouse;
 }				t_game;
