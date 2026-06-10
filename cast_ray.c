@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 12:03:48 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 11:36:35 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,18 @@ void	perform_dda(t_ray *ray, t_game *game)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			move_ray(&ray->side_dist_x, ray->delta_dist_x, &ray->map_x, ray->step_x);
+			move_ray(&ray->side_dist_x, ray->delta_dist_x,
+				&ray->map_x, ray->step_x);
 			ray->side = 0;
 		}
 		else
 		{
-			move_ray(&ray->side_dist_y, ray->delta_dist_y, &ray->map_y, ray->step_y);
+			move_ray(&ray->side_dist_y, ray->delta_dist_y,
+				&ray->map_y, ray->step_y);
 			ray->side = 1;
 		}
-		if (ray->map_x < 0 || ray->map_y < 0 || ray->map_y >= game->map.total_row
-			|| ray->map_x >= game->map.total_column)
+		if (ray->map_x < 0 || ray->map_y < 0 || ray->map_y
+			>= game->map.total_row || ray->map_x >= game->map.total_column)
 		{
 			ray->hit = -1;
 			return ;

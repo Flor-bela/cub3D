@@ -12,16 +12,6 @@
 
 #include "cub3D.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 char	*set_line(char **rest)
 {
 	char	*line;
@@ -29,6 +19,8 @@ char	*set_line(char **rest)
 	size_t	len;
 
 	len = 0;
+	if (!rest || !(*rest) || **rest == '\0')
+		return (NULL);
 	while ((*rest)[len] && (*rest)[len] != '\n')
 		len++;
 	if ((*rest)[len] == '\n')
@@ -45,23 +37,11 @@ char	*set_line(char **rest)
 	*rest = temp;
 	return (line);
 }
-
-char	*join_buffer(char *rest, char *buffer)
-{
-	char	*temp;
-
-	temp = rest;
-	rest = ft_strjoin(temp, buffer);
-	if (!rest)
-		return (free(rest), NULL);
-	free(temp);
-	temp = NULL;
-	return (rest);
-}
-
+ 
 static char	*fill_line_buffer(int fd, char *rest)
 {
 	ssize_t	bytes_read;
+	char	*temp;
 	char	*buffer;
 
 	bytes_read = 1;
@@ -72,17 +52,35 @@ static char	*fill_line_buffer(int fd, char *rest)
 	{
 		bytes_read = read(fd, buffer, 1024);
 		if (bytes_read < 0)
-			return (free (rest), free(buffer), NULL);
+		{
+			free(buffer);
+			if (rest)
+				free(rest);
+			return (NULL);
+		}
 		else if (bytes_read == 0)
 			break ;
 		buffer[bytes_read] = '\0';
 		if (!rest)
+		{
 			rest = ft_strdup("");
-		rest = join_buffer(rest, buffer);
+			if (!rest)
+				return (free(buffer), NULL);
+		}
+		temp = ft_strjoin(rest, buffer);
+		if (!temp)
+		{
+			free(buffer);
+			free(rest);
+			return (NULL);
+		}
+		free(rest);
+		rest = temp;
 		if (ft_strchr(buffer, '\n'))
-			break ;
+			break;
 	}
-	return (free (buffer), rest);
+	free(buffer);
+	return (rest);
 }
 
 char	*get_next_line(int fd)
@@ -90,7 +88,7 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	static char	*rest;
 
-	if (fd < 0 || 1024 <= 0)
+	if (fd < 0)
 		return (NULL);
 	rest = fill_line_buffer(fd, rest);
 	if (!rest)

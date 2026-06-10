@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:13:32 by fda-roch          #+#    #+#             */
-/*   Updated: 2025/05/19 14:50:57 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 14:45:33 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strchr(const char *s, int c)
 
 	ch = (unsigned char)c;
 	i = 0;
+	if(!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		if (s[i] == ch)

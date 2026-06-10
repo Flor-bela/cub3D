@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_walls.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/05 17:34:53 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 12:06:50 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	error_walls(void)
 {
-	write(2, "Error \n map not enclosed by walls.\n", 36);
+	write(2, "Error \nMap not enclosed by walls.\n", 35);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/05 17:32:04 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 12:08:10 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	check_single_char(t_game *game, int *flag, int row, int *col)
 		(*col)++;
 	else
 	{
-		write(2, "Error \n incorrect character on the map.\n", 41);
+		write(2, "Error \nIncorrect character on the map.\n", 40);
 		return (0);
 	}
 	return (1);
@@ -59,7 +59,7 @@ int	check_characters_map(t_game *game)
 	}
 	if (flag != 1)
 	{
-		write(2, "Error \n incorrect starting point.\n", 35);
+		write(2, "Error \nIncorrect starting point.\n", 34);
 		return (0);
 	}
 	return (1);

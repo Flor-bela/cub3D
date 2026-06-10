@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 13:39:50 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 11:38:52 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	move_mouse(t_game *game, t_player *player)
 
 	center_x = WIDTH / 2;
 	center_y = HEIGHT / 2;
-
 	if (!game->mouse)
 		return ;
 	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 11:55:52 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 15:46:59 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,15 @@ int	parse_texture(char **line, t_game *game, int fd)
 // Only 2 colors, with correct format
 // Closed map
 // Only allowed characters (1, 0 and character position)
+void	close_file(int fd)
+{
+	char *line;
+
+	while((line = get_next_line(fd)))
+		free(line);
+	close(fd);
+}
+
 int	parse_file(int fd, t_game *game)
 {
 	char	*line;
@@ -99,14 +108,14 @@ int	parse_file(int fd, t_game *game)
 	line = NULL;
 	if (!parse_texture(&line, game, fd))
 	{
-		close(fd);
 		free(line);
+		close_file(fd);
 		game_destroy(game, "The textures are not correct", errno);
 	}
 	if (!parse_color(&line, game, fd))
 	{
-		close(fd);
 		free(line);
+		close_file(fd);
 		game_destroy(game, "The colors are not correct", errno);
 	}
 	if (!parse_map(&line, game, fd))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:04 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 12:02:07 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 11:34:03 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	buffer_wall(t_ray *ray, int i, t_game *game)
 	texture = get_texture(game, ray);
 	tex.texx = get_texx(game->player, ray, texture);
 	tex.step = (double)texture.height / ray->line_height;
-	tex.texpos = (ray->draw_start - HEIGHT / 2 + ray->line_height / 2) * tex.step;
+	tex.texpos = (ray->draw_start - HEIGHT / 2 + ray->line_height / 2)
+		* tex.step;
 	while (ray->draw_start < ray->draw_end)
 	{
 		tex.texy = (int)tex.texpos & (TILE_SIZE - 1);

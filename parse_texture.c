@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:07:45 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/05/17 14:02:56 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/09 15:42:53 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	save_path(char *path, char **texture)
 {
 	if (*texture)
 	{
-		printf("Textura ya usada\n");
-		printf("%s\n", path);
 		free(path);
 		return (0);
 	}
@@ -44,7 +42,7 @@ char	*extract_path(char *line)
 	while (line[start] && ft_isspace(line[start]))
 		start++;
 	end = start;
-	while (line[end] && line[end] != '\n')
+	while (line[end] && line[end] != '\n' && line[end] != ' ')
 		end++;
 	return (ft_substr(line, start, end - start));
 }
@@ -64,6 +62,7 @@ int	extract_texture(char *line, t_game *game)
 		return (save_path(path, &game->map.text_path[WE]));
 	else if (ft_strncmp(line, "EA", 2) == 0 && game->map.text_path[WE])
 		return (save_path(path, &game->map.text_path[EA]));
+	free(path);
 	return (1);
 }
 
