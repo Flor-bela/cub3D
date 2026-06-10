@@ -6,7 +6,7 @@
 /*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 11:55:52 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:53:38 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,19 @@ int	parse_map(char **line, t_game *game, int fd)
 	}
 	game->map.grid = ft_split(temp, '\n');
 	free(temp);
+	printf("rows total %d\n", game->map.total_row);
 	if (!check_characters_map(game))
 		return (0);
+	
+	int i;
+
+	i = 0;
+	while (game->map.grid[i] != NULL)
+		i++;
+	printf("i is %d\n", i);
+	printf("total rows check file is %d\n", game->map.total_row);
+	printf("Last line is %s\n", game->map.grid[i - 1]);
+	
 	if (!check_map_enclosed(game))
 		return (0);
 	return (1);
@@ -91,7 +102,7 @@ int	parse_texture(char **line, t_game *game, int fd)
 // textures with correct format
 // Only 2 colors, with correct format
 // Closed map
-// Only allowed characters (1, 0 and character position)
+// Only allowed characters (1, 0 , ' ' and character position)
 int	parse_file(int fd, t_game *game)
 {
 	char	*line;

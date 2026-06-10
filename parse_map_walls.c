@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_walls.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/05 17:34:53 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:24:33 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ int	check_map_enclosed(t_game *game)
 	int	col;
 
 	row = 0;
+	printf("total rows %d\n", game->map.total_row);
 	while (row < game->map.total_row)
 	{
 		col = 0;
-		while (game->map.grid[row][col] != '\0')
+		printf("row %d, %s\n", row, game->map.grid[row]);
+		while (col < (int)ft_strlen((game->map.grid[row])))
 		{
 			if (game->map.grid[row][col] == '0')
 			{
