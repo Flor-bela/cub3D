@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:39:06 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:40:12 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_each_char(t_game *game, int *flag, int row, int *col)
 	}
 	else if (game->map.grid[row][*col] == ' '
 		|| game->map.grid[row][*col] == '1'
-		|| game->map.grid[row][*col] == '\n' // remove this???
+		|| game->map.grid[row][*col] == '\n'
 		|| game->map.grid[row][*col] == '0')
 		(*col)++;
 	else

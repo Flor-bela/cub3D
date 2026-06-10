@@ -6,21 +6,11 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:38:28 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:52:34 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static void	update_total_row(t_game *game)
-{
-	int	row;
-
-	row = 0;
-	while (game->map.grid[row])
-		row++;
-	game->map.total_row = row;
-}
 
 int	parse_map(char **line, t_game *game, int fd)
 {
@@ -74,7 +64,7 @@ int	parse_color(char **line, t_game *game, int fd)
 int	parse_texture(char **line, t_game *game, int fd)
 {
 	*line = get_next_line(fd);
-	if(!*line)
+	if (!*line)
 		game_destroy(game, "Empty file", 0);
 	while (*line)
 	{
@@ -96,22 +86,19 @@ int	parse_texture(char **line, t_game *game, int fd)
 	return (1);
 }
 
-// We jump empty lines
-// We check we have 4 textures, no repetitions, no less or more than 4 
-// textures with correct format
-// Only 2 colors, with correct format
-// Closed map
-// Only allowed characters (1, 0 and character position)
-void	close_file(int fd)
-{
-	char *line;
-
-	while((line = get_next_line(fd)))
-		free(line);
-	close(fd);
-}
-
-// Only allowed characters (1, 0 , ' ' and character position)
+/**
+ * @brief Parses the game config. file including textures, colors, and the map.
+ * @details This function skips empty lines and checks these rules:
+ * - Exactly 4 unique textures with the correct format.
+ * - Exactly 2 colors (RGB format).
+ * - The map must only contain allowed characters ('1', '0', ' ', and the player
+ * position that could be 'N', 'S', 'W' or 'E').
+ * - The map must be fully enclosed.
+ * @param fd The file descriptor of the opened file .cub to read from.
+ * @param game Pointer to the main data structure.
+ * @return int Return 1 if successful parsing. If it fails, it frees allocated
+ * memory, closes the file, and terminates with game_destroy().
+ */
 int	parse_file(int fd, t_game *game)
 {
 	char	*line;

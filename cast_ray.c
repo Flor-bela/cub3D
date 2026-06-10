@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 11:36:35 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:58:54 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	init_ray(t_ray *ray, t_game *game, float ray_angle)
 	init_rayy(ray, game, ray_angle);
 }
 
-// We need to save rays_dist in game to use it in mini_map
+// We save rays_dist in the main game struct to use it for the minimap
 void	cast_ray(t_game *game, float ray_angle, int i)
 {
 	t_ray	ray;

@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:38:48 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:57:13 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	game_loop(t_game *game)
 	move_mouse(game, player);
 	if (game->minimap == true)
 		minimap(game);
-	//frames_per_second();
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->render.screen.img, 0, 0);
 	return (0);

@@ -15,6 +15,7 @@ MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 SOURCES =	main.c \
 			check_file.c \
+			check_file_utils.c \
 			error_utils.c \
 			get_next_line.c \
 			init.c \

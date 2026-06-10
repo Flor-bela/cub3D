@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/10 12:11:11 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:43:31 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,8 @@ void	img_init(t_game *game);
 char	*get_next_line(int fd);
 
 //check file
+void	close_file(int fd);
+void	update_total_row(t_game *game);
 int		ft_format(char *file);
 int		parse_file(int fd, t_game *game);
 
