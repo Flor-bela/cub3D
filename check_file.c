@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:52:34 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 15:37:52 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	parse_file(int fd, t_game *game)
 	{
 		close(fd);
 		free(line);
-		game_destroy(game, 0, errno);
+		game_destroy(game, "m", errno);
 	}
 	player_direction(game);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:38:44 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 15:36:33 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	game_destroy(t_game *game, char *errmsg, int errnum)
 
 void	die(char *errmsg, int errnum)
 {
+	if (errmsg != 0 && *errmsg == 'm')
+		exit(1);
 	if (errmsg != 0 || errnum != 0)
 		ft_putendl_fd("Error", 2);
 	if (errmsg != 0)
@@ -87,8 +89,6 @@ void	die(char *errmsg, int errnum)
 		ft_putendl_fd("", 2);
 		exit(1);
 	}
-	if (errmsg == 0)
-		exit(1);
 	exit(0);
 }
 
