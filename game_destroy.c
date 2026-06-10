@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_destroy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 12:14:43 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:38:44 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	game_destroy(t_game *game, char *errmsg, int errnum)
 			free(game->mlx);
 		}
 		free(game->rays_dist);
+		free(game->start_angle);
 		free_map(game);
 		free(game);
 	}

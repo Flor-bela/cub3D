@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:18:02 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:38:28 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static void	update_total_row(t_game *game)
+{
+	int	row;
+
+	row = 0;
+	while (game->map.grid[row])
+		row++;
+	game->map.total_row = row;
+}
 
 int	parse_map(char **line, t_game *game, int fd)
 {
@@ -26,12 +36,12 @@ int	parse_map(char **line, t_game *game, int fd)
 	while (*line)
 	{
 		temp = ft_strjoin_free(temp, *line);
-		game->map.total_row++;
 		free(*line);
 		*line = get_next_line(fd);
 	}
 	game->map.grid = ft_split(temp, '\n');
 	free(temp);
+	update_total_row(game);
 	if (!check_characters_map(game))
 		return (0);
 	if (!check_map_enclosed(game))
@@ -101,6 +111,7 @@ void	close_file(int fd)
 	close(fd);
 }
 
+// Only allowed characters (1, 0 , ' ' and character position)
 int	parse_file(int fd, t_game *game)
 {
 	char	*line;

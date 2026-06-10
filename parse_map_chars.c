@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 12:08:10 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:39:06 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	check_single_char(t_game *game, int *flag, int row, int *col)
+static int	check_each_char(t_game *game, int *flag, int row, int *col)
 {
 	if (game->map.grid[row][*col] == 'N' || game->map.grid[row][*col] == 'S'
 			|| game->map.grid[row][*col] == 'W'
@@ -25,8 +25,8 @@ static int	check_single_char(t_game *game, int *flag, int row, int *col)
 		(*col)++;
 	}
 	else if (game->map.grid[row][*col] == ' '
-		|| game->map.grid[row][*col] == '\n'
 		|| game->map.grid[row][*col] == '1'
+		|| game->map.grid[row][*col] == '\n' // remove this???
 		|| game->map.grid[row][*col] == '0')
 		(*col)++;
 	else
@@ -45,12 +45,12 @@ int	check_characters_map(t_game *game)
 
 	row = 0;
 	flag = 0;
-	while (game->map.grid[row] != NULL)
+	while (row < game->map.total_row)
 	{
 		col = 0;
 		while (game->map.grid[row][col] != '\0')
 		{
-			if (!check_single_char(game, &flag, row, &col))
+			if (!check_each_char(game, &flag, row, &col))
 				return (0);
 		}
 		if (game->map.total_column < col)

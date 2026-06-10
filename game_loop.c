@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 11:38:52 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:38:48 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ void	move_mouse(t_game *game, t_player *player)
 	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
 	if (x != center_x)
 	{
-		if (x < center_x)
-			player->p_angle -= A_SPEED * 0.5;
-		else if (x > center_x)
-			player->p_angle += A_SPEED * 0.5;
+		player->p_angle += (x - center_x) * 0.0005;
+		if (player->p_angle > 2 * PI)
+			player->p_angle -= 2 * PI;
+		if (player->p_angle < 0)
+			player->p_angle += 2 * PI;
 		mlx_mouse_move(game->mlx, game->win, center_x, center_y);
 		mlx_mouse_hide(game->mlx, game->win);
 	}
@@ -37,16 +38,13 @@ void	move_mouse(t_game *game, t_player *player)
 
 void	minimap(t_game *game)
 {
-	int		i;
-	float	start_angle;
+	int	i;
 
 	i = 0;
 	draw_minimap(game);
 	while (i < WIDTH)
 	{
-		start_angle = game->player.p_angle + atan((i - (WIDTH / 2))
-				/ game->proj_plane_dist);
-		draw_ray_on_minimap(game, game->rays_dist[i], start_angle);
+		draw_ray_on_minimap(game, game->rays_dist[i], game->start_angle[i]);
 		i++;
 	}
 }
@@ -55,7 +53,6 @@ int	game_loop(t_game *game)
 {
 	t_player	*player;
 	float		fov;
-	float		start_angle;
 	int			i;
 
 	player = &game->player;
@@ -65,14 +62,15 @@ int	game_loop(t_game *game)
 	i = 0;
 	while (i < WIDTH)
 	{
-		start_angle = game->player.p_angle + atan((i - (WIDTH / 2))
+		game->start_angle[i] = game->player.p_angle + atan((i - (WIDTH / 2))
 				/ game->proj_plane_dist);
-		cast_ray(game, start_angle, i);
+		cast_ray(game, game->start_angle[i], i);
 		i++;
 	}
 	move_mouse(game, player);
 	if (game->minimap == true)
 		minimap(game);
+	//frames_per_second();
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->render.screen.img, 0, 0);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:18 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 12:29:55 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:38:55 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ t_game	*init_game(void)
 	game->map.grid = NULL;
 	game->rays_dist = (float *)malloc(sizeof(float) * WIDTH);
 	if (!game->rays_dist)
+		die("init_game(): malloc()", errno);
+	game->start_angle = (float *)malloc(sizeof(float) * WIDTH);
+	if (!game->start_angle)
 		die("init_game(): malloc()", errno);
 	init_textures(game);
 	game->map.total_row = 0;
