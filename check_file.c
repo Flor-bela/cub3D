@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 15:37:52 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 16:24:33 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	parse_texture(char **line, t_game *game, int fd)
 }
 
 /**
- * @brief Parses the game config. file including textures, colors, and the map.
- * @details This function skips empty lines and checks these rules:
+ * @brief Parses the game .cub file including textures, colors, and the map.
+ * - This function skips empty lines and checks these rules:
  * - Exactly 4 unique textures with the correct format.
  * - Exactly 2 colors (RGB format).
  * - The map must only contain allowed characters ('1', '0', ' ', and the player
@@ -96,7 +96,7 @@ int	parse_texture(char **line, t_game *game, int fd)
  * - The map must be fully enclosed.
  * @param fd The file descriptor of the opened file .cub to read from.
  * @param game Pointer to the main data structure.
- * @return int Return 1 if successful parsing. If it fails, it frees allocated
+ * @return int 1 if successful parsing. If it fails, it frees allocated
  * memory, closes the file, and terminates with game_destroy().
  */
 int	parse_file(int fd, t_game *game)
