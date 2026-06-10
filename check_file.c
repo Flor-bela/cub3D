@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 18:53:38 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:28:30 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static void	update_total_row(t_game *game)
+{
+	int	row;
+
+	row = 0;
+	while (game->map.grid[row])
+		row++;
+	game->map.total_row = row;
+}
 
 int	parse_map(char **line, t_game *game, int fd)
 {
@@ -26,25 +36,14 @@ int	parse_map(char **line, t_game *game, int fd)
 	while (*line)
 	{
 		temp = ft_strjoin_free(temp, *line);
-		game->map.total_row++;
 		free(*line);
 		*line = get_next_line(fd);
 	}
 	game->map.grid = ft_split(temp, '\n');
 	free(temp);
-	printf("rows total %d\n", game->map.total_row);
+	update_total_row(game);
 	if (!check_characters_map(game))
 		return (0);
-	
-	int i;
-
-	i = 0;
-	while (game->map.grid[i] != NULL)
-		i++;
-	printf("i is %d\n", i);
-	printf("total rows check file is %d\n", game->map.total_row);
-	printf("Last line is %s\n", game->map.grid[i - 1]);
-	
 	if (!check_map_enclosed(game))
 		return (0);
 	return (1);

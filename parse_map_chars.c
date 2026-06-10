@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 19:07:13 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:29:44 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 
 static int	check_each_char(t_game *game, int *flag, int row, int *col)
 {
-	printf("row %d, c is %c\n", row, game->map.grid[row][*col]);
-	if (game->map.grid[row][0] == '\n' || game->map.grid[row][0] == '\0')
-	{			
-		write(2, "Error \n incorrect character on the map.\n", 41);
-		return (0);
-	}
-	
 	if (game->map.grid[row][*col] == 'N' || game->map.grid[row][*col] == 'S'
 			|| game->map.grid[row][*col] == 'W'
 			|| game->map.grid[row][*col] == 'E')
@@ -33,7 +26,7 @@ static int	check_each_char(t_game *game, int *flag, int row, int *col)
 	}
 	else if (game->map.grid[row][*col] == ' '
 		|| game->map.grid[row][*col] == '1'
-		|| game->map.grid[row][*col] == '\n'
+		|| game->map.grid[row][*col] == '\n' // remove this???
 		|| game->map.grid[row][*col] == '0')
 		(*col)++;
 	else
@@ -52,13 +45,11 @@ int	check_characters_map(t_game *game)
 
 	row = 0;
 	flag = 0;
-	while (row < game->map.total_row) // o sea.... no llega a row 10
+	while (row < game->map.total_row)
 	{
 		col = 0;
-		while (game->map.grid[row][col] != '\0') // aqui da segmentation fault....porque??? 
+		while (game->map.grid[row][col] != '\0')
 		{
-			// nunca llega aqui a ir a row 14....
-			printf("row here is %d\n", row);
 			if (!check_each_char(game, &flag, row, &col))
 				return (0);
 		}
