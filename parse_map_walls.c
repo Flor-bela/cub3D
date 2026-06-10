@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:39:10 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 17:04:31 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	error_walls(void)
 
 static int	check_map_cols(int col, int row, int *flag, t_game *game)
 {
+	////////////////////////////////////////////////////// printf -> ver rows de nuevo!!!!
 	if ((col + 1) < (int)ft_strlen(game->map.grid[row]))
 	{
 		(*flag)++;

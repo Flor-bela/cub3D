@@ -2,7 +2,7 @@
 
 ## Description
 
-cub3D
+cub3D is a project where we develop a faux 3D game with a technique called ray-casting. The first commercial game developed with this technique.......
 
 ## Instructions
 

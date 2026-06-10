@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 16:24:33 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/10 17:06:59 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	parse_texture(char **line, t_game *game, int fd)
 {
 	*line = get_next_line(fd);
 	if (!*line)
+	{
 		game_destroy(game, "Empty file", 0);
+		close (fd);
+	}
 	while (*line)
 	{
 		if (empty_line(*line))
