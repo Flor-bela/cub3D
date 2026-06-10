@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:28 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/05 14:34:50 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:15:35 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	all_colors_found(t_game *game)
 
 int	spaces(char *line, int i)
 {
-	while (line[i] && !ft_isdigit(line[i]))
+	
+	while (line[i] && (line[i] == ' ' || line[i] == ','))
 		i++;
 	return (i);
 }
@@ -42,21 +43,20 @@ int	save_color(char *line, int *colors, int *ccolor)
 	int		size;
 
 	index = 0;
-	i = 0;
+	i = 1;
 	while (line[i])
 	{
 		i = spaces(line, i);
 		size = i;
 		while (line[size] && ft_isdigit(line[size]))
 			size++;
-		if (size - i > 0)
-		{
-			if (index > 2)
-				return (0);
-			temp = ft_substr(line, i, size);
-			colors[index++] = ft_atoi(temp);
-			free(temp);
-		}
+		if (size - i == 0)
+			break ;
+		if (index > 2)
+			return (0);
+		temp = ft_substr(line, i, size - i);
+		colors[index++] = ft_atoi(temp);
+		free(temp);
 		i = size;
 	}
 	*ccolor = ((colors[0] << 16) | (colors[1] << 8) | colors[2]);

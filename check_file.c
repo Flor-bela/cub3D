@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 15:46:59 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/10 13:18:02 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	parse_color(char **line, t_game *game, int fd)
 {
 	while (*line)
 	{
-		if (all_colors_found(game))
-			return (1);
 		if (empty_line(*line))
 		{
 			free(*line);
@@ -66,6 +64,8 @@ int	parse_color(char **line, t_game *game, int fd)
 int	parse_texture(char **line, t_game *game, int fd)
 {
 	*line = get_next_line(fd);
+	if(!*line)
+		game_destroy(game, "Empty file", 0);
 	while (*line)
 	{
 		if (empty_line(*line))
