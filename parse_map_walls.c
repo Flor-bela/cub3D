@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_walls.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 17:04:31 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:49:56 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,20 @@ static int	error_walls(void)
 
 static int	check_map_cols(int col, int row, int *flag, t_game *game)
 {
-	////////////////////////////////////////////////////// printf -> ver rows de nuevo!!!!
 	if ((col + 1) < (int)ft_strlen(game->map.grid[row]))
 	{
 		(*flag)++;
 		if (game->map.grid[row][col + 1] == ' '
-			|| game->map.grid[row][col + 1] == '\n')
+			|| game->map.grid[row][col + 1] == '\n'
+			|| !game->map.grid[row][col + 1])
 			return (error_walls());
 	}
 	if ((col - 1) >= 0)
 	{
 		(*flag)++;
 		if (game->map.grid[row][col - 1] == ' '
-			|| game->map.grid[row][col - 1] == '\n')
+			|| game->map.grid[row][col - 1] == '\n'
+			|| !game->map.grid[row][col + 1])
 			return (error_walls());
 	}
 	return (1);
@@ -44,14 +45,16 @@ static int	check_map_rows(int col, int row, int *flag, t_game *game)
 	{
 		(*flag)++;
 		if (game->map.grid[row - 1][col] == ' '
-			|| game->map.grid[row - 1][col] == '\n')
+			|| game->map.grid[row - 1][col] == '\n'
+			|| !game->map.grid[row - 1][col])
 			return (error_walls());
 	}
 	if ((row + 1) < game->map.total_row)
 	{
 		(*flag)++;
 		if (game->map.grid[row + 1][col] == ' '
-			|| game->map.grid[row + 1][col] == '\n')
+			|| game->map.grid[row + 1][col] == '\n'
+			|| !game->map.grid[row + 1][col])
 			return (error_walls());
 	}
 	return (1);

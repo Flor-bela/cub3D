@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 17:03:51 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:49:37 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	check_each_char(t_game *game, int *flag, int row, int *col)
 {
-	printf("row %d %s\n", row, game->map.grid[row]); //////
 	if (game->map.grid[row][*col] == 'N' || game->map.grid[row][*col] == 'S'
 			|| game->map.grid[row][*col] == 'W'
 			|| game->map.grid[row][*col] == 'E')
