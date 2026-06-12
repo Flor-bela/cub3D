@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/10 13:43:31 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:36:51 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # define TILE_SIZE 64
 # define TILE_MINI 10
-# define WIDTH 1920
+//# define WIDTH 2560
+//# define HEIGHT 1600
+# define WIDTH 1980
 # define HEIGHT 1200
 
 # define SPEED 5

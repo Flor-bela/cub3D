@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:15:08 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/08 12:03:48 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:41:56 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	valid_move(t_player *player, float x, float y, char **grid)
 	int	n_map_x;
 	int	n_map_y;
 
-	n_map_x = player->p_x + x * SPEED;
-	n_map_y = player->p_y + y * SPEED;
+	n_map_x = player->p_x + x * SPEED; // Calcular con WIDTH aqui??? 
+	n_map_y = player->p_y + y * SPEED; // 
 	if (valid_x(n_map_x, player->p_y, grid))
 		player->p_x = n_map_x;
 	if (valid_y(player->p_x, n_map_y, grid))
