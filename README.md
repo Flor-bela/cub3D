@@ -93,6 +93,8 @@ Finally:
 
 $$ ray\_angle = player\_angle + \theta $$
 
+![alt text](proyection_plane.png)
+
 This approach models a flat projection plane and associates each ray directly with a screen column, producing a more geometrically accurate camera model than a simple uniform angular sweep.
 
 ### 1. **Ray Vector Derivation:**
