@@ -130,6 +130,8 @@ This approach models a flat projection plane and associates each ray directly wi
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
    $$\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle})$$
 
+   ![alt text](<Fish_eye.png>)
+
    *The Euclidean distance measures the ray length, but wall projection requires the distance perpendicular to the camera plane*
 
 ### 4. **Wall Texture Mapping:**
@@ -138,9 +140,8 @@ This approach models a flat projection plane and associates each ray directly wi
    At this stage we already know:
 
    - The exact grid cell where the ray hit a wall
-   - The axis of impact (`side`: vertical or horizontal)
+   - The axis and the direction of impact
    - The perpendicular distance to the wall
-   - The ray angle used for this column
 
    #### Wall Hit Position (`wall_x`)
 
@@ -155,6 +156,8 @@ This approach models a flat projection plane and associates each ray directly wi
    $$ wall\_x = wall\_x - \lfloor wall\_x \rfloor $$
 
    This gives a normalized coordinate in range `[0, 1]`, representing the exact hit position within the tile.
+
+   ![alt text](Wall_x.png)
 
    #### Texture Coordinate Mapping
 
