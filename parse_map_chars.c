@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/11 16:49:37 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/24 13:45:13 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static int	check_starting_point_pos(t_game *game, int row, int col)
+{
+	int	flag;
+
+	flag = 0;
+	if (row + 1 <= HEIGHT && (game->map.grid[row + 1][col] == ' '
+		|| game->map.grid[row + 1][col] == '\n'
+		|| !game->map.grid[row + 1][col]))
+		flag++;
+	if (row - 1 >= 0 && (game->map.grid[row - 1][col] == ' '
+		|| game->map.grid[row - 1][col] == '\n'
+		|| !game->map.grid[row - 1][col]))
+		flag++;
+	if (col + 1 <= WIDTH && (game->map.grid[row][col + 1] == ' '
+		|| game->map.grid[row][col + 1] == '\n'
+		|| !game->map.grid[row][col + 1]))
+		flag++;
+	if (col - 1 >= 0 && (game->map.grid[row][col - 1] == ' '
+		|| game->map.grid[row][col - 1] == '\n'
+		|| !game->map.grid[row][col - 1]))
+		flag++;
+	if (flag != 0)
+	{
+		write(2, "Error \nIncorrect starting point.\n", 34);
+		return (0);
+	}
+	return (1);
+}
 
 static int	check_each_char(t_game *game, int *flag, int row, int *col)
 {
@@ -18,6 +47,8 @@ static int	check_each_char(t_game *game, int *flag, int row, int *col)
 			|| game->map.grid[row][*col] == 'W'
 			|| game->map.grid[row][*col] == 'E')
 	{
+		if (!check_starting_point_pos(game, row, *col))
+			return (0);
 		game->player.p_x = *col * TILE_SIZE + TILE_SIZE / 2;
 		game->player.p_y = row * TILE_SIZE + TILE_SIZE / 2;
 		game->player.pov = game->map.grid[row][*col];
