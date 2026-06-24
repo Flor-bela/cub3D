@@ -1,9 +1,9 @@
 NAME = cub3D
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g
+#FLAGS = -Wall -Wextra -Werror -g
 # Use -O3 in 42 campus only:
-# FLAGS = -Wall -Wextra -Werror -g -O3
+FLAGS = -Wall -Wextra -Werror -g -O3
 
 MLX_DIR = minilibx-linux
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
