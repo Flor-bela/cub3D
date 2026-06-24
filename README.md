@@ -40,11 +40,11 @@ Instead of using a moving camera plane vector, we the player's view orientation 
 
 Ray-casting is a rendering technique used to create a 3D perspective from a 2D map. It is highly efficient because it only requires one calculation per vertical screen column. Our implementation is limited to walls of uniform height represented as orthogonal square tiles on a 2D grid.
 
-![alt text](ray-casting.png) 
+![alt text](assets/README/ray-casting.png)
 
 The goal of ray-casting is to detect the walls surrounding the player within the camera's field of view and calculate their distance from the player. This distance is then used to determine the apparent wall height on the screen.
 
-![alt text](player-view-1.png)
+![alt text](assets/README/player-view-1.png)
 
 For each vertical screen column (each x-coordinate), a ray is cast from the player's position. Its direction depends on both the player's viewing angle and the column's position on the screen. The ray traverses the 2D map until it intersects a wall. Once a collision is detected, the distance between the player and the wall is calculated and used to determine the wall's projected height. The farther away a wall is, the smaller it appears on the screen.
 
@@ -125,7 +125,7 @@ Finally:
 
 $$ ray\_angle = player\_angle + \theta $$
 
-![alt text](proyection_plane.png)
+![alt text](assets/README/proyection_plane.png)
 
 This approach models a flat projection plane and associates each ray directly with a screen column, producing a more geometrically accurate camera model than a simple uniform angular sweep.
 
@@ -158,13 +158,13 @@ This approach models a flat projection plane and associates each ray directly wi
    Although the ray is defined in **continuous direction space**, the collision detection is performed in **discrete grid space**, where each step corresponds to crossing a tile boundary.
 
 
-![alt text](DDA-1.png)
+![alt text](assets/README/DDA-1.png)
 
 ### 3. **Fish-Eye Correction:**
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
    $$\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle})$$
 
-   ![alt text](<Fish_eye.png>)
+   ![alt text](assets/README/Fish%20eye.png)
 
    *The Euclidean distance measures the ray length, but wall projection requires the distance perpendicular to the camera plane*
 
@@ -191,7 +191,7 @@ This approach models a flat projection plane and associates each ray directly wi
 
    This gives a normalized coordinate in range `[0, 1]`, representing the exact hit position within the tile.
 
-   ![alt text](Wall_x.png)
+   ![alt text](assets/README/Wall_x.png)
 
    #### Texture Coordinate Mapping
 
