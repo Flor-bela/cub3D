@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:04 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 11:34:03 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/24 16:52:14 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	buffer_wall(t_ray *ray, int i, t_game *game)
 		* tex.step;
 	while (ray->draw_start < ray->draw_end)
 	{
-		tex.texy = (int)tex.texpos & (TILE_SIZE - 1);
+		//tex.texy = (int)tex.texpos & (TILE_SIZE - 1); //??
+		tex.texy = (int)tex.texpos; // con el bitwise & TILE_SIZE - 1 nuestras texturas nunca se ven completas si son más grandes que TILE_SIZE....
 		tex.texpos += tex.step;
 		if (tex.texy < 0)
 			tex.texy = 0;

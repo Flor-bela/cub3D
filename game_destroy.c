@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 15:36:33 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/24 17:25:39 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	die(char *errmsg, int errnum)
 
 int	close_game(t_game *game)
 {
-	ft_putendl_fd("¡Gracias por jugar!", 1);
+	ft_putendl_fd("Thank you for playing!", 1);
 	game_destroy(game, NULL, 0);
 	exit (0);
 }

@@ -1,14 +1,14 @@
-NO ./assets/north.xpm
-SO ./assets/south.xpm
-WE ./assets/west.xpm
-EA ./assets/east.xpm
+NO ./assets/moroccan_tile_small.xpm
+SO ./assets/spanish_tile_small.xpm
+WE ./assets/marble_blue_tile_small.xpm
+EA ./assets/marble_tile_small.xpm
 
 F 60, 120, 200
 C 180,170,200
 
 1111111111111111111111111
 1000000000000000000001111
-1011000000000S000000000001
+1011000000000N000000000001
 1100100000000000000000000011111111
 111111111011000001110000000000001
 100000000011111000001110111111111
