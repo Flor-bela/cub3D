@@ -19,8 +19,6 @@ char	*set_line(char **rest)
 	size_t	len;
 
 	len = 0;
-	if (!rest || !(*rest) || **rest == '\0')
-		return (NULL);
 	while ((*rest)[len] && (*rest)[len] != '\n')
 		len++;
 	if ((*rest)[len] == '\n')
@@ -38,10 +36,22 @@ char	*set_line(char **rest)
 	return (line);
 }
 
+char	*join_buffer(char *rest, char *buffer)
+{
+	char	*temp;
+
+	temp = rest;
+	rest = ft_strjoin(temp, buffer);
+	if (!rest)
+		return (free(rest), NULL);
+	free(temp);
+	temp = NULL;
+	return (rest);
+}
+
 static char	*fill_line_buffer(int fd, char *rest)
 {
 	ssize_t	bytes_read;
-	char	*temp;
 	char	*buffer;
 
 	bytes_read = 1;
@@ -52,35 +62,17 @@ static char	*fill_line_buffer(int fd, char *rest)
 	{
 		bytes_read = read(fd, buffer, 1024);
 		if (bytes_read < 0)
-		{
-			free(buffer);
-			if (rest)
-				free(rest);
-			return (NULL);
-		}
+			return (free (rest), free(buffer), NULL);
 		else if (bytes_read == 0)
 			break ;
 		buffer[bytes_read] = '\0';
 		if (!rest)
-		{
 			rest = ft_strdup("");
-			if (!rest)
-				return (free(buffer), NULL);
-		}
-		temp = ft_strjoin(rest, buffer);
-		if (!temp)
-		{
-			free(buffer);
-			free(rest);
-			return (NULL);
-		}
-		free(rest);
-		rest = temp;
+		rest = join_buffer(rest, buffer);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
-	free(buffer);
-	return (rest);
+	return (free (buffer), rest);
 }
 
 char	*get_next_line(int fd)

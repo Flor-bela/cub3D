@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:07:45 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/09 15:42:53 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:29:31 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ int	extract_texture(char *line, t_game *game)
 		return (save_path(path, &game->map.text_path[WE]));
 	else if (ft_strncmp(line, "EA", 2) == 0 && game->map.text_path[WE])
 		return (save_path(path, &game->map.text_path[EA]));
+	else
+	{
+		free(path);
+		return (0);
+	}
 	free(path);
 	return (1);
 }
