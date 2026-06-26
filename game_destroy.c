@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:53:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/24 17:25:39 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 12:26:28 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	game_destroy_images(t_game *game)
 		}
 		i++;
 	}
-	if(game->render.screen.img)
+	if (game->render.screen.img)
 		mlx_destroy_image(game->mlx, game->render.screen.img);
 }
 

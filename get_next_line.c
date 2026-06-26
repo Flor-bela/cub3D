@@ -37,7 +37,7 @@ char	*set_line(char **rest)
 	*rest = temp;
 	return (line);
 }
- 
+
 static char	*fill_line_buffer(int fd, char *rest)
 {
 	ssize_t	bytes_read;
@@ -77,7 +77,7 @@ static char	*fill_line_buffer(int fd, char *rest)
 		free(rest);
 		rest = temp;
 		if (ft_strchr(buffer, '\n'))
-			break;
+			break ;
 	}
 	free(buffer);
 	return (rest);

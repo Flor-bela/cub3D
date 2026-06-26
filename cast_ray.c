@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:30:39 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:58:54 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 12:24:33 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,5 @@ void	cast_ray(t_game *game, float ray_angle, int i)
 	perform_dda(&ray, game);
 	calculate_wall(&ray, game, ray_angle);
 	draw_wall(&ray, game, i);
-//	debugray(ray, game, ray_angle);
 	game->rays_dist[i] = ray.perp_wall_dist;
 }

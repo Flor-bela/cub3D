@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:28 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/10 13:15:35 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/26 12:32:22 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	all_colors_found(t_game *game)
 
 int	spaces(char *line, int i)
 {
-	
 	while (line[i] && (line[i] == ' ' || line[i] == ','))
 		i++;
 	return (i);
