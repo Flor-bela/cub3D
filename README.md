@@ -64,7 +64,8 @@ All compilation commands:
 | `make` or `make all` | Build the complete project |
 | `make clean` | Remove object files (.o) |
 | `make fclean` | Remove object files and the executable |
-| `make re`| Rebuild everything from scratch | 
+| `make re`| Rebuild everything from scratch without bonus |
+| `make bonus`| Build the complete project plus bonus features (wall collision, minimap and mouse)
 
 
 ## Execution
@@ -296,6 +297,9 @@ This approach models a flat projection plane and associates each ray directly wi
    Once all columns are processed, the buffer is displayed as a single frame using the rendering backend.
 
 ## Key Features
+
+These features are activated by using `make bonus`
+
 - **Sliding Collision System:** Independent axis checking using a player boundaries threshold (`PLAYER_RADIUS` = 10) to support fluid movement when close to the walls.
 - **Minimap:** Toggleable ($2D$) map showing wall grids, player position, and live projection ray casting beams (by pressing N).
 - **Mouse camera rotation:** Toggleable camera rotation with mouse (by pressing M).
