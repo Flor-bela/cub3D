@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:28 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/26 12:32:22 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 17:35:49 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	extract_color(char *line, t_game *game)
 	}
 	else if (*line == 'C')
 	{
-		if (game->map.ceiling[0] >= 0 || game->map.floor[0] < 0)
+		if (game->map.ceiling[0] >= 0)
 			return (0);
 		return (save_color(line, game->map.ceiling, &game->map.c_color));
 	}

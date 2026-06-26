@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:07:45 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/26 16:29:31 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/26 17:32:51 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int	extract_texture(char *line, t_game *game)
 	path = extract_path(line + 2);
 	if (ft_strncmp(line, "NO", 2) == 0)
 		return (save_path(path, &game->map.text_path[NO]));
-	else if (ft_strncmp(line, "SO", 2) == 0 && game->map.text_path[NO])
+	else if (ft_strncmp(line, "SO", 2) == 0)
 		return (save_path(path, &game->map.text_path[SO]));
-	else if (ft_strncmp(line, "WE", 2) == 0 && game->map.text_path[SO])
+	else if (ft_strncmp(line, "WE", 2) == 0)
 		return (save_path(path, &game->map.text_path[WE]));
-	else if (ft_strncmp(line, "EA", 2) == 0 && game->map.text_path[WE])
+	else if (ft_strncmp(line, "EA", 2) == 0)
 		return (save_path(path, &game->map.text_path[EA]));
 	else
 	{
