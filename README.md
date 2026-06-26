@@ -316,3 +316,6 @@ These features are activated by using `make bonus`
 - [3D Ray-casting Game with Cub3D](https://devabdilah.medium.com/3d-ray-casting-game-with-cub3d-7a116376056a)
 - [Ray-casting - Medium](https://ismailassil.medium.com/ray-casting-c-8bfae2c2fc13)
 
+### AI usage
+
+AI was used in this project as a tool to explain concepts we didn't know or had forgotten, to guide our search for tutorials, to rename functions and variables, and to check for grammatical errors in this README.
