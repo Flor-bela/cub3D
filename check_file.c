@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
+/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/11 16:50:32 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 19:43:56 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static int	check_empty_lines_map(char *temp)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	if (!temp || temp[i] == '\0')
+	{
+		free(temp);
+		write(2, "Error\nMap not found\n", 21);
+		return (0);
+	}
+	while (temp[i] != '\0' && temp[i + 1] != '\0')
+	{
+		if (temp[i] == '\n' && temp[i + 1] == '\n')
+			flag = 1;
+		if (flag == 1 && temp[i] != '\0' && temp[i] != '\n')
+		{
+			free(temp);
+			write(2, "Error\nIncorrect row on map\n", 28);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
 
 int	parse_map(char **line, t_game *game, int fd)
 {
@@ -29,6 +57,8 @@ int	parse_map(char **line, t_game *game, int fd)
 		free(*line);
 		*line = get_next_line(fd);
 	}
+	if (!check_empty_lines_map(temp))
+		return (0);
 	game->map.grid = ft_split(temp, '\n');
 	free(temp);
 	update_total_row(game);
