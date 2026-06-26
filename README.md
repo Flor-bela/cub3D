@@ -155,6 +155,8 @@ This defines a continuous direction independent of scale:
 - Represent direction only, not position
 - Used to simulate infinite ray propagation through the grid
 
+<p style="text-align: center"><img src="assets/README/ray_dir.png"></p>
+
 
 ### Relationship Between Spaces
 
