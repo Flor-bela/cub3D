@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -O3 -g3
+FLAGS = -Wall -Wextra -Werror -g -O3
 
 MLX_DIR = minilibx-linux
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
@@ -34,12 +34,16 @@ SOURCES =	main.c \
 			move_player.c \
 			cast_ray.c \
 			cast_ray_utils.c \
-			minimap.c \
 			move_player_utils.c
 			
+SOURCES_BONUS = bonus/minimap.c \
+				bonus/minimap_utils.c\
+				bonus/move_mouse.c
 
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
+
+OBJECTS_BONUS = $(SOURCES_BONUS:%.c=$(OBJ_DIR)/%.o)
 
 all: $(MLX) $(LFT) $(NAME)
 
@@ -62,9 +66,9 @@ $(LFT):
 	@make -s -C libft
 	@echo " [ OK ] | Libft ready!"
 
-
 bonus: FLAGS += -DBONUS=1 -DPLAYER_RADIUS=10
-bonus: fclean $(MLX) $(LFT) $(NAME)
+bonus: fclean $(MLX) $(LFT) $(OBJECTS) $(OBJECTS_BONUS)
+	$(CC) $(FLAGS) $(OBJECTS) $(OBJECTS_BONUS) $(LFT) $(MLX_FLAGS) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ_DIR)

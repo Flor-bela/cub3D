@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/26 13:34:54 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 14:08:10 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@
 # define PI 3.14159265359
 
 //bonus
-#ifndef BONUS
+# ifndef BONUS
 #  define BONUS 0
 # endif
 
-#ifndef PLAYER_RADIUS
+# ifndef PLAYER_RADIUS
 #  define PLAYER_RADIUS 0
 # endif
 
