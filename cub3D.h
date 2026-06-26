@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/24 14:46:15 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/25 14:52:49 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 # define A 97
 # define S 115
 # define D 100
-# define M 109 // mouse
-# define N 110 // minimap
+# define M 109
+# define N 110
 # define LEFT 65361
 # define RIGHT 65363
 

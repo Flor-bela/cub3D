@@ -4,49 +4,111 @@
 
 cub3D is a faux 3D game engine inspired by the 90s *Wolfenstein 3D*, written in C using the **MiniLibX** graphical library. This project parses a `.cub` file as a 2D grid map into an immersive 3D perspective using ray-casting algorithms.
 
-### Custom Ray-casting Implementation
 
-AQUI HABLAR EN QUE CONSISTE EL RAY-CASTING
+# Instructions
+
+## Prerequisites
+
+cub3D requires a Linux environment with X11 support.
 
 
-#### The Angular Approach (our method)
-While many ray-casting tutorials (such as Lodev) use a Vector Plane approach, we used the **Angular Method** for ray generation.
+### MiniLibX
 
-Instead of using a moving camera plane vector, we the player's view orientation as a continuous floating-point angle in radians (`p_angle`). For each vertical column `i` across the `WIDTH` ($1920$), we step through target angles stored inside `start_angle[i]`.
+MiniLibX is a graphics library for creating windows and rendering pixels. In our project it is automatically downloaded from its Git repository (with Makefile), but we can also find it in the cub3D project page.
 
-1. **Ray Vector Derivation:**
-   For every column, the horizontal and vertical components of the ray are extracted directly via basic trigonometric functions:
-   $$\text{ray\_dir\_x} = \cos(\text{ray\_angle})$$
-   $$\text{ray\_dir\_y} = \sin(\text{ray\_angle})$$
-   The grid delta metrics (`delta_dist_x` and `delta_dist_y`) represent the distance the ray must travel to cross a full grid boundary ($TILE\_SIZE = 64$) and are initialized using:
-   $$\Delta\text{dist}_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad \Delta\text{dist}_y = \left| \frac{1}{\sin(\text{ray\_angle})} \right|$$
 
-2. **Digital Differential Analysis (DDA):**
-   Using `perform_dda`, the ray steps incrementally across grid intersections. Variables `side_dist_x` and `side_dist_y` track accumulated distance bounds. The traversal advances column-by-column along the shortest dimensional vector until a map grid barrier (`'1'`) is intersected.
+**MiniLibX** dependencies (X11 / Xshm / Xlib).
+These libraries are required for MiniLibX:
 
-3. **Fish-Eye Correction:**
-   Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
-   $$\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle})$$
+In Ubuntu/Debian we can install it with these 3 steps:
 
-4. **Wall Texture Mapping:**
+1. X11 Development Libraries (to create windows and handle graphics)
+	
+	`sudo apt-get update`
 
-  (VER DE NUEVO ESTA PARTE)
+	`sudo apt-get install libx11-dev libxext-dev`
 
-   The intersection axis (`side = 0` for vertical, `side = 1` for horizontal) with the directional step flags (`step_x` / `step_y`) to determine the orientation of the wall (**North**, **South**, **East**, or **West**). 
-   The horizontal texture coordinate (`texx`), from raw `.xpm` source files into the frame rendering.
+2. Math Library (for trigonometric calculations)
 
-### Key Features
+	`sudo apt-get install libm-dev`
+
+3. Build Essentials (basic build tools)
+
+	`sudo apt-get install build-essential`
+
+###  Libft
+
+Libft is a custom C standard library implementation. It is in the libft/ directory.
+
+
+## Compilation
+
+The Makefile handles all dependencies automatically with:
+
+ `make`
+
+It will build MiniLibX (libmlx.a), build Libft (libft.a), compile all Cub3D source files and link everything into the `cub3d` executable.
+
+The compiler flags used are:
+
+`-Wall -Wextra -Werror` (enable all warnings and treat them as errors)
+
+`-O3` (maximum optimization for performance)
+
+`-g` (include debug symbols)
+
+All compilation commands:
+
+| Command | Description |
+| ------- | ----------- |
+| `make` or `make all` | Build the complete project |
+| `make clean` | Remove object files (.o) |
+| `make fclean` | Remove object files and the executable |
+| `make re`| Rebuild everything from scratch | 
+
+
+## Execution
+
+Launch cub3D from its directory by using one of the example maps:
+
+`./cub3D maps/map.cub`
+
+
+## Controls
+
+cub3D uses a simple keyboard-based control. 
+
+**W / S**: Move forward / backward.
+
+**A / D**: Move left / right.
+
+**Left Arrow / Right Arrow**: Camera rotation that directly modifies the player's viewing angle.
+
+**M**: Toggle Mouse mode that controls the camera rotation too. It is turned on by default.
+
+**N**: Toggle Minimap, turned on by default.
+
+**ESC / Window Close (X)**: Exits the game.
+
+---
+---
+
+
 ## Custom Ray-casting Implementation
 
 Ray-casting is a rendering technique used to create a 3D perspective from a 2D map. It is highly efficient because it only requires one calculation per vertical screen column. Our implementation is limited to walls of uniform height represented as orthogonal square tiles on a 2D grid.
 
-![alt text](assets/README/ray-casting.png)
+
+<p style="text-align: center"><img src="assets/README/ray-casting.png"></p>
+
 
 The goal of ray-casting is to detect the walls surrounding the player within the camera's field of view and calculate their distance from the player. This distance is then used to determine the apparent wall height on the screen.
 
-![alt text](assets/README/player-view-1.png)
+<p style="text-align: center"><img src="assets/README/player-view-1.png"></p>
+
 
 For each vertical screen column (each x-coordinate), a ray is cast from the player's position. Its direction depends on both the player's viewing angle and the column's position on the screen. The ray traverses the 2D map until it intersects a wall. Once a collision is detected, the distance between the player and the wall is calculated and used to determine the wall's projected height. The farther away a wall is, the smaller it appears on the screen.
+
 
 ## Coordinate Systems
 
@@ -75,7 +137,7 @@ $$
 In this space:
 
 - Each cell represents a wall or empty space
-- DDA operates on integer tile transitions
+- DDA (Digital Differential Analysis) operates on integer tile transitions
 - This is the space used for collision detection and ray traversal
 
 ### 3. Direction Space
@@ -125,7 +187,7 @@ Finally:
 
 $$ ray\_angle = player\_angle + \theta $$
 
-![alt text](assets/README/proyection_plane.png)
+<p style="text-align: center"><img src="assets/README/proyection_plane.png"></p>
 
 This approach models a flat projection plane and associates each ray directly with a screen column, producing a more geometrically accurate camera model than a simple uniform angular sweep.
 
@@ -158,13 +220,13 @@ This approach models a flat projection plane and associates each ray directly wi
    Although the ray is defined in **continuous direction space**, the collision detection is performed in **discrete grid space**, where each step corresponds to crossing a tile boundary.
 
 
-![alt text](assets/README/DDA-1.png)
+<p style="text-align: center"><img src="assets/README/DDA-1.png"></p>
 
 ### 3. **Fish-Eye Correction:**
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
    $$\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle})$$
 
-   ![alt text](assets/README/Fish%20eye.png)
+   <p style="text-align: center"><img src="assets/README/Fish%20eye.png"></p>
 
    *The Euclidean distance measures the ray length, but wall projection requires the distance perpendicular to the camera plane*
 
@@ -191,7 +253,7 @@ This approach models a flat projection plane and associates each ray directly wi
 
    This gives a normalized coordinate in range `[0, 1]`, representing the exact hit position within the tile.
 
-   ![alt text](assets/README/Wall_x.png)
+<p style="text-align: center"><img src="assets/README/Wall_x.png"></p>
 
    #### Texture Coordinate Mapping
 
@@ -235,50 +297,16 @@ This approach models a flat projection plane and associates each ray directly wi
 
 ## Key Features
 - **Sliding Collision System:** Independent axis checking using a player boundaries threshold (`PLAYER_RADIUS` = 10) to support fluid movement when close to the walls.
-- **Minimap:** Toggleable ($2D$) map showing wall grids, player position, and live projection ray casting beams.
+- **Minimap:** Toggleable ($2D$) map showing wall grids, player position, and live projection ray casting beams (by pressing N).
+- **Mouse camera rotation:** Toggleable camera rotation with mouse (by pressing M).
 
-## Instructions
-
-### Prerequisites
-(CONTINUAR AQUI)
-
-**MiniLibX** dependencies (X11 / Xshm / Xlib).
-
-### Compilation
-
- `make`
-
- `make re`
-
-
-### Execution
-
-For example:
-
-`./cub3D maps/map.cub`
-
-
-### Controls
-**W / S**: Move forward / backward.
-
-**A / D**: Move left / right.
-
-**Left Arrow / Right Arrow**: Rotate camera view perspective.
-
-**M**: Toggle Mouse mode.
-
-**N**: Toggle Minimap.
-
-**ESC / Window Close (X)**: Exits the game.
 
 ## Resources
-
-#### Raycasting:
 
 - [Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html)
 - [Permandi's Ray-Casting Tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
 - [Cub3D by Fran Byte](https://42-fran-byte-f94097.gitlab.io/docs/cub3d/cub3d-approach-es/#/)
 - [Cub3D by Jun Han Ng](https://hackmd.io/@nszl/H1LXByIE2)
 - [3D Ray-casting Game with Cub3D](https://devabdilah.medium.com/3d-ray-casting-game-with-cub3d-7a116376056a)
+- [Ray-casting - Medium](https://ismailassil.medium.com/ray-casting-c-8bfae2c2fc13)
 
-#### AI Usage
