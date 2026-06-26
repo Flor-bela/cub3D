@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/26 14:08:10 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:57:47 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ int		is_texture_line(char *line);
 int		all_textures_found(t_game *game);
 
 int		check_characters_map(t_game *game);
+int		check_starting_point_pos(t_game *game, int row, int col);
 int		check_map_enclosed(t_game *game);
 
 void	player_direction(t_game *game);
