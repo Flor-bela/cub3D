@@ -6,40 +6,11 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:06:29 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/24 13:45:13 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:57:20 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static int	check_starting_point_pos(t_game *game, int row, int col)
-{
-	int	flag;
-
-	flag = 0;
-	if (row + 1 <= HEIGHT && (game->map.grid[row + 1][col] == ' '
-		|| game->map.grid[row + 1][col] == '\n'
-		|| !game->map.grid[row + 1][col]))
-		flag++;
-	if (row - 1 >= 0 && (game->map.grid[row - 1][col] == ' '
-		|| game->map.grid[row - 1][col] == '\n'
-		|| !game->map.grid[row - 1][col]))
-		flag++;
-	if (col + 1 <= WIDTH && (game->map.grid[row][col + 1] == ' '
-		|| game->map.grid[row][col + 1] == '\n'
-		|| !game->map.grid[row][col + 1]))
-		flag++;
-	if (col - 1 >= 0 && (game->map.grid[row][col - 1] == ' '
-		|| game->map.grid[row][col - 1] == '\n'
-		|| !game->map.grid[row][col - 1]))
-		flag++;
-	if (flag != 0)
-	{
-		write(2, "Error \nIncorrect starting point.\n", 34);
-		return (0);
-	}
-	return (1);
-}
 
 static int	check_each_char(t_game *game, int *flag, int row, int *col)
 {

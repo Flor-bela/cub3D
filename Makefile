@@ -23,6 +23,7 @@ SOURCES =	main.c \
 			parse_color.c \
 			parse_texture.c \
 			parse_map_chars.c \
+			parse_map_starting_point.c \
 			parse_map_walls.c \
 			debug.c \
 			frames_per_second.c \
