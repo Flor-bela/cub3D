@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/25 14:52:49 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 13:34:54 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # define TILE_MINI 10
 # define WIDTH 2560
 # define HEIGHT 1600
-//# define WIDTH 1980
-//# define HEIGHT 1200
+
 # if WIDTH < 2560
 #  define SPEED 5
 # endif
@@ -28,7 +27,6 @@
 # endif
 
 # define A_SPEED 0.05
-# define PLAYER_RADIUS 10
 
 # define W 119
 # define A 97
@@ -40,6 +38,15 @@
 # define RIGHT 65363
 
 # define PI 3.14159265359
+
+//bonus
+#ifndef BONUS
+#  define BONUS 0
+# endif
+
+#ifndef PLAYER_RADIUS
+#  define PLAYER_RADIUS 0
+# endif
 
 # include <unistd.h>
 # include <sys/types.h>
@@ -103,8 +110,8 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
-	int		width; //?
-	int		height; //?
+	int		width;
+	int		height;
 }			t_img;
 
 typedef struct s_player
@@ -126,8 +133,8 @@ typedef struct s_player
 typedef struct s_map
 {
 	char	**grid;
-	int		floor[3]; // datos innecesarios?
-	int		ceiling[3]; // datos innecesarios?
+	int		floor[3];
+	int		ceiling[3];
 	int		f_color;
 	int		c_color;
 	char	*text_path[4];

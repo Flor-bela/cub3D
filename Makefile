@@ -1,8 +1,6 @@
 NAME = cub3D
 
 CC = cc
-#FLAGS = -Wall -Wextra -Werror -g
-# Use -O3 in 42 campus only:
 FLAGS = -Wall -Wextra -Werror -g -O3 -g3
 
 MLX_DIR = minilibx-linux
@@ -64,6 +62,10 @@ $(LFT):
 	@make -s -C libft
 	@echo " [ OK ] | Libft ready!"
 
+
+bonus: FLAGS += -DBONUS=1 -DPLAYER_RADIUS=10
+bonus: fclean $(MLX) $(LFT) $(NAME)
+
 clean:
 	rm -rf $(OBJ_DIR)
 	@make -s clean -C libft
@@ -77,4 +79,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

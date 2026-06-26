@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:23 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/26 12:21:18 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 13:31:36 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	main(int ac, char **av)
 	if (!ft_format(av[1]))
 		game_destroy(NULL, "Correct format is .cub", 0);
 	game = init_game();
+	printf("PLAYER_RADIUS is %d\n", PLAYER_RADIUS);
+	printf("BONUS is %d\n", BONUS);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		game_destroy(game, "File cannot be open", errno);

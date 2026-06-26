@@ -6,7 +6,7 @@
 /*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:12:02 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/25 14:50:17 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/26 13:31:02 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,12 @@ int	game_loop(t_game *game)
 		cast_ray(game, game->start_angle[i], i);
 		i++;
 	}
-	move_mouse(game, player);
-	if (game->minimap == true)
-		minimap(game);
+	if (BONUS)
+	{
+		move_mouse(game, player);
+		if (game->minimap == true)
+			minimap(game);
+	}
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->render.screen.img, 0, 0);
 	return (0);
