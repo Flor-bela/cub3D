@@ -51,7 +51,7 @@ all: $(MLX) $(LFT) $(NAME)
 $(NAME): $(OBJECTS)
 	$(CC) $(FLAGS) $^ $(LFT) $(MLX_FLAGS) -o $@
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c cub3D.h
 	@mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@
 
