@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: medel-ca <medel-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:07:45 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/26 17:32:51 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/06/30 17:15:29 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 int	all_textures_found(t_game *game)
 {
-	return (game->map.text_path[NO]
+	if (game->map.text_path[NO]
 		&& game->map.text_path[SO]
 		&& game->map.text_path[WE]
-		&& game->map.text_path[EA]);
+		&& game->map.text_path[EA])
+		return (1);
+	else
+	{
+		write(2, "Error\nInvalid or missing textures\n", 35);
+		return (0);
+	}
 }
 
 int	save_path(char *path, char **texture)
@@ -25,6 +31,7 @@ int	save_path(char *path, char **texture)
 	if (*texture)
 	{
 		free(path);
+		write(2, "Error\nDuplicate texture\n", 25);
 		return (0);
 	}
 	*texture = path;
@@ -65,6 +72,7 @@ int	extract_texture(char *line, t_game *game)
 	else
 	{
 		free(path);
+		write(2, "Error\nInvalid texture\n", 23);
 		return (0);
 	}
 	free(path);

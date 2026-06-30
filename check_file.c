@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/26 19:43:56 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/06/30 17:40:55 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,52 +69,31 @@ int	parse_map(char **line, t_game *game, int fd)
 	return (1);
 }
 
-int	parse_color(char **line, t_game *game, int fd)
+int	parse_assets(char **line, t_game *game, int fd)
 {
 	while (*line)
 	{
-		if (empty_line(*line))
+		while (empty_line(*line))
 		{
 			free(*line);
 			*line = get_next_line(fd);
-			continue ;
 		}
-		if (!is_color_line(*line))
-			break ;
-		if (!extract_color(*line, game))
-			return (0);
-		free(*line);
-		*line = get_next_line(fd);
-	}
-	if (!all_colors_found(game))
-		return (0);
-	return (1);
-}
-
-int	parse_texture(char **line, t_game *game, int fd)
-{
-	*line = get_next_line(fd);
-	if (!*line)
-	{
-		game_destroy(game, "Empty file", 0);
-		close (fd);
-	}
-	while (*line)
-	{
-		if (empty_line(*line))
+		if (is_texture_line(*line))
 		{
-			free(*line);
-			*line = get_next_line(fd);
-			continue ;
+			if (!extract_texture(*line, game))
+				return (0);
 		}
-		if (!is_texture_line(*line))
+		else if (is_color_line(*line))
+		{
+			if (!extract_color(*line, game))
+				return (0);
+		}
+		else
 			break ;
-		if (!extract_texture(*line, game))
-			return (0);
 		free(*line);
 		*line = get_next_line(fd);
 	}
-	if (!all_textures_found(game))
+	if (!all_textures_found(game) || !all_colors_found(game))
 		return (0);
 	return (1);
 }
@@ -136,18 +115,17 @@ int	parse_file(int fd, t_game *game)
 {
 	char	*line;
 
-	line = NULL;
-	if (!parse_texture(&line, game, fd))
+	line = get_next_line(fd);
+	if (!*line)
 	{
-		free(line);
-		close_file(fd);
-		game_destroy(game, "The textures are not correct", errno);
+		game_destroy(game, "Empty file", 0);
+		close (fd);
 	}
-	if (!parse_color(&line, game, fd))
+	if (!parse_assets(&line, game, fd))
 	{
 		free(line);
 		close_file(fd);
-		game_destroy(game, "The colors are not correct", errno);
+		game_destroy(game, "m", errno);
 	}
 	if (!parse_map(&line, game, fd))
 	{
