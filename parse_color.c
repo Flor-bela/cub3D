@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:58:28 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/30 17:49:18 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/07/01 09:16:13 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ int	all_colors_found(t_game *game)
 	return (1);
 }
 
-int	spaces(char *line, int i)
-{
-	while (line[i] && (line[i] == ' ' || line[i] == ','))
-		i++;
-	return (i);
-}
-
 int	save_color(char *line, int *colors, int *ccolor)
 {
 	int		index;
@@ -48,19 +41,19 @@ int	save_color(char *line, int *colors, int *ccolor)
 
 	index = 0;
 	i = 1;
+	while (ft_isspace(line[i]))
+		i++;
 	while (line[i])
 	{
-		i = spaces(line, i);
-		if (!ft_isdigit(line[i]))
-			break ;
-		if (index == 3)
-		{
-			write(2, "Error\nInvalid colour\n", 22);
-			return (0);
-		}
+		if (index == 3 || !ft_isdigit(line[i]))
+			return (write(2, "Error\nInvalid format\n", 22), 0);
 		colors[index++] = ft_atoi(&line[i]);
 		while (ft_isdigit(line[i]))
-		i++;
+			i++;
+		if (line[i] == ',' || line[i] == '\n')
+			i++;
+		else
+			return (write(2, "Error\nInvalid format\n", 22), 0);
 	}
 	*ccolor = ((colors[0] << 16) | (colors[1] << 8) | colors[2]);
 	return (1);
