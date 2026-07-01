@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/07/01 12:20:54 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/07/01 12:25:44 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,10 @@ int	parse_file(int fd, t_game *game)
 	char	*line;
 
 	line = get_next_line(fd);
-	if (!*line)
+	if (!line || !*line)
 	{
-		game_destroy(game, "Empty file", 0);
 		close (fd);
+		game_destroy(game, "Empty file", 0);
 	}
 	if (!parse_assets(&line, game, fd))
 	{
