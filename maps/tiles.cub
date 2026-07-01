@@ -3,7 +3,7 @@ SO ./assets/spanish_tile_small.xpm
 WE ./assets/marble_blue_tile_small.xpm
 EA ./assets/marble_tile_small.xpm
 
-F 60, 120, 200
+F 60,120,200
 C 180,170,200
 
 1111111111111111111111111

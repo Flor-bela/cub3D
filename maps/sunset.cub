@@ -2,11 +2,14 @@
 
 NO ./assets/montain1.xpm
 SO ./assets/montain2.xpm
+
 WE ./assets/montain3.xpm
+
 EA ./assets/montain4.xpm
 
+C 171,106,140
 F 22,8,5
-C 171, 106, 140
+
 
 11111111111111111111111111111
 10000000001100000000000000001
