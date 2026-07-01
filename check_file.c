@@ -6,7 +6,7 @@
 /*   By: medel-ca <medel-ca@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:48:35 by medel-ca          #+#    #+#             */
-/*   Updated: 2026/06/30 17:40:55 by medel-ca         ###   ########.fr       */
+/*   Updated: 2026/07/01 12:20:54 by medel-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int	parse_file(int fd, t_game *game)
 		free(line);
 		game_destroy(game, "m", errno);
 	}
+	close(fd);
 	player_direction(game);
 	return (1);
 }
