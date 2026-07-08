@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-roch <fda-roch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fda-roch <<fda-roch@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:27:13 by fda-roch          #+#    #+#             */
-/*   Updated: 2026/06/26 20:28:42 by fda-roch         ###   ########.fr       */
+/*   Updated: 2026/07/08 13:38:53 by fda-roch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 # define TILE_SIZE 64
 # define TILE_MINI 10
-# define WIDTH 2560
-# define HEIGHT 1600
+//# define WIDTH 2560
+//# define HEIGHT 1600
+# define WIDTH 1980
+# define HEIGHT 1080
 
 # if WIDTH < 2560
 #  define SPEED 5

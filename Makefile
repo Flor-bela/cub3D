@@ -1,7 +1,8 @@
 NAME = cub3D
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -O3
+# FLAGS = -Wall -Wextra -Werror -g -O3
+FLAGS = -Wall -Wextra -Werror -g
 
 MLX_DIR = minilibx-linux
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
@@ -44,7 +45,8 @@ SOURCES_BONUS = bonus/minimap.c \
 OBJ_DIR = obj
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
 
-OBJECTS_BONUS = $(SOURCES_BONUS:%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR_BONUS = obj_bonus
+OBJECTS_BONUS_ALL = $(SOURCES:%.c=$(OBJ_DIR_BONUS)/%.o) $(SOURCES_BONUS:%.c=$(OBJ_DIR_BONUS)/%.o)
 
 all: $(MLX) $(LFT) $(NAME)
 
@@ -54,6 +56,10 @@ $(NAME): $(OBJECTS)
 $(OBJ_DIR)/%.o: %.c cub3D.h
 	@mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@
+
+$(OBJ_DIR_BONUS)/%.o: %.c cub3D.h
+	@mkdir -p $(dir $@)
+	$(CC) $(FLAGS) $(INC) -DBONUS=1 -DPLAYER_RADIUS=10 -c $< -o $@
 
 $(MLX):
 	@if [ ! -d "$(MLX_DIR)" ]; then \
@@ -67,12 +73,15 @@ $(LFT):
 	@make -s -C libft
 	@echo " [ OK ] | Libft ready!"
 
-bonus: FLAGS += -DBONUS=1 -DPLAYER_RADIUS=10
-bonus: fclean $(MLX) $(LFT) $(OBJECTS) $(OBJECTS_BONUS)
-	$(CC) $(FLAGS) $(OBJECTS) $(OBJECTS_BONUS) $(LFT) $(MLX_FLAGS) -o $(NAME)
+
+bonus: $(OBJ_DIR_BONUS)/.bonus
+
+$(OBJ_DIR_BONUS)/.bonus: $(MLX) $(LFT) $(OBJECTS_BONUS_ALL)
+	$(CC) $(FLAGS) $(OBJECTS_BONUS_ALL) $(LFT) $(MLX_FLAGS) -o $(NAME)
+	@touch $@
 
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR) $(OBJ_DIR_BONUS)
 	@make -s clean -C libft
 	@if [ -d "$(MLX_DIR)" ]; then \
 		$(MAKE) -C $(MLX_DIR) clean; \
