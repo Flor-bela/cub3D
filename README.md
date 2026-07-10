@@ -188,7 +188,9 @@ $$ \theta = \arctan\left(\frac{x}{projection_plane_distance}\right) $$
 
 Finally:
 
-$$ ray_angle = player_angle + \theta $$
+$$ 
+ray_angle = player_angle + \theta 
+$$
 
 <p style="text-align: center"><img src="assets/README/proyection_plane.png"></p>
 
@@ -197,14 +199,20 @@ This approach models a flat projection plane and associates each ray directly wi
 ### 1. **Ray Vector Derivation:**
    For every column, the horizontal and vertical components of the ray are extracted directly via basic trigonometric functions:
 
-$$ ray\_dir\_x = cos(ray\_angle) $$
+$$ 
+ray\_dir\_x = cos(ray\_angle) 
+$$
 
-$$ ray\_dir\_y = sin(ray\_angle) $$
+$$
+ray\_dir\_y = sin(ray\_angle)
+$$
    
 
    The grid delta metrics (`delta_dist_x` and `delta_dist_y`) represent the distance the ray must travel to cross a full grid boundary ($TILE\_SIZE = 64$) and are initialized using:
 
-$$ \Delta\text{dist}_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad \Delta\text{dist}_y = \left| \frac{1}{\sin(\text{ray\_angle})} \right| $$
+$$ 
+\Delta\text{dist}_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad \Delta\text{dist}_y = \left| \frac{1}{\sin(\text{ray\_angle})} \right| 
+$$
 
    These values determine which grid boundary the ray will hit first.
 
@@ -229,7 +237,9 @@ $$ \Delta\text{dist}_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad
 ### 3. **Fish-Eye Correction:**
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
 
-$$ \text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle}) $$
+$$ 
+\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle}) 
+$$
 
    <p style="text-align: center"><img src="assets/README/Fish%20eye.png"></p>
 
