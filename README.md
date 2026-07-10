@@ -197,9 +197,9 @@ This approach models a flat projection plane and associates each ray directly wi
 ### 1. **Ray Vector Derivation:**
    For every column, the horizontal and vertical components of the ray are extracted directly via basic trigonometric functions:
 
-$$ \ray\_dir\_x = \cos(\ray\_angle) $$
+$$ ray\_dir\_x = \cos(\ray\_angle) $$
 
-$$ \{ray\_dir\_y = \sin(\ray\_angle) $$
+$$ ray\_dir\_y = \sin(\ray\_angle) $$
    
    ![](ray_dir-1.png)
 
