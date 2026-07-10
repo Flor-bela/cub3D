@@ -197,11 +197,10 @@ This approach models a flat projection plane and associates each ray directly wi
 ### 1. **Ray Vector Derivation:**
    For every column, the horizontal and vertical components of the ray are extracted directly via basic trigonometric functions:
 
-$$ ray_dir_x = cos(ray_angle) $$
+$$ ray\_dir\_x = cos(ray\_angle) $$
 
-$$ ray_dir_y = sin(ray_angle) $$
+$$ ray\_dir\_y = sin(ray\_angle) $$
    
-   ![](ray_dir-1.png)
 
    The grid delta metrics (`delta_dist_x` and `delta_dist_y`) represent the distance the ray must travel to cross a full grid boundary ($TILE\_SIZE = 64$) and are initialized using:
 
