@@ -197,9 +197,9 @@ This approach models a flat projection plane and associates each ray directly wi
 ### 1. **Ray Vector Derivation:**
    For every column, the horizontal and vertical components of the ray are extracted directly via basic trigonometric functions:
 
-$$ \text{ray\_dir\_x} = \cos(\text{ray\_angle}) $$
+$$ \ray\_dir\_x = \cos(\ray\_angle) $$
 
-$$ \text{ray\_dir\_y} = \sin(\text{ray\_angle}) $$
+$$ \{ray\_dir\_y = \sin(\ray\_angle) $$
    
    ![](ray_dir-1.png)
 
@@ -229,7 +229,7 @@ $$ \Delta\text{dist}_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad
 
 ### 3. **Fish-Eye Correction:**
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
-   
+
 $$ \text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle}) $$
 
    <p style="text-align: center"><img src="assets/README/Fish%20eye.png"></p>
