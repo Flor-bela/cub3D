@@ -176,7 +176,7 @@ Instead of using a moving camera plane vector, we use the player's view orientat
 
 Instead of stepping through the field of view using a constant angular increment, each ray angle is derived from its position on the projection plane. The projection plane distance is computed from the desired FOV:
 
-$$ projection\_plane\_distance = \frac{WIDTH / 2}{\tan(FOV / 2)}$$
+$$ projection_plane_distance = \frac{WIDTH / 2}{\tan(FOV / 2)}$$
 
 For every screen column *i*, we compute its horizontal offset from the screen center:
 
@@ -184,11 +184,11 @@ $$ x = i - \frac{WIDTH}{2} $$
 
 The corresponding ray angle offset is:
 
-$$ \theta = \arctan\left(\frac{x}{projection\_plane\_distance}\right) $$
+$$ \theta = \arctan\left(\frac{x}{projection_plane_distance}\right) $$
 
 Finally:
 
-$$ ray\_angle = player\_angle + \theta $$
+$$ ray_angle = player_angle + \theta $$
 
 <p style="text-align: center"><img src="assets/README/proyection_plane.png"></p>
 
