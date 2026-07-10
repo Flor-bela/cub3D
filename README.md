@@ -105,7 +105,7 @@ Ray-casting is a rendering technique used to create a 3D perspective from a 2D m
 
 The goal of ray-casting is to detect the walls surrounding the player within the camera's field of view and calculate their distance from the player. This distance is then used to determine the apparent wall height on the screen.
 
-<p style="text-align: center"><img src="assets/README/player-view-1.png"></p>
+<p style="text-align: center"><img src="assets/README/player-view.png"></p>
 
 
 For each vertical screen column (each x-coordinate), a ray is cast from the player's position. Its direction depends on both the player's viewing angle and the column's position on the screen. The ray traverses the 2D map until it intersects a wall. Once a collision is detected, the distance between the player and the wall is calculated and used to determine the wall's projected height. The farther away a wall is, the smaller it appears on the screen.
@@ -224,7 +224,7 @@ $$ \Delta\text{dist}_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad
    Although the ray is defined in **continuous direction space**, the collision detection is performed in **discrete grid space**, where each step corresponds to crossing a tile boundary.
 
 
-<p style="text-align: center"><img src="assets/README/DDA-1.png"></p>
+<p style="text-align: center"><img src="assets/README/DDA.png"></p>
 
 ### 3. **Fish-Eye Correction:**
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
