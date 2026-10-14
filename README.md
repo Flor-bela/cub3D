@@ -100,12 +100,13 @@ cub3D uses a simple keyboard-based control.
 Ray-casting is a rendering technique used to create a 3D perspective from a 2D map. It is highly efficient because it only requires one calculation per vertical screen column. Our implementation is limited to walls of uniform height represented as orthogonal square tiles on a 2D grid.
 
 
-<p style="text-align: center"><img src="assets/README/ray-casting.png"></p>
+<p align="center"><img src="assets/README/ray-casting.png"></p>
 
 
 The goal of ray-casting is to detect the walls surrounding the player within the camera's field of view and calculate their distance from the player. This distance is then used to determine the apparent wall height on the screen.
 
-<p style="text-align: center"><img src="assets/README/player-view.png"></p>
+
+<p align="center"><img src="assets/README/player-view.png"></p>
 
 
 For each vertical screen column (each x-coordinate), a ray is cast from the player's position. Its direction depends on both the player's viewing angle and the column's position on the screen. The ray traverses the 2D map until it intersects a wall. Once a collision is detected, the distance between the player and the wall is calculated and used to determine the wall's projected height. The farther away a wall is, the smaller it appears on the screen.
@@ -132,7 +133,7 @@ The game map is represented as a 2D grid of square tiles.
 Each tile corresponds to a fixed number of pixels:
 
 $$
-map\_x = \frac{p_x}{TILE\_SIZE}, \quad map\_y = \frac{p_y}{TILE\_SIZE}
+map\_x = \frac{p\_x}{TILE\_SIZE}, \quad map\_y = \frac{p\_y}{TILE\_SIZE}
 $$
 
 In this space:
@@ -146,7 +147,7 @@ In this space:
 Ray directions are not expressed in pixels or tiles, but as mathematical unit vectors derived from an angle:
 
 $$
-ray\_dir_x = \cos(ray\_angle), \quad ray\_dir_y = \sin(ray\_angle)
+ray\_dir\_x = \cos(ray\_angle), \quad ray\_dir\_y = \sin(ray\_angle)
 $$
 
 This defines a continuous direction independent of scale:
@@ -155,8 +156,7 @@ This defines a continuous direction independent of scale:
 - Represent direction only, not position
 - Used to simulate infinite ray propagation through the grid
 
-<p style="text-align: center"><img src="assets/README/ray_dir.png"></p>
-
+<p align="center"><img src="assets/README/ray_dir.png"></p>
 
 ### Relationship Between Spaces
 
@@ -176,7 +176,7 @@ Instead of using a moving camera plane vector, we use the player's view orientat
 
 Instead of stepping through the field of view using a constant angular increment, each ray angle is derived from its position on the projection plane. The projection plane distance is computed from the desired FOV:
 
-$$ projection_plane_distance = \frac{WIDTH / 2}{\tan(FOV / 2)}$$
+$$ projection\_plane\_distance = \frac{WIDTH / 2}{\tan(FOV / 2)}$$
 
 For every screen column *i*, we compute its horizontal offset from the screen center:
 
@@ -184,15 +184,13 @@ $$ x = i - \frac{WIDTH}{2} $$
 
 The corresponding ray angle offset is:
 
-$$ \theta = \arctan\left(\frac{x}{projection_plane_distance}\right) $$
+$$ \theta = \arctan\left(\frac{x}{projection\_plane\_distance}\right) $$
 
 Finally:
 
-$$ 
-ray_angle = player_angle + \theta 
-$$
+$$ ray\_angle = player\_angle + \theta $$
 
-<p style="text-align: center"><img src="assets/README/proyection_plane.png"></p>
+<p align="center"><img src="assets/README/proyection_plane.png"></p>
 
 This approach models a flat projection plane and associates each ray directly with a screen column, producing a more geometrically accurate camera model than a simple uniform angular sweep.
 
@@ -210,8 +208,8 @@ $$
 
    The grid delta metrics (`delta_dist_x` and `delta_dist_y`) represent the distance the ray must travel to cross a full grid boundary ($TILE\_SIZE = 64$) and are initialized using:
 
-$$ 
-\Delta\text{dist}_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad \Delta\text{dist}_y = \left| \frac{1}{\sin(\text{ray\_angle})} \right| 
+$$
+\Delta\text{dist}\_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad \Delta\text{dist}\_y = \left| \frac{1}{\sin(\text{ray\_angle})} \right|
 $$
 
    These values determine which grid boundary the ray will hit first.
@@ -232,16 +230,16 @@ $$
    Although the ray is defined in **continuous direction space**, the collision detection is performed in **discrete grid space**, where each step corresponds to crossing a tile boundary.
 
 
-<p style="text-align: center"><img src="assets/README/DDA.png"></p>
+<p align="center"><img src="assets/README/DDA.png"></p>
 
 ### 3. **Fish-Eye Correction:**
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
 
-$$ 
-\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle}) 
+$$
+\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle})
 $$
 
-   <p style="text-align: center"><img src="assets/README/Fish%20eye.png"></p>
+<p align="center"><img src="assets/README/Fish%20eye.png"></p>
 
    *The Euclidean distance measures the ray length, but wall projection requires the distance perpendicular to the camera plane*
 
@@ -259,22 +257,22 @@ $$
    To correctly map a texture, we first compute the exact fractional position of the hit inside the wall tile. This value represents where the ray intersects the wall in **grid space**, not pixel space:
 
    - If the hit is on a vertical wall:
-   $$ wall\_x = player\_y + perp\_dist \cdot ray\_dir_y $$
+   $$ wall\_x = player\_y + perp\_dist \cdot ray\_dir\_y $$
    - If the hit is on a horizontal wall:
-   $$ wall\_x = player\_x + perp\_dist \cdot ray\_dir_x $$
+   $$ wall\_x = player\_x + perp\_dist \cdot ray\_dir\_x $$
 
    We then extract only the fractional part:
    $$ wall\_x = wall\_x - \lfloor wall\_x \rfloor $$
 
    This gives a normalized coordinate in range `[0, 1]`, representing the exact hit position within the tile.
 
-<p style="text-align: center"><img src="assets/README/Wall_x.png"></p>
+<p align="center"><img src="assets/README/Wall_x.png"></p>
 
    #### Texture Coordinate Mapping
 
    Once `wall_x` is known, it is mapped to the texture width:
 
-   $$ tex_x = wall_x \cdot texture\_width $$
+   $$ tex\_x = wall\_x \cdot texture\_width $$
 
    This determines which vertical stripe of the texture corresponds to the current screen column.
 
