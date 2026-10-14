@@ -132,9 +132,7 @@ The game map is represented as a 2D grid of square tiles.
 
 Each tile corresponds to a fixed number of pixels:
 
-$$
-map\_x = \frac{p\_x}{TILE\_SIZE}, \quad map\_y = \frac{p\_y}{TILE\_SIZE}
-$$
+$$\text{map\\_x} = \frac{\text{p\\_x}}{\text{TILE\\_SIZE}}, \quad \text{map\\_y} = \frac{\text{p\\_y}}{\text{TILE\\_SIZE}}$$
 
 In this space:
 
@@ -146,9 +144,7 @@ In this space:
 
 Ray directions are not expressed in pixels or tiles, but as mathematical unit vectors derived from an angle:
 
-$$
-ray\_dir\_x = \cos(ray\_angle), \quad ray\_dir\_y = \sin(ray\_angle)
-$$
+$$\text{ray\\_dir\\_x} = \cos(\text{ray\\_angle}), \quad \text{ray\\_dir\\_y} = \sin(\text{ray\\_angle})$$
 
 This defines a continuous direction independent of scale:
 
@@ -163,7 +159,7 @@ This defines a continuous direction independent of scale:
 The ray-casting pipeline connects these spaces as follows:
 
 1. The player moves in **pixel space**
-2. The map is interpreted in **grid space**
+​2. The map is interpreted in **grid space**
 3. The ray is defined in **continuous direction space**
 4. The DDA algorithm converts the continuous ray into discrete grid steps
 
@@ -176,19 +172,19 @@ Instead of using a moving camera plane vector, we use the player's view orientat
 
 Instead of stepping through the field of view using a constant angular increment, each ray angle is derived from its position on the projection plane. The projection plane distance is computed from the desired FOV:
 
-$$ projection\_plane\_distance = \frac{WIDTH / 2}{\tan(FOV / 2)}$$
+$$\text{projection\\_plane\\_distance} = \frac{\text{WIDTH} / 2}{\tan(\text{FOV} / 2)}$$
 
 For every screen column *i*, we compute its horizontal offset from the screen center:
 
-$$ x = i - \frac{WIDTH}{2} $$
+$$x = i - \frac{\text{WIDTH}}{2}$$
 
 The corresponding ray angle offset is:
 
-$$ \theta = \arctan\left(\frac{x}{projection\_plane\_distance}\right) $$
+$$\theta = \arctan\left(\frac{x}{\text{projection\\_plane\\_distance}}\right)$$
 
 Finally:
 
-$$ ray\_angle = player\_angle + \theta $$
+$$\text{ray\\_angle} = \text{player\\_angle} + \theta$$
 
 <p align="center"><img src="assets/README/proyection_plane.png"></p>
 
@@ -197,20 +193,14 @@ This approach models a flat projection plane and associates each ray directly wi
 ### 1. **Ray Vector Derivation:**
    For every column, the horizontal and vertical components of the ray are extracted directly via basic trigonometric functions:
 
-$$ 
-ray\_dir\_x = cos(ray\_angle) 
-$$
+$$\text{ray\\_dir\\_x} = \cos(\text{ray\\_angle})$$
 
-$$
-ray\_dir\_y = sin(ray\_angle)
-$$
+$$\text{ray\\_dir\\_y} = \sin(\text{ray\\_angle})$$
    
 
    The grid delta metrics (`delta_dist_x` and `delta_dist_y`) represent the distance the ray must travel to cross a full grid boundary ($TILE\_SIZE = 64$) and are initialized using:
 
-$$
-\Delta\text{dist}\_x = \left| \frac{1}{\cos(\text{ray\_angle})} \right|, \quad \Delta\text{dist}\_y = \left| \frac{1}{\sin(\text{ray\_angle})} \right|
-$$
+$$\Delta\text{dist\\_x} = \left\vert{} \frac{1}{\cos(\text{ray\\_angle})} \right\vert{}, \quad \Delta\text{dist\\_y} = \left\vert{} \frac{1}{\sin(\text{ray\\_angle})} \right\vert{}$$
 
    These values determine which grid boundary the ray will hit first.
 
@@ -235,9 +225,7 @@ $$
 ### 3. **Fish-Eye Correction:**
    Because our rays radiate outward at equal angular steps from a central point, computing raw Euclidean distance produces radial lens distortion (flat walls appear curved). To maintain a flat projection plane, we isolate the perpendicular distance by flattening the ray against the player's focal direction vector:
 
-$$
-\text{corrected\_dist} = \text{euclidean\_dist} \times \cos(\text{ray\_angle} - \text{player\_angle})
-$$
+$$\text{corrected\\_dist} = \text{euclidean\\_dist} \times \cos(\text{ray\\_angle} - \text{player\\_angle})$$
 
 <p align="center"><img src="assets/README/Fish%20eye.png"></p>
 
@@ -257,12 +245,12 @@ $$
    To correctly map a texture, we first compute the exact fractional position of the hit inside the wall tile. This value represents where the ray intersects the wall in **grid space**, not pixel space:
 
    - If the hit is on a vertical wall:
-   $$ wall\_x = player\_y + perp\_dist \cdot ray\_dir\_y $$
+   $$\text{wall\\_x} = \text{player\\_y} + \text{perp\\_dist} \cdot \text{ray\\_dir\\_y}$$
    - If the hit is on a horizontal wall:
-   $$ wall\_x = player\_x + perp\_dist \cdot ray\_dir\_x $$
+   $$\text{wall\\_x} = \text{player\\_x} + \text{perp\\_dist} \cdot \text{ray\\_dir\\_x}$$
 
    We then extract only the fractional part:
-   $$ wall\_x = wall\_x - \lfloor wall\_x \rfloor $$
+   $$\text{wall\\_x} = \text{wall\\_x} - \lfloor \text{wall\\_x} \rfloor$$
 
    This gives a normalized coordinate in range `[0, 1]`, representing the exact hit position within the tile.
 
@@ -272,7 +260,7 @@ $$
 
    Once `wall_x` is known, it is mapped to the texture width:
 
-   $$ tex\_x = wall\_x \cdot texture\_width $$
+   $$\text{tex\\_x} = \text{wall\\_x} \cdot \text{texture\\_width}$$
 
    This determines which vertical stripe of the texture corresponds to the current screen column.
 
